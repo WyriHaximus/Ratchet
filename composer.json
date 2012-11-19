@@ -1,0 +1,9 @@
+{
+    "name": "wyrhaximus/cake-ratchet",
+    "require": {
+        "cboden/Ratchet": "0.2.*"
+    },
+    "config": { 
+        "vendor-dir": "Vendor/" 
+    }
+}
