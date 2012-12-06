@@ -7,8 +7,7 @@ class RatchetController extends AppController {
         $this->Auth->allow(array('probeer'));
     }
     
-    public function probeer() {
-        return 'tadaaaaaaaa!';
+    public function admin_live() {
     }
     
 }
