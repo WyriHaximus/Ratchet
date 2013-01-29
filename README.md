@@ -9,9 +9,11 @@ Getting started
 ---------------
     1. Installing Composer (It's the only way to get Ratchet)
         > curl -s https://getcomposer.org/installer | php
+        - or -
+        > php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));"
     
     2. Install Ratchet
-        > composer.phar install
+        > php composer.phar install
     
     3. Start Ratchet
         > ./cake Ratchet.websocket run
