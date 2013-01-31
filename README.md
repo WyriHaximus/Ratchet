@@ -23,6 +23,6 @@ Getting started
         > php ~/composer.phar install
     
     5. Start Ratchet
-        > cd {Your Cake Project}/app/Console/Cake
-        > chmod +x Cake
+        > cd {Your Cake Project}/app/Console/
+        > chmod +x cake
         > ./cake Ratchet.websocket run
