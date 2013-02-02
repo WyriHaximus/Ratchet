@@ -1,8 +1,22 @@
 {
-    "name": "wyrhaximus/cake-ratchet",
+    "name": "wyrhaximus/ratchet",
+    "description": "Ratchet websockets integration plugin for CakePHP",
     "type": "cakephp-plugin",
     "license": "MIT",
+    "keywords": [
+        "ratchet",
+        "cakephp",
+        "websockets"
+    ],
+    "authors": [
+        {
+            "name": "Cees-Jan Kiewiet",
+            "email": "ceesjank@gmail.com",
+            "homepage": "http://wyrihaximus.net/"
+        }
+    ],
     "require": {
+        "php": ">=5.3.3",
         "cboden/Ratchet": "0.2.*",
         "composer/installers": "*"
     },
