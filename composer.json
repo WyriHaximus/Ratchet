@@ -1,6 +1,7 @@
 {
     "name": "wyrhaximus/ratchet",
     "description": "Ratchet websockets integration plugin for CakePHP",
+    "homepage": "http://wyrihaximus.net/projects/cakephp/ratchet.html",
     "type": "cakephp-plugin",
     "license": "MIT",
     "keywords": [
