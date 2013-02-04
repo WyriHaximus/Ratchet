@@ -2,6 +2,7 @@
 
 require_once CakePlugin::path('Ratchet') . 'Vendor' . DS . 'autoload.php';
 App::uses('CakeWampServer', 'Ratchet.Lib');
+App::uses('CakeWampAppServer', 'Ratchet.Lib');
 App::uses('PhpSerializeHandler', 'Ratchet.Lib');
 App::uses('CakeWampSessionProvider', 'Ratchet.Lib');
 App::uses('CakeWampSessionHandler', 'Ratchet.Lib');
@@ -11,7 +12,7 @@ use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
 use React\Socket\Server as Reactor;
 use React\EventLoop\Factory as LoopFactory;
-use Ratchet\Server\FlashPolicy;
+//use Ratchet\Server\FlashPolicy;
 
 class WebsocketShell extends Shell {
     
@@ -36,16 +37,14 @@ class WebsocketShell extends Shell {
         $socket->listen(54321, '0.0.0.0');
         $this->ioServer = new IoServer(new WsServer(
             new CakeWampSessionProvider(
-                new WampServer(
-                    new CakeWampServer($this)
+                new CakeWampServer(
+                    new CakeWampAppServer($this, $this->loop)
                 ),
                 new CakeWampSessionHandler(),
                 array(),
                 new PhpSerializeHandler()
             )
         ), $socket, $this->loop);
-        
-        
     }
     
     public function run() {
