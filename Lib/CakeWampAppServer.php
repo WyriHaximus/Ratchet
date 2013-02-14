@@ -1,6 +1,8 @@
 <?php
 
 use Ratchet\ConnectionInterface as Conn;
+App::uses('CakeEventManager', 'Event');
+App::uses('CakeEvent', 'Event');
 
 class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     
