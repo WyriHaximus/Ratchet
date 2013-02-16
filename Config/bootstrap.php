@@ -1,6 +1,7 @@
 <?php
 
 App::uses('CakeEventManager', 'Event');
+App::uses('CakeEvent', 'Event');
 
 App::uses('RatchetCallUrlListener', 'Ratchet.Event');
 App::uses('RatchetConnectionStatisticsListener', 'Ratchet.Event');
