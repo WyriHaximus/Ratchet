@@ -18,6 +18,14 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     
     public function onPublish(Conn $conn, $topic, $event, array $exclude, array $eligible) {
         $topic->broadcast($event);
+        
+        CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onPublish.' . $topic->getId(), $this, array(
+            'connection' => $conn,
+            'topic' => $topic,
+            'exclude' => $exclude,
+            'eligible' => $eligible,
+            'connectionData' => $this->connections[$conn->WAMP->sessionId],
+        )));
     }
 
     public function onCall(Conn $conn, $id, $topic, array $params) {
