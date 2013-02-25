@@ -15,8 +15,13 @@ class PhpSerializeHandler implements HandlerInterface {
      * {@inheritdoc}
      */
     public function unserialize($raw) {
+        $data = unserialize($raw);
+        if (!$data) {
+            $data = array();
+        }
+        
         return array(
-            '_sf2_attributes' => unserialize($raw),
+            '_sf2_attributes' => $data,
         );
     }
 }
