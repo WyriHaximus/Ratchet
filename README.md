@@ -16,7 +16,7 @@ Getting started
         > mkdir {Your Cake Project}/app/Plugin/Ratchet
         
     3. Load Ratchet Plugin
-        - Open /app/Config/bootstrap.php and add "CakePlugin::load('Ratchet');" to the file
+        - Open /app/Config/bootstrap.php and add "CakePlugin::load('Ratchet',array('bootstrap' => true));" to the file
     
     4. Install Ratchet (assuming composer.phar is in your home dir)
         > cd {Your Cake Project}/app/Plugin/Ratchet
