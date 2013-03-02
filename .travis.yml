@@ -8,9 +8,6 @@ php:
 
 env:
   - CAKE_VERSION=master
-  - CAKE_VERSION=d3fdd2c911211ef81d5dba5c7155eb7fcb6fde80 # 2.3.0
-  - CAKE_VERSION=6a4160f2ae70373fb88a1d0e1d93cd4a65c12532x # 2.2.7
-  - CAKE_VERSION=0328c5955ebba4458b1522006eeca0437f4c8b00 # 2.1.5
 
 before_script:
   - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
