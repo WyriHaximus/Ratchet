@@ -1,89 +1,46 @@
-// WAMP session object
-var sess;
+var cakeWamp = window.cakeWamp || {};
 
-// WAMP server
-var wsuri = "ws://localhost:54321";
+/**
+ * Array with the subscriptions to keep track off and auto (re)subscribe when (re)connected
+ * @type Array
+ */
+cakeWamp.subscriptions = [];
 
-ab._debugrpc = true;
-
-connect();
-
-function connect() {
-    console.log("Connecting!");
-   // establish session to WAMP server
-   sess = new ab.Session(wsuri,
-
-      // fired when session has been opened
-      function() {
-         console.log("Connected!");
-         
-        sess.subscribe("ping",
-            // on event publication callback
-            function (topic, event) {
-               connectionCountDraw(event);
-               console.log(topic);
-               console.log(event);
-                /*sess.call('callUrl', {
-                'url': url,
-                'data': data
-                }).then(
-                function (res) {
-                console.log(res);
-                callback(res[0]);
-                },
-                function (error, desc) {
-                console.log("error: " + desc);
-                }
-                );*/
-         });
-      },
-
-      // fired when session has been closed
-      function(reason) {
-          console.log(reason);
-         switch (reason) {
-            case ab.CONNECTION_CLOSED:
-               console.log("Connection was closed properly - done.");
-               break;
-            case ab.CONNECTION_UNREACHABLE:
-               console.log("Connection could not be established.");
-               
-               // automatically reconnect after 1s
-               window.setTimeout(connect, 10000);
-               break;
-            case ab.CONNECTION_UNSUPPORTED:
-               console.log("Browser does not support WebSocket.");
-               break;
-            case ab.CONNECTION_LOST:
-               console.log("Connection lost - reconnecting ...");
-
-               // automatically reconnect after 1s
-               window.setTimeout(connect, 1000);
-               break;
-         }
-      }
-   );
+cakeWamp.connect = function() {
+    ab.connect(wsuri, function(session) {
+        cakeWamp.session = session;
+        
+        cakeWamp.onconnect();
+    }, cakeWamp.options);
 };
 
-
-function CakeGet(url, data, callback) {
+cakeWamp.onconnect = function() {  
+    cakeWamp.session.subscribe('Rachet.connection.keepAlive', function (topic, event) {});
     
-    if (sess && sess._websocket_connected) {
-        console.log([url, data, callback]);
-        sess.call('callUrl', {
-                'url': url,
-                'data': data
-            }).then(
-            function (res) {
-                console.log(res);
-                callback(res[0]);
-            },
-            function (error, desc) {
-                console.log("error: " + desc);
-            }
-        );
-    } else {
-        $.get(url, data, callback);
+    for (var i in cakeWamp.subscriptions) {
+        cakeWamp.session.subscribe(cakeWamp.subscriptions[i].topic, cakeWamp.subscriptions[i].callback);
     }
+};
+
+cakeWamp.call = function() {
+    cakeWamp.session.call.apply(cakeWamp.session, arguments);
+};
+
+cakeWamp.subscribe = function() {
+    cakeWamp.subscriptions.push({
+        topic: arguments[0],
+        callback: arguments[1]
+    });
     
-}
+    cakeWamp.session.subscribe.apply(cakeWamp.session, arguments);
+};
+
+cakeWamp.unsubscribe = function() {
+    cakeWamp.session.unsubscribe.apply(cakeWamp.session, arguments);
+};
+
+cakeWamp.publish = function() {
+    cakeWamp.session.publish.apply(cakeWamp.session, arguments);
+};
+
+cakeWamp.connect();
