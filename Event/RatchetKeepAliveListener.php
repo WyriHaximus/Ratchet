@@ -10,8 +10,8 @@ class RatchetKeepAliveListener implements CakeEventListener {
     public function implementedEvents() {
         return array(
             'Rachet.WampServer.construct' => 'construct',
-            'Rachet.WampServer.onSubscribeNewTopic.keepAlive' => 'onSubscribeNewTopic',
-            'Rachet.WampServer.onUnSubscribeStaleTopic.keepAlive' => 'onUnSubscribeStaleTopic',
+            'Rachet.WampServer.onSubscribeNewTopic.Rachet.connection.keepAlive' => 'onSubscribeNewTopic',
+            'Rachet.WampServer.onUnSubscribeStaleTopic.Rachet.connection.keepAlive' => 'onUnSubscribeStaleTopic',
         );
     }
     
