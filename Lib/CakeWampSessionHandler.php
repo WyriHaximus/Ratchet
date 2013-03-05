@@ -2,6 +2,10 @@
 
 class CakeWampSessionHandler implements SessionHandlerInterface {
     
+    public function __construct() {
+        session_start();
+    }
+    
     /**
      * Open session.
      *
@@ -15,8 +19,6 @@ class CakeWampSessionHandler implements SessionHandlerInterface {
      * @return boolean
      */
     public function open($savePath, $sessionName) {
-        debug($savePath);
-        debug($sessionName);
         return true;
     }
 
@@ -43,9 +45,13 @@ class CakeWampSessionHandler implements SessionHandlerInterface {
      * @return string String as stored in persistent storage or empty string in all other cases.
      */
     public function read($sessionId) {
-        CakeSession::id($sessionId);
-        $sessionData = CakeSession::read();
-        return serialize($sessionData);
+        $sessionData = Cache::read($sessionId, Configure::read('Session.handler.config'));
+        session_decode($sessionData);
+        $restoredSessionData = $_SESSION;
+        foreach ($_SESSION as $key => $value){
+            unset($_SESSION[$key]);
+        }
+        return serialize($restoredSessionData);
     }
 
     /**
