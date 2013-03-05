@@ -40,7 +40,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 
     public function onSubscribe(Conn $conn, $topic) {
         if (!isset($this->topics[$topic->getId()])) {
-            $this->topics[$topic->getId()] = $topic;
+            $this->topics[$topic->getId()] = true;
             
             CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onSubscribeNewTopic.' . $topic->getId(), $this, array(
                 'connection' => $conn,
@@ -57,7 +57,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     }
     
     public function onUnSubscribe(Conn $conn, $topic) {
-        if ($this->topics[$topic->getId()]->count() > 0) {
+        if (isset($this->topics[$topic->getId()]) && $topic->count() > 0) {
             unset($this->topics[$topic->getId()]);
             
             CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onUnSubscribeStaleTopic.' . $topic->getId(), $this, array(
