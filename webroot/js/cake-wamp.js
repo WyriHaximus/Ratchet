@@ -5,20 +5,34 @@ var cakeWamp = window.cakeWamp || {};
  * @type Array
  */
 cakeWamp.subscriptions = [];
+cakeWamp.onconnectListeners = [];
+cakeWamp.onhangupListeners = [];
 
 cakeWamp.connect = function() {
     ab.connect(wsuri, function(session) {
         cakeWamp.session = session;
         
         cakeWamp.onconnect();
+    }, function(code, reason) {
+        cakeWamp.onhangup(code, reason);
     }, cakeWamp.options);
 };
 
-cakeWamp.onconnect = function() {  
+cakeWamp.onconnect = function() {
     cakeWamp.session.subscribe('Rachet.connection.keepAlive', function (topic, event) {});
+    
+    for (var i in cakeWamp.onconnectListeners) {
+        cakeWamp.onconnectListeners[i](cakeWamp.session);
+    }
     
     for (var i in cakeWamp.subscriptions) {
         cakeWamp.session.subscribe(cakeWamp.subscriptions[i].topic, cakeWamp.subscriptions[i].callback);
+    }
+};
+
+cakeWamp.onhangup = function(code, reason) {
+    for (var i in cakeWamp.onhangupListeners) {
+        cakeWamp.onhangupListeners[i](code, reason);
     }
 };
 
@@ -32,7 +46,9 @@ cakeWamp.subscribe = function() {
         callback: arguments[1]
     });
     
-    cakeWamp.session.subscribe.apply(cakeWamp.session, arguments);
+    if (cakeWamp.session && cakeWamp.session._websocket_connected) {
+        cakeWamp.session.subscribe.apply(cakeWamp.session, arguments);
+    }
 };
 
 cakeWamp.unsubscribe = function() {
