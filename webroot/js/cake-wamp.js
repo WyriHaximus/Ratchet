@@ -5,7 +5,17 @@ var cakeWamp = window.cakeWamp || {};
  * @type Array
  */
 cakeWamp.subscriptions = [];
+
+/**
+ * Array with onconnect listeners
+ * @type Array
+ */
 cakeWamp.onconnectListeners = [];
+
+/**
+ * Array with onhangup listeners
+ * @type Array
+ */
 cakeWamp.onhangupListeners = [];
 
 cakeWamp.connect = function() {
