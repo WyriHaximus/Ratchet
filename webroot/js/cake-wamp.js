@@ -46,10 +46,16 @@ cakeWamp.onhangup = function(code, reason) {
     }
 };
 
+/**
+ * Wrapper around AB's session.call method
+ */
 cakeWamp.call = function() {
     cakeWamp.session.call.apply(cakeWamp.session, arguments);
 };
 
+/**
+ * Wrapper around AB's session.subscribe method
+ */
 cakeWamp.subscribe = function() {
     cakeWamp.subscriptions.push({
         topic: arguments[0],
@@ -61,10 +67,16 @@ cakeWamp.subscribe = function() {
     }
 };
 
+/**
+ * Wrapper around AB's session.unsubscribe method
+ */
 cakeWamp.unsubscribe = function() {
     cakeWamp.session.unsubscribe.apply(cakeWamp.session, arguments);
 };
 
+/**
+ * Wrapper around AB's session.publish method
+ */
 cakeWamp.publish = function() {
     cakeWamp.session.publish.apply(cakeWamp.session, arguments);
 };
