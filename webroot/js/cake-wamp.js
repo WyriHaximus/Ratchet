@@ -18,6 +18,11 @@ cakeWamp.onconnectListeners = [];
  */
 cakeWamp.onhangupListeners = [];
 
+/**
+ * connect to the websocket server and call onconnect and onhangup callbacks when they occur
+ * 
+ * @returns void
+ */
 cakeWamp.connect = function() {
     ab.connect(wsuri, function(session) {
         cakeWamp.session = session;
@@ -28,6 +33,11 @@ cakeWamp.connect = function() {
     }, cakeWamp.options);
 };
 
+/**
+ * onhangup callback notifies all listeners about a succesful connection
+ * 
+ * @returns void
+ */
 cakeWamp.onconnect = function() {
     cakeWamp.session.subscribe('Rachet.connection.keepAlive', function (topic, event) {});
     
@@ -40,6 +50,13 @@ cakeWamp.onconnect = function() {
     }
 };
 
+/**
+ * onhangup callback notifies all listeners about a hangup
+ * 
+ * @param int code hangup code
+ * @param string reason hangup text reason
+ * @returns void
+ */
 cakeWamp.onhangup = function(code, reason) {
     for (var i in cakeWamp.onhangupListeners) {
         cakeWamp.onhangupListeners[i](code, reason);
@@ -81,4 +98,7 @@ cakeWamp.publish = function() {
     cakeWamp.session.publish.apply(cakeWamp.session, arguments);
 };
 
+/**
+ * Connect to the websocket server
+ */
 cakeWamp.connect();
