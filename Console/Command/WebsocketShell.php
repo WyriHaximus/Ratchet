@@ -9,6 +9,7 @@ App::uses('CakeWampSessionProvider', 'Ratchet.Lib');
 App::uses('CakeWampSessionHandler', 'Ratchet.Lib');
 App::uses('RatchetCakeSession', 'Ratchet.Lib');
 
+use Ratchet\Wamp\WampServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
 use React\Socket\Server as Reactor;

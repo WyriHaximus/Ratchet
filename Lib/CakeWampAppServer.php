@@ -4,9 +4,10 @@ use Ratchet\ConnectionInterface as Conn;
 
 class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     
-    private $shell;
+    public $shell;
     private $loop;
     protected $connections = array();
+    public $topics = array();
     
     public function __construct($shell, $loop) {
         $this->shell = $shell;
@@ -40,7 +41,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 
     public function onSubscribe(Conn $conn, $topic) {
         if (!isset($this->topics[$topic->getId()])) {
-            $this->topics[$topic->getId()] = true;
+            $this->topics[$topic->getId()] = $topic;
             
             CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onSubscribeNewTopic.' . $topic->getId(), $this, array(
                 'connection' => $conn,

@@ -19,6 +19,9 @@
     "require": {
         "php": ">=5.3.3",
         "cboden/Ratchet": "0.2.*",
+        "predis/predis": "0.8.*",
+        "predis/predis-async": "dev-master",
+        "react/zmq": "0.1.*",
         "composer/installers": "*"
     },
     "config": { 

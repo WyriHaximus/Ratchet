@@ -19,7 +19,7 @@ class PhpSerializeHandler implements HandlerInterface {
         if (!$data) {
             $data = array();
         }
-        
+        //debug($data);
         return array(
             '_sf2_attributes' => $data,
         );

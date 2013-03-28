@@ -41,10 +41,6 @@ class RatchetCallUrlListener implements CakeEventListener {
     private function requestAction($url, $data, $connData) {
         $request = new CakeRequest($url);
         $request->data = $data;
-        $request->sessionAuth = array(
-            'id' => $connData['session']['Auth']['User']['id'],
-            'username' => $connData['session']['Auth']['User']['username'],
-        );
         $dispatcher = new Dispatcher();
         ob_start();
         $dispatcher->dispatch($request, new CakeResponse());

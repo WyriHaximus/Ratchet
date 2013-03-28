@@ -8,11 +8,11 @@ Configure::write('Ratchet', array(
     'Connection' => array(
         'flashPolicy' => array(
             'address' => '0.0.0.0',
-            'port' => 843,
+            'port' => 12001,
         ),
         'websocket' => array(
             'address' => '0.0.0.0',
-            'port' => 54321,
+            'port' => 11001,
         ),
         'external' => array(
             'hostname' => 'localhost',
@@ -21,6 +21,18 @@ Configure::write('Ratchet', array(
             'secure' => false,
         ),
     ),
+    'Queue' => array(
+        /*'type' => 'Predis',
+        'key' => 'test_reddis_opuapugfoyiufgiawe',
+        'server' => array(
+            'scheme' => 'tcp',
+            'host' => '127.0.0.1',
+            'port' => 6379,
+            'database' => 12,
+        ),*/
+        'type' => 'ZMQ',
+        'server' => 'tcp://127.0.0.1:13001',
+    ),
 ));
 
 App::uses('CakeEventManager', 'Event');
@@ -28,7 +40,9 @@ App::uses('CakeEventManager', 'Event');
 App::uses('RatchetCallUrlListener', 'Ratchet.Event');
 App::uses('RatchetConnectionStatisticsListener', 'Ratchet.Event');
 App::uses('RatchetKeepAliveListener', 'Ratchet.Event');
+App::uses('RatchetModelUpdateListener', 'Ratchet.Event');
 
 CakeEventManager::instance()->attach(new RatchetCallUrlListener());
 CakeEventManager::instance()->attach(new RatchetConnectionStatisticsListener());
 CakeEventManager::instance()->attach(new RatchetKeepAliveListener());
+CakeEventManager::instance()->attach(new RatchetModelUpdateListener());
