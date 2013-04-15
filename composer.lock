@@ -1,18 +1,22 @@
 {
-    "hash": "58dc3b592d0d115c04e21bbb226de6f3",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "cc12c636f3d25dc1410d823c0e3fa480",
     "packages": [
         {
-            "name": "cboden/Ratchet",
-            "version": "v0.2.4",
+            "name": "cboden/ratchet",
+            "version": "v0.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cboden/Ratchet.git",
-                "reference": "v0.2.4"
+                "reference": "v0.2.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cboden/Ratchet/zipball/v0.2.4",
-                "reference": "v0.2.4",
+                "url": "https://api.github.com/repos/cboden/Ratchet/zipball/v0.2.5",
+                "reference": "v0.2.5",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +52,7 @@
                 "server",
                 "sockets"
             ],
-            "time": "2013-03-09 14:06:25"
+            "time": "2013-04-01 23:38:50"
         },
         {
             "name": "composer/installers",
@@ -145,6 +149,7 @@
                     "Evenement": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -163,17 +168,17 @@
         },
         {
             "name": "guzzle/common",
-            "version": "v3.3.1",
+            "version": "v3.4.0",
             "target-dir": "Guzzle/Common",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/common.git",
-                "reference": "v3.3.1"
+                "reference": "v3.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/common/zipball/v3.3.1",
-                "reference": "v3.3.1",
+                "url": "https://api.github.com/repos/guzzle/common/zipball/v3.4.0",
+                "reference": "v3.4.0",
                 "shasum": ""
             },
             "require": {
@@ -203,21 +208,21 @@
                 "event",
                 "exception"
             ],
-            "time": "2013-03-10 23:05:38"
+            "time": "2013-04-12 05:58:15"
         },
         {
             "name": "guzzle/http",
-            "version": "v3.3.1",
+            "version": "v3.4.0",
             "target-dir": "Guzzle/Http",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/http.git",
-                "reference": "v3.3.1"
+                "reference": "v3.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/http/zipball/v3.3.1",
-                "reference": "v3.3.1",
+                "url": "https://api.github.com/repos/guzzle/http/zipball/v3.4.0",
+                "reference": "v3.4.0",
                 "shasum": ""
             },
             "require": {
@@ -260,21 +265,21 @@
                 "http",
                 "http client"
             ],
-            "time": "2013-03-10 04:14:16"
+            "time": "2013-04-11 23:42:03"
         },
         {
             "name": "guzzle/parser",
-            "version": "v3.3.1",
+            "version": "v3.4.0",
             "target-dir": "Guzzle/Parser",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/parser.git",
-                "reference": "v3.3.1"
+                "reference": "v3.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/parser/zipball/v3.3.1",
-                "reference": "v3.3.1",
+                "url": "https://api.github.com/repos/guzzle/parser/zipball/v3.4.0",
+                "reference": "v3.4.0",
                 "shasum": ""
             },
             "require": {
@@ -308,17 +313,17 @@
         },
         {
             "name": "guzzle/stream",
-            "version": "v3.3.1",
+            "version": "v3.4.0",
             "target-dir": "Guzzle/Stream",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/stream.git",
-                "reference": "v3.3.1"
+                "reference": "v3.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/stream/zipball/v3.3.1",
-                "reference": "v3.3.1",
+                "url": "https://api.github.com/repos/guzzle/stream/zipball/v3.4.0",
+                "reference": "v3.4.0",
                 "shasum": ""
             },
             "require": {
@@ -357,100 +362,7 @@
                 "component",
                 "stream"
             ],
-            "time": "2013-03-10 04:14:16"
-        },
-        {
-            "name": "predis/predis",
-            "version": "v0.8.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nrk/predis.git",
-                "reference": "v0.8.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/v0.8.3",
-                "reference": "v0.8.3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "suggest": {
-                "ext-curl": "Allows access to Webdis when paired with phpiredis",
-                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Predis": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniele Alessandri",
-                    "email": "suppakilla@gmail.com",
-                    "homepage": "http://clorophilla.net"
-                }
-            ],
-            "description": "Flexible and feature-complete PHP client library for Redis",
-            "homepage": "http://github.com/nrk/predis",
-            "keywords": [
-                "nosql",
-                "predis",
-                "redis"
-            ],
-            "time": "2013-02-18 14:03:45"
-        },
-        {
-            "name": "predis/predis-async",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nrk/predis-async.git",
-                "reference": "3babb025d26bddc3863f58df8c9f487b82b5fedd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis-async/zipball/3babb025d26bddc3863f58df8c9f487b82b5fedd",
-                "reference": "3babb025d26bddc3863f58df8c9f487b82b5fedd",
-                "shasum": ""
-            },
-            "require": {
-                "ext-phpiredis": "*",
-                "php": ">=5.3.0",
-                "predis/predis": "0.8.*",
-                "react/event-loop": "0.2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Predis\\Async": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniele Alessandri",
-                    "email": "suppakilla@gmail.com",
-                    "homepage": "http://clorophilla.net"
-                }
-            ],
-            "description": "Asynchronous version of Predis",
-            "homepage": "http://github.com/nrk/predis-async",
-            "keywords": [
-                "nosql",
-                "predis",
-                "redis"
-            ],
-            "time": "2013-01-01 13:00:49"
+            "time": "2013-04-06 18:28:51"
         },
         {
             "name": "react/event-loop",
@@ -583,63 +495,18 @@
             "time": "2012-12-14 00:58:14"
         },
         {
-            "name": "react/zmq",
-            "version": "v0.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/reactphp/zmq",
-                "reference": "v0.1.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/reactphp/zmq/archive/v0.1.1.zip",
-                "reference": "v0.1.1",
-                "shasum": ""
-            },
-            "require": {
-                "evenement/evenement": "1.0.*",
-                "ext-zmq": "*",
-                "php": ">=5.3.2",
-                "react/event-loop": "0.2.*"
-            },
-            "require-dev": {
-                "ext-pcntl": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "React\\ZMQ": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "ZeroMQ bindings for React.",
-            "keywords": [
-                "zeromq",
-                "zmq"
-            ],
-            "time": "2012-11-18 15:00:01"
-        },
-        {
             "name": "symfony/event-dispatcher",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "v2.2.0-RC3"
+                "reference": "v2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/v2.2.0-RC3",
-                "reference": "v2.2.0-RC3",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/v2.2.1",
+                "reference": "v2.2.1",
                 "shasum": ""
             },
             "require": {
@@ -683,17 +550,17 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "target-dir": "Symfony/Component/HttpFoundation",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "v2.2.0"
+                "reference": "v2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/v2.2.0",
-                "reference": "v2.2.0",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/v2.2.1",
+                "reference": "v2.2.1",
                 "shasum": ""
             },
             "require": {
@@ -729,7 +596,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2013-02-26 09:42:13"
+            "time": "2013-04-06 10:15:43"
         }
     ],
     "packages-dev": [
@@ -739,9 +606,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "predis/predis-async": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.3.3"
     },
