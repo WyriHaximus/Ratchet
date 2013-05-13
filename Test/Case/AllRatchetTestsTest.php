@@ -1,6 +1,6 @@
 <?php
 
-class AllTestsTest extends PHPUnit_Framework_TestSuite {
+class AllRatchetTestsTest extends PHPUnit_Framework_TestSuite {
 
 /**
  * suite method, defines tests for this suite.
