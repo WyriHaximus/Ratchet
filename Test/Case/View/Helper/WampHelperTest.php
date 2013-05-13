@@ -44,7 +44,7 @@ class RatchetHelperTest extends CakeTestCase {
  */
 	public function testInit() {
                 $this->Helper->init();
-                $this->assertEqual($this->view->fetch('script'), "<script type=\"text/javascript\">\n//<![CDATA[\nWEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\"\n//]]>\n</script><script type=\"text/javascript\" src=\"js/cache/Ratchet.wamp.js\"></script><script type=\"text/javascript\" src=\"/Ratchet/js/cake-wamp.js\"></script>");
+                $this->assertEqual($this->view->fetch('script'), "<script type=\"text/javascript\">\n//<![CDATA[\nWEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 500,maxRetries: 500};\nvar wsuri = \"ws://localhost:80/websocket\";\n//]]>\n</script><script type=\"text/javascript\" src=\"/js/cache/Ratchet.wamp.js\"></script>");
 	}
 
 }
