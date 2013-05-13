@@ -25,7 +25,7 @@ Getting started
     5. Start Ratchet
         > cd {Your Cake Project}/app/Console/
         > chmod +x cake
-        > ./cake Ratchet.websocket run
+        > ./cake Ratchet.websocket start
 
 
 Model Push

@@ -1,15 +1,15 @@
 <?php
 
-require_once CakePlugin::path('Ratchet') . 'Vendor' . DS . 'autoload.php';
-
-App::uses('CakeWampServer', 'Ratchet.Lib');
-App::uses('CakeWampAppServer', 'Ratchet.Lib');
+App::uses('CakeWampServer', 'Ratchet.Lib/Wamp');
+App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
 App::uses('PhpSerializeHandler', 'Ratchet.Lib');
-App::uses('CakeWampSessionProvider', 'Ratchet.Lib');
-App::uses('CakeWampSessionHandler', 'Ratchet.Lib');
+App::uses('CakeWampSessionProvider', 'Ratchet.Lib/Wamp');
+App::uses('CakeWampSessionHandler', 'Ratchet.Lib/Wamp');
 App::uses('RatchetCakeSession', 'Ratchet.Lib');
+App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
+App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue/Command');
+App::uses('RatchetMessageQueueKillSwitchCommand', 'Ratchet.Lib/MessageQueue/Command');
 
-use Ratchet\Wamp\WampServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
 use React\Socket\Server as Reactor;
@@ -22,8 +22,7 @@ class WebsocketShell extends Shell {
     private $ioServer;
     private $flashPolicy;
     
-    public function __construct($stdout = null, $stderr = null, $stdin = null) {
-        parent::__construct($stdout, $stderr, $stdin);
+    public function start() {
         
         $this->loop = LoopFactory::create();
         
@@ -47,16 +46,23 @@ class WebsocketShell extends Shell {
                 new PhpSerializeHandler()
             )
         ), $socket, $this->loop);
+        
+        $this->loop->run();
     }
     
-    public function run() {
-        $this->loop->run();
+    public function stop() {
+        $command = new RatchetMessageQueueKillSwitchCommand();
+        $command->setShell($this);
+        $command->setHash(Security::hash(serialize(Configure::read('PhuninCake.Node')), 'sha256', true));
+        
+        $this->out('<info>Sending stop command</info>');
+        
+        RatchetMessageQueueProxy::instance()->queueMessage($command);
     }
     
     function getOptionParser() {
         $parser = parent::getOptionParser();
-        $parser->addSubcommand('run', array(
-            'short' => 'r',
+        $parser->addSubcommand('start', array(
             'help' => __('Starts and runs both the websocket service and the flashpolicy.')
         ))->description(__('Ratchet Websocket service.'));
         return $parser;

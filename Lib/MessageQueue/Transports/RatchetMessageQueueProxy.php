@@ -1,8 +1,8 @@
 <?php
 
-App::uses('RatchetMessageQueueInterface', 'Ratchet.Lib/MessageQueue');
-App::uses('RatchetMessageQueuePredis', 'Ratchet.Lib/MessageQueue');
-App::uses('RatchetMessageQueueZmq', 'Ratchet.Lib/MessageQueue');
+App::uses('RatchetMessageQueueInterface', 'Ratchet.Lib/MessageQueue/Interfaces');
+App::uses('RatchetMessageQueuePredis', 'Ratchet.Lib/MessageQueue/Transports');
+App::uses('RatchetMessageQueueZmq', 'Ratchet.Lib/MessageQueue/Transports');
 
 class RatchetMessageQueueProxy implements RatchetMessageQueueInterface {
     
@@ -41,5 +41,9 @@ class RatchetMessageQueueProxy implements RatchetMessageQueueInterface {
                 throw new Exception('Unknown queue type:' . Configure::read('Ratchet.Queue.type'));
                 break;
         }
+    }
+    
+    public function handleResponse() {
+        
     }
 }

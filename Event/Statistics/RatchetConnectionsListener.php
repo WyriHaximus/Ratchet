@@ -2,7 +2,7 @@
 
 App::uses('CakeEventListener', 'Event');
 
-class RatchetConnectionStatisticsListener implements CakeEventListener {
+class RatchetConnectionsListener implements CakeEventListener {
 
     private $userConnectionCount = 0;
     private $guestConnectionCount = 0;
@@ -15,6 +15,7 @@ class RatchetConnectionStatisticsListener implements CakeEventListener {
             'Rachet.WampServer.onSubscribeNewTopic.connectionCount' => 'onSubscribeNewTopic',
             'Rachet.WampServer.onSubscribe.connectionCount' => 'onSubscribe',
             'Rachet.WampServer.onUnSubscribeStaleTopic.connectionCount' => 'onUnSubscribeStaleTopic',
+            'Rachet.WebsocketServer.getConnectionCounts' => 'getConnectionCounts',
         );
     }
 
@@ -61,5 +62,12 @@ class RatchetConnectionStatisticsListener implements CakeEventListener {
     
     public function onUnSubscribeStaleTopic($event) {
         $this->topic = false;
+    }
+    
+    public function getConnectionCounts($event) {
+        $event->result = array(
+            'guests' => $this->guestConnectionCount,
+            'users' => $this->userConnectionCount,
+        );
     }
 }

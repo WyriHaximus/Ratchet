@@ -24,7 +24,8 @@ class RatchetMessageQueueModelUpdateCommand extends RatchetMessageQueueCommand {
         $this->data = $data;
     }
     
-    public function execute($topics) {
+    public function execute($eventSubject) {
+        $topics = $eventSubject->getTopics();
         if (isset($topics['Rachet.WampServer.ModelUpdate.' . $this->event])) {
             $topics['Rachet.WampServer.ModelUpdate.' . $this->event]->broadcast($this->data);
         }

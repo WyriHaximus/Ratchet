@@ -1,13 +1,16 @@
 <?php
 
+App::uses('CakeEvent', 'Event');
+App::uses('CakeEventManager', 'Event');
+
 use Ratchet\ConnectionInterface as Conn;
 
 class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     
-    public $shell;
-    private $loop;
+    protected $shell;
+    protected $loop;
     protected $connections = array();
-    public $topics = array();
+    protected $topics = array();
     
     public function __construct($shell, $loop) {
         $this->shell = $shell;
@@ -15,6 +18,18 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.construct', $this, array(
             'loop' => $this->loop,
         )));
+    }
+    
+    public function getShell() {
+        return $this->shell;
+    }
+    
+    public function getLoop() {
+        return $this->loop;
+    }
+    
+    public function getTopics() {
+        return $this->topics;
     }
     
     public function onPublish(Conn $conn, $topic, $event, array $exclude, array $eligible) {

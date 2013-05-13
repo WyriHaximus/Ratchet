@@ -20,7 +20,7 @@ class RatchetKeepAliveListener implements CakeEventListener {
     }
     
     public function onSubscribeNewTopic($event) {
-        $this->timer = $this->loop->addPeriodicTimer(5, function() use ($event) {
+        $this->timer = $this->loop->addPeriodicTimer(Configure::read('Ratchet.Connection.keepaliveInterval'), function() use ($event) {
             $event->data['topic']->broadcast('ping');
         }, true);
         

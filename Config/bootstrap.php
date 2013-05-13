@@ -20,6 +20,7 @@ Configure::write('Ratchet', array(
             'path' => 'websocket',
             'secure' => false,
         ),
+        'keepaliveInterval' => 23,
     ),
     'Queue' => array(
         /*'type' => 'Predis',
@@ -37,12 +38,54 @@ Configure::write('Ratchet', array(
 
 App::uses('CakeEventManager', 'Event');
 
-App::uses('RatchetCallUrlListener', 'Ratchet.Event');
-App::uses('RatchetConnectionStatisticsListener', 'Ratchet.Event');
-App::uses('RatchetKeepAliveListener', 'Ratchet.Event');
-App::uses('RatchetModelUpdateListener', 'Ratchet.Event');
+// Disabled as it might pose a security risk
+/*App::uses('RatchetCallUrlListener', 'Ratchet.Event');
+CakeEventManager::instance()->attach(new RatchetCallUrlListener());*/
 
-CakeEventManager::instance()->attach(new RatchetCallUrlListener());
-CakeEventManager::instance()->attach(new RatchetConnectionStatisticsListener());
+/**
+ * Statistical listeners
+ */
+
+App::uses('RatchetConnectionsListener', 'Ratchet.Event/Statistics');
+CakeEventManager::instance()->attach(new RatchetConnectionsListener());
+
+App::uses('RatchetUptimeListener', 'Ratchet.Event/Statistics');
+CakeEventManager::instance()->attach(new RatchetUptimeListener());
+
+App::uses('RatchetMemoryUsageListener', 'Ratchet.Event/Statistics');
+CakeEventManager::instance()->attach(new RatchetMemoryUsageListener());
+
+/**
+ * Client services listener
+ */
+
+App::uses('RatchetKeepAliveListener', 'Ratchet.Event');
 CakeEventManager::instance()->attach(new RatchetKeepAliveListener());
-CakeEventManager::instance()->attach(new RatchetModelUpdateListener());
+
+/**
+ * Queue handler listeners
+ */
+
+switch (Configure::read('Ratchet.Queue.type')) {
+    case 'Predis':
+        App::uses('RatchetQueueCommandPredisListener', 'Ratchet.Event/Queue');
+        CakeEventManager::instance()->attach(new RatchetQueueCommandPredisListener());
+        break;
+    case 'ZMQ':
+        App::uses('RatchetQueueCommandZmqListener', 'Ratchet.Event/Queue');
+        CakeEventManager::instance()->attach(new RatchetQueueCommandZmqListener());
+        break;
+    default:
+        // Untill a release is tagged this Exception is thrown
+        throw new Exception('Unknown queue type:' . Configure::read('Ratchet.Queue.type'));
+        break;
+}
+
+/**
+ * PhuninCake listener
+ */
+
+if (CakePlugin::loaded('PhuninCake')) {
+    App::uses('RatchetPhuninCakeListener', 'Ratchet.Event');
+    CakeEventManager::instance()->attach(new RatchetPhuninCakeListener());
+}

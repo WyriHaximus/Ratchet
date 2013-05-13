@@ -1,6 +1,6 @@
 <?php
 
-App::uses('RatchetMessageQueueCommandInterface', 'Ratchet.Lib/MessageQueue');
+App::uses('RatchetMessageQueueCommandInterface', 'Ratchet.Lib/MessageQueue/Interfaces');
 
 abstract class RatchetMessageQueueCommand implements RatchetMessageQueueCommandInterface, Serializable  {
     public function serialize() {
