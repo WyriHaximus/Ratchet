@@ -19,7 +19,8 @@
     "require": {
         "php": ">=5.3.3",
         "cboden/Ratchet": "0.2.*",
-        "composer/installers": "*"
+        "composer/installers": "*",
+        "markstory/asset_compress": "dev-master"
     },
     "suggest": {
         "wyrihaximus/phunin-cake": "0.1.0",

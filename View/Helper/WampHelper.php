@@ -4,6 +4,7 @@ class WampHelper extends AppHelper {
     
     public $helpers = array(
         'Html',
+        'AssetCompress.AssetCompress',
     );
     
     public function init() {
@@ -22,8 +23,7 @@ class WampHelper extends AppHelper {
         $this->Html->scriptBlock($block, array(
             'inline' => false,
         ));
-        $this->Html->script('cache/Ratchet.wamp', array('block' => 'script'));
-        $this->Html->script('/Ratchet/js/cake-wamp', array('block' => 'script'));
+        $this->AssetCompress->script('Ratchet.wamp', array('block' => 'script'));
         
     }
     
