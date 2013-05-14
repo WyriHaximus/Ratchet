@@ -1,5 +1,6 @@
 <?php
 
+App::uses('Security', 'Utility');
 App::uses('CakeWampServer', 'Ratchet.Lib/Wamp');
 App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
 App::uses('PhpSerializeHandler', 'Ratchet.Lib');
