@@ -6,21 +6,7 @@ App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue');
 class PushableBehavior extends ModelBehavior {
     
     private $defaults = array(
-        'events' => array(
-            /*array(
-                'eventName' => 'test.created',
-                'created' => true,
-            ),
-            array(
-                'eventName' => 'test.updated',
-                'created' => false,
-            ),
-            array(
-                'eventName' => 'test.updated.{id}',
-                'created' => false,
-                'fields' => true,
-            ),*/
-        ),
+        'events' => array(),
     );
     
     public function setup(Model $Model, $settings = array()) {
