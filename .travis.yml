@@ -28,7 +28,7 @@ before_script:
     }" > ../cakephp/app/Config/database.php
 
 script:
-  - ./lib/Cake/Console/cake test Ratchet AllTests --stderr
+  - ./lib/Cake/Console/cake test Ratchet AllRatchetTestsTest --stderr
   
 notifications:
   webhooks:
