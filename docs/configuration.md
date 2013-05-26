@@ -47,7 +47,7 @@ On the client side there are 2 settings. The retry delay (in miliseconds) and th
 
 # Queue #
 
-Ratchet comes with a message queue to send messages to the server instance. (For example the Pushable behavior.)
+Ratchet comes with a message queue to send messages to the server instance. (For example the [Pushable behavior](model-push.html).)
 
 ## 0MQ ##
 
