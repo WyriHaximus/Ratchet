@@ -1,8 +1,10 @@
 <?php
 
-App::uses('RatchetMessageQueueCommand', 'Ratchet.Lib/MessageQueue');
+App::uses('RatchetMessageQueueCommand', 'Ratchet.Lib/MessageQueue/Command');
 
 class RatchetMessageQueueModelUpdateCommand extends RatchetMessageQueueCommand {
+    
+    const EVENT_PREFIX = 'Rachet.WampServer.ModelUpdate.';
     
     public function serialize() {
         return serialize(array(
@@ -25,9 +27,17 @@ class RatchetMessageQueueModelUpdateCommand extends RatchetMessageQueueCommand {
     }
     
     public function execute($eventSubject) {
-        $topics = $eventSubject->getTopics();
-        if (isset($topics['Rachet.WampServer.ModelUpdate.' . $this->event])) {
-            $topics['Rachet.WampServer.ModelUpdate.' . $this->event]->broadcast($this->data);
-        }
+        $eventSubject->getLoop()->addTimer(.5, function() use ($eventSubject) {
+            $topics = $eventSubject->getTopics();
+            if (isset($topics[self::EVENT_PREFIX . $this->event])) {
+                $topics[self::EVENT_PREFIX . $this->event]->broadcast($this->data);
+            }
+        });
+        
+        return true;
+    }
+    
+    public function response($response) {
+        //
     }
 }
