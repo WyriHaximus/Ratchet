@@ -5,7 +5,7 @@ Out of the box Ratchet does only client to client (via the server) communication
 
 ## Configuration and Dependencies ##
 
-As this is one a more advanced feature of Ratchet additional dependencies are required. There are 2 flavours to pick one, either `0MQ` or `Redis`. **Either of those 2 has to be configured in the configuration otherwise this feature won't work!** Check the [configuration documentation](configuration.md#queue) to configure it before you use it.
+As this is one a more advanced feature of Ratchet additional dependencies are required. There are 2 flavours to pick one, either `0MQ` or `Redis`. **Either of those 2 has to be configured in the configuration otherwise this feature won't work!** Check the [configuration documentation](configuration.html#queue) to configure it before you use it.
 
 ## Setting up the behaviour ##
 
