@@ -44,7 +44,9 @@ The data is passed into the event as a 1 dimensional array.
 On the client side the only thing required is subscribing to the event:
 
 ```javascript
-cakeWamp.subscribe('WyriProject.updated.1', function(topicUri, event) {
+cakeWamp.subscribe('Rachet.WampServer.ModelUpdate.WyriProject.updated.1', function(topicUri, event) {
 	// Do your stuff with the data
 });
 ```
+
+*Note: the actual event you're subscribing to is prefixed by *`Rachet.WampServer.ModelUpdate.`*.*
