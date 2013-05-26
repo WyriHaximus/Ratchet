@@ -1,7 +1,7 @@
 <?php
 
-App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue');
-App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue');
+App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
+App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue/Command');
 
 class PushableBehavior extends ModelBehavior {
     
@@ -19,8 +19,9 @@ class PushableBehavior extends ModelBehavior {
     public function afterSave(Model $Model, $created) {
         array_walk($this->settings[$Model->alias]['events'], array($this, 'afterSaveEventCheck'), array(
             'id' => $Model->id,
-            'data' => $Model->data[$Model->alias],
+            'data' => $Model->data,
             'created' => $created,
+            'model' => $Model,
         ));
     }
     
@@ -29,9 +30,15 @@ class PushableBehavior extends ModelBehavior {
             return;
         }
         
-        $eventName = $this->afterSavePrepareEventName($event['eventName'], $data['id'], $data['data']);
+        if ($event['refetch']) {
+            $resultSet = $data['model']->findById($data['id']);
+        } else {
+            $resultSet = $data['data'];
+        }
         
-        $this->afterSaveDispatchEvent($eventName, $data['data']);
+        $eventName = $this->afterSavePrepareEventName($event['eventName'], $data['id'], $resultSet[$data['model']->alias]);
+        
+        $this->afterSaveDispatchEvent($eventName, $resultSet);
     }
     
     private function afterSavePrepareEventName($eventName, $id, $data) {
