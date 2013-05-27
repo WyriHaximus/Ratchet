@@ -9,6 +9,12 @@
  * file that was distributed with this source code.
  */
 
+CakePlugin::loadAll(array(
+	'AssetCompress' => array(
+		'bootstrap' => true
+	),
+));
+
 class AllRatchetTestsTest extends PHPUnit_Framework_TestSuite {
 
 /**
