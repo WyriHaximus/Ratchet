@@ -32,7 +32,7 @@ Configure::write('Ratchet.Connection.external', array(
 ));
 ```
 
-Note for [HAproxy check here](http://socketo.me/docs/deploy#serverconfiguration) and [nginx here](http://blog.wyrihaximus.net/2013/03/serving-websockets-and-cakephp-on-the-same-domain-and-port-with-nginx).
+Note for [HAproxy check here](http://socketo.me/docs/deploy#serverconfiguration) and [nginx here](http://blog.wyrihaximus.net/2013/05/serving-websockets-and-cakephp-on-the-same-domain-and-port-with-nginx/).
 
 ## Keep alive ##
 
