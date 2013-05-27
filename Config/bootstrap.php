@@ -38,10 +38,6 @@ Configure::write('Ratchet', array(
 
 App::uses('CakeEventManager', 'Event');
 
-// Disabled as it might pose a security risk
-/*App::uses('RatchetCallUrlListener', 'Ratchet.Event');
-CakeEventManager::instance()->attach(new RatchetCallUrlListener());*/
-
 /**
  * Statistical listeners
  */
