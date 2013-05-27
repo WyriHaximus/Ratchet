@@ -1,5 +1,6 @@
 <?php
 
+App::uses('ModelBehavior', 'Model');
 App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
 App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue/Command');
 
@@ -25,7 +26,7 @@ class PushableBehavior extends ModelBehavior {
         ));
     }
     
-    private function afterSaveEventCheck($event, $key, $data) {
+    protected function afterSaveEventCheck($event, $key, $data) {
         if ($event['created'] !== $data['created']) {
             return;
         }
@@ -41,7 +42,7 @@ class PushableBehavior extends ModelBehavior {
         $this->afterSaveDispatchEvent($eventName, $resultSet);
     }
     
-    private function afterSavePrepareEventName($eventName, $id, $data) {
+    protected function afterSavePrepareEventName($eventName, $id, $data) {
         $before = array(
             '{id}',
         );
@@ -57,7 +58,7 @@ class PushableBehavior extends ModelBehavior {
         return str_replace($before, $after, $eventName);
     }
     
-    private function afterSaveDispatchEvent($eventName, $eventData) {
+    protected function afterSaveDispatchEvent($eventName, $eventData) {
         $command = new RatchetMessageQueueModelUpdateCommand();
         $command->setEvent($eventName);
         $command->setData($eventData);
