@@ -42,6 +42,10 @@ If you've configurated the queue correctly you can stop the server with the foll
 
 For a proper way to boot the server check out the [Ratchet example supervisor configuration](http://socketo.me/docs/deploy#supervisor).
 
+## Documentation ##
+
+For more abundant documentation on this project, check the [project documentation site](http://wyrihaximus.net/projects/cakephp/ratchet/documentation.html "Ratchet for CakePHP documentation").
+
 ## Plugin License ##
 
 (The MIT License)
