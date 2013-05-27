@@ -1,17 +1,14 @@
 <?php
-/**
- * Autobahn Panel for DebugKit.Toolbar
+
+/*
+ * This file is part of Ratchet for CakePHP.
  *
- * PHP 5
+ ** (c) 2012 - 2013 Cees-Jan Kiewiet
  *
- * Copyright 2013, Cees-Jan Kiewiet, The Netherlands
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     2013 Cees-Jan Kiewiet, The Netherlands
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 
 App::uses('DebugPanel', 'DebugKit.Lib');
 App::uses('ClearCache', 'ClearCache.Lib');

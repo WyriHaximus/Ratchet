@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Ratchet for CakePHP.
+ *
+ ** (c) 2012 - 2013 Cees-Jan Kiewiet
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 Configure::write('Ratchet', array(
     'Client' => array(
         'retryDelay' => 500, // Not the best option but it speeds up development
