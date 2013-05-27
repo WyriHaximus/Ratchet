@@ -13,6 +13,9 @@ CakePlugin::loadAll(array(
 	'AssetCompress' => array(
 		'bootstrap' => true
 	),
+	'Ratchet' => array(
+		'bootstrap' => true
+	),
 ));
 
 class AllRatchetTestsTest extends PHPUnit_Framework_TestSuite {
