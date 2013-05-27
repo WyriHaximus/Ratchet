@@ -30,14 +30,7 @@ before_script:
       'persistent' => false,
     );
     }" > ../cakephp/app/Config/database.php
-  - echo "
-[js]
-paths[] = WEBROOT/js/*
-cachePath = WEBROOT/js/cache
-[css]
-paths[] = WEBROOT/css/*
-cachePath = WEBROOT/css/cache
-    " >> ../cakephp/app/Config/asset_compress.ini
+  - cp ../Ratchet/Test/test_app/Config/asset_compress.ini app/Config/
 
 script:
   - ./lib/Cake/Console/cake test Ratchet AllRatchetTests --stderr
