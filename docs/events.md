@@ -26,3 +26,12 @@ The plusOne function has to call `callResult` sending the RPC result back to the
 		));
 	}
 ```
+
+## pub/sub ##
+
+Pubsub events work slightly differently and have more then 1 event to listen on.
+
+- `Rachet.WampServer.onSubscribeNewTopic.YOURTOPICNAME` when a topic is `fresh` a.k.a. no clients are listening on it untill now.
+- `Rachet.WampServer.onSubscribe.YOURTOPICNAME` when a client subscribes to a topic with other clients listening on it.
+- `Rachet.WampServer.onUnSubscribe.YOURTOPICNAME` when a client unsubscribes to a topic with other clients listening on it.
+- `Rachet.WampServer.onUnSubscribeStaleTopic.YOURTOPICNAME` becomes `stale` as the last client listening on it has unsubscribed.
