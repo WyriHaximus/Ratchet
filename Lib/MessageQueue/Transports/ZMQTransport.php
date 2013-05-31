@@ -9,13 +9,12 @@
  * file that was distributed with this source code.
  */
 
-class RatchetMessageQueueZmq implements RatchetMessageQueueInterface {
-    private $serverConfiguration = null;
-    public function __construct($serverConfiguration, $key = '') {
-        $this->serverConfiguration = $serverConfiguration;
+class ZMQTransport implements RatchetMessageQueueTransportInterface {
+    private $serverConnection;
+    public function __construct($serverConfiguration) {
         $zmq = new ZMQContext(1);
         $this->serverConnection = $zmq->getSocket(ZMQ::SOCKET_REQ);
-        $this->serverConnection->connect($serverConfiguration);
+        $this->serverConnection->connect($serverConfiguration['server']);
     }
     public function queueMessage(RatchetMessageQueueCommand $command) {
         $this->serverConnection->send(serialize($command));

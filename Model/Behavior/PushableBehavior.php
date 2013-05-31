@@ -10,7 +10,7 @@
  */
 
 App::uses('ModelBehavior', 'Model');
-App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
+App::uses('TransportProxy', 'Ratchet.Lib/MessageQueue/Transports');
 App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue/Command');
 
 class PushableBehavior extends ModelBehavior {
@@ -40,7 +40,7 @@ class PushableBehavior extends ModelBehavior {
             return;
         }
         
-        if ($event['refetch']) {
+        if (isset($event['refetch']) && $event['refetch']) {
             $resultSet = $data['model']->findById($data['id']);
         } else {
             $resultSet = $data['data'];
@@ -71,7 +71,7 @@ class PushableBehavior extends ModelBehavior {
         $command = new RatchetMessageQueueModelUpdateCommand();
         $command->setEvent($eventName);
         $command->setData($eventData);
-        RatchetMessageQueueProxy::instance()->queueMessage($command);
+        TransportProxy::instance()->queueMessage($command);
     }
 
 }
