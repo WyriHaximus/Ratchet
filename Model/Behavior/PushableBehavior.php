@@ -36,7 +36,7 @@ class PushableBehavior extends ModelBehavior {
     }
     
     protected function afterSaveEventCheck($event, $key, $data) {
-        if ($event['created'] !== $data['created']) {
+        if (isset($event['created']) && $event['created'] !== $data['created']) {
             return;
         }
         
