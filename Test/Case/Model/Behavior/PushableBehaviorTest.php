@@ -58,6 +58,8 @@ class PushableBehaviorTest extends CakeTestCase {
     
     public $fixtures = array(
         'plugin.ratchet.pushable_model',
+        'plugin.ratchet.associated_pushable_model',
+        'plugin.ratchet.pushable_model_associated',
     );
     
     public $callbacks = array();
@@ -84,7 +86,9 @@ class PushableBehaviorTest extends CakeTestCase {
             ),
         ));
         
-        $this->PushableModel = ClassRegistry::init('Ratchet.PushableModel');
+        $this->PushableModel = ClassRegistry::init('TestRatchet.PushableModel');
+        $this->AssociatedPushableModel = ClassRegistry::init('TestRatchet.AssociatedPushableModel');
+        $this->PushableModelAssociated = ClassRegistry::init('TestRatchet.PushableModelAssociated');
         $this->TransportProxy = TransportProxy::instance();
         $this->PushableBehaviorTestCapsule = new PushableBehaviorTestCapsule();
         
@@ -94,6 +98,18 @@ class PushableBehaviorTest extends CakeTestCase {
                     'eventName' => 'Ratchet.Pushable.created',
                     'created' => true,
                 ),
+                array(
+                    'eventName' => 'Ratchet.Pushable.updated',
+                ),
+                array(
+                    'eventName' => 'Ratchet.Pushable.refetch',
+                    'refetch' => true,
+                ),
+            ),
+        ));
+        
+        $this->PushableModelAssociated->Behaviors->load('Ratchet.Pushable', array(
+            'events' => array(
                 array(
                     'eventName' => 'Ratchet.Pushable.updated',
                 ),
@@ -221,6 +237,77 @@ class PushableBehaviorTest extends CakeTestCase {
         
         $this->PushableModel->id = 1;
         $this->PushableModel->save($expectedData);
+        
+        $this->assertTrue($callbackFired);
+    }
+    
+    public function providerAfterSaveUpdatedAssociated() {
+        return array(
+            array(
+                array(
+                    'PushableModel' => array(
+                        'id' => 1,
+                        'url' => 'http://tweakers.net/',
+                        'title' => 'Tweakers',
+                        'slug' => 'tweakers',
+                    ),
+                )
+            )
+        );
+    }
+    /**
+     * @dataProvider providerAfterSaveUpdatedAssociated
+     */
+    public function testAfterSaveUpdatedAssociated($expectedData) {
+        $callbackFired = false;
+        $that = $this;
+        $this->callbacks['updated'] = function($resultData) use ($that, &$callbackFired, $expectedData) {
+            $that->assertEqual($resultData, $expectedData);
+            $callbackFired = true;
+        };
+        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        
+        $this->PushableModel->id = 1;
+        $this->PushableModel->save($expectedData);
+        
+        $this->assertTrue($callbackFired);
+    }
+    
+    public function providerAfterSaveRefetchedAssociated() {
+        return array(
+            array(
+                array(
+                    'PushableModelAssociated' => array(
+                        'id' => 1,
+                        'url' => 'http://www.tweakers.net/',
+                        'title' => 'Tweakers',
+                        'slug' => 'tweakers',
+                    ),
+                    'AssociatedPushableModel' => array(
+                        'id' => 1,
+                        'url' => 'http://tweakers.net/',
+                        'title' => 'Tweakers',
+                        'slug' => 'tweakers',
+                        'pushable_model_associated_id' => 1,
+                    ),
+                )
+            )
+        );
+    }
+    /**
+     * @dataProvider providerAfterSaveRefetchedAssociated
+     */
+    public function testAfterSaveRefetchedAssociated($expectedData) {
+        $callbackFired = false;
+        $that = $this;
+        $this->callbacks['refetch'] = function($resultData) use ($that, &$callbackFired, $expectedData) {
+            $that->assertEqual($resultData, $expectedData);
+            $callbackFired = true;
+        };
+        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        
+        $this->PushableModelAssociated->id = 1;
+        $this->PushableModelAssociated->save($expectedData['PushableModelAssociated']);
         
         $this->assertTrue($callbackFired);
     }
