@@ -10,15 +10,21 @@
  */
 
 App::uses('TransportProxy', 'Ratchet.Lib/MessageQueue/Transports');
-App::uses('RatchetMessageQueueDummyCommand', 'Ratchet.Lib/MessageQueue/Command');
+App::uses('RatchetMessageQueueDummyCommand', 'TestRatchet.Lib/MessageQueue/Command');
 
 class TransportProxyTest extends CakeTestCase {
     
     public function setUp() {
         parent::setUp();
         
+        $this->_pluginPath = App::pluginPath('Ratchet');
+        App::build(array(
+            'Plugin' => array($this->_pluginPath . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS )
+        ));
+        CakePlugin::load('TestRatchet');
+        
         Configure::write('Ratchet.Queue', array(
-            'transporter' => 'Ratchet.DummyTransport',
+            'transporter' => 'TestRatchet.DummyTransport',
             'configuration' => array(
                 'server' => 'tcp://127.0.0.1:13001',
             ),
@@ -31,6 +37,7 @@ class TransportProxyTest extends CakeTestCase {
         parent::tearDown();
         
         unset($this->TransportProxy);
+        CakePlugin::unload('TestRatchet');
     }
     
     public function testQueueMessage() {

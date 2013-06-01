@@ -24,15 +24,15 @@ class PushableBehaviorTestEvent {
 }
 
 class PushableBehaviorTestLoop {
-    public function addTimer($seconds, $callback) {
+    public function addTimer($timeout, $callback) {
         call_user_func($callback);
     }
 }
 
 class PushableBehaviorEventSubjectTestImposer {
     
-    public function __construct($callback) {
-        $this->callback = $callback;
+    public function __construct($callbacks) {
+        $this->callbacks = $callbacks;
     }
     
     public function getLoop() {
@@ -41,7 +41,9 @@ class PushableBehaviorEventSubjectTestImposer {
     
     public function getTopics() {
         return array(
-            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.created' => new PushableBehaviorTestEvent($this->callback),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.created' => new PushableBehaviorTestEvent($this->callbacks['created']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.updated' => new PushableBehaviorTestEvent($this->callbacks['updated']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.refetch' => new PushableBehaviorTestEvent($this->callbacks['refetch']),
         );
     }
 }
@@ -58,11 +60,52 @@ class PushableBehaviorTest extends CakeTestCase {
         'plugin.ratchet.pushable_model',
     );
     
+    public $expectedData = array(
+        'PushableModel' => array(
+            'id' => 2,
+            'url' => 'http://arstechnica.com/',
+            'title' => 'Ars Technica',
+            'slug' => 'arstechnica',
+        ),
+    );
+    
+    public $expectedDataUpdated = array(
+        'PushableModel' => array(
+            'id' => 1,
+            'url' => 'http://tweakers.net/',
+            'title' => 'Tweakers',
+            'slug' => 'tweakers',
+        ),
+    );
+    
+    public $expectedDataRefetch = array(
+        'PushableModel' => array(
+            'id' => 1,
+            'url' => 'http://www.tweakers.net/',
+            'title' => 'Tweakers',
+            'slug' => 'tweakers',
+        ),
+    );
+    
+    public $callbacks = array();
+    
     public function setUp() {
         parent::setUp();
         
+        $this->callbacks = array(
+            'created' => function() {},
+            'updated' => function() {},
+            'refetch' => function() {},
+        );
+        
+        $this->_pluginPath = App::pluginPath('Ratchet');
+        App::build(array(
+            'Plugin' => array($this->_pluginPath . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS )
+        ));
+        CakePlugin::load('TestRatchet');
+        
         Configure::write('Ratchet.Queue', array(
-            'transporter' => 'Ratchet.DummyTransport',
+            'transporter' => 'TestRatchet.DummyTransport',
             'configuration' => array(
                 'server' => 'tcp://127.0.0.1:13001',
             ),
@@ -71,14 +114,34 @@ class PushableBehaviorTest extends CakeTestCase {
         $this->PushableModel = ClassRegistry::init('Ratchet.PushableModel');
         $this->TransportProxy = TransportProxy::instance();
         $this->PushableBehaviorTestCapsule = new PushableBehaviorTestCapsule();
+        
+        $this->PushableModel->Behaviors->load('Ratchet.Pushable', array(
+            'events' => array(
+                array(
+                    'eventName' => 'Ratchet.Pushable.created',
+                    'created' => true,
+                ),
+                array(
+                    'eventName' => 'Ratchet.Pushable.updated',
+                ),
+                array(
+                    'eventName' => 'Ratchet.Pushable.refetch',
+                    'refetch' => true,
+                ),
+            ),
+        ));
     }
     
     public function tearDown() {
-        parent::tearDown();
+        $this->PushableModel->Behaviors->unload('Ratchet.Pushable');
         
         unset($this->PushableModel);
         unset($this->TransportProxy);
         unset($this->PushableBehaviorTestCapsule);
+        
+        CakePlugin::unload('TestRatchet');
+        
+        parent::tearDown();
     }
     
     public function testAfterSavePrepareEventNameId() {
@@ -93,39 +156,47 @@ class PushableBehaviorTest extends CakeTestCase {
         $this->assertEqual($result, 'Ratchet.Model.test.kads-asdef-awsefg-234213');
     }
     
-    public function testAfterSave() {
-        
+    public function testAfterSaveCreated() {
         $callbackFired = false;
         $that = $this;
-        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer(function($data) use ($that, &$callbackFired) {
-            $that->assertEqual($data, array(
-                'PushableModel' => array(
-                    'id' => (int) 2,
-                    'url' => 'http://arstechnica.com/',
-                    'title' => 'Ars Technica',
-                    'slug' => 'arstechnica',
-                ),
-            ));
+        $this->callbacks['created'] = function($resultData) use ($that, &$callbackFired) {
+            $that->assertEqual($resultData, $that->expectedData);
             $callbackFired = true;
-        }));
+        };
+        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
         
-        $this->PushableModel->Behaviors->load('Ratchet.Pushable', array(
-            'events' => array(
-                array(
-                    'eventName' => 'Ratchet.Pushable.created',
-                    'created' => true,
-                ),
-            ),
-        ));
         $this->PushableModel->create();
-        $this->PushableModel->save(array(
-            'id' => 2,
-            'url' => 'http://arstechnica.com/',
-            'title' => 'Ars Technica',
-            'slug' => 'arstechnica',
-        ));
+        $this->PushableModel->save($this->expectedData);
         
-        $this->PushableModel->Behaviors->unload('Ratchet.Pushable');
+        $this->assertTrue($callbackFired);
+    }
+    
+    public function testAfterSaveUpdated() {
+        $callbackFired = false;
+        $that = $this;
+        $this->callbacks['updated'] = function($resultData) use ($that, &$callbackFired) {
+            $that->assertEqual($resultData, $that->expectedDataUpdated);
+            $callbackFired = true;
+        };
+        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        
+        $this->PushableModel->id = 1;
+        $this->PushableModel->save($this->expectedDataUpdated);
+        
+        $this->assertTrue($callbackFired);
+    }
+    
+    public function testAfterSaveRefetched() {
+        $callbackFired = false;
+        $that = $this;
+        $this->callbacks['refetch'] = function($resultData) use ($that, &$callbackFired) {
+            $that->assertEqual($resultData, $that->expectedDataRefetch);
+            $callbackFired = true;
+        };
+        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        
+        $this->PushableModel->id = 1;
+        $this->PushableModel->save($this->expectedDataRefetch);
         
         $this->assertTrue($callbackFired);
     }
