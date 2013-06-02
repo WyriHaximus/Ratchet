@@ -9,6 +9,10 @@
  * file that was distributed with this source code.
  */
 
+
+/**
+ * Configuration
+ */
 Configure::write('Ratchet', array(
     'Client' => array(
         'retryDelay' => 500, // Not the best option but it speeds up development
@@ -40,8 +44,10 @@ Configure::write('Ratchet', array(
             'port' => 6379,
             'database' => 12,
         ),*/
-        'type' => 'ZMQ',
-        'server' => 'tcp://127.0.0.1:13001',
+        'transporter' => 'Ratchet.ZMQTransport',
+        'configuration' => array(
+            'server' => 'tcp://127.0.0.1:13001',
+        ),
     ),
 ));
 
@@ -68,26 +74,9 @@ App::uses('RatchetKeepAliveListener', 'Ratchet.Event');
 CakeEventManager::instance()->attach(new RatchetKeepAliveListener());
 
 /**
- * Queue handler listeners
- */
-
-switch (Configure::read('Ratchet.Queue.type')) {
-    case 'Predis':
-        App::uses('RatchetQueueCommandPredisListener', 'Ratchet.Event/Queue');
-        CakeEventManager::instance()->attach(new RatchetQueueCommandPredisListener());
-        break;
-    case 'ZMQ':
-        App::uses('RatchetQueueCommandZmqListener', 'Ratchet.Event/Queue');
-        CakeEventManager::instance()->attach(new RatchetQueueCommandZmqListener());
-        break;
-    default:
-        // Untill a release is tagged this Exception is thrown
-        throw new Exception('Unknown queue type:' . Configure::read('Ratchet.Queue.type'));
-        break;
-}
-
-/**
  * PhuninCake listener
+ * 
+ * (Make sure PhuninCake is loaded before Ratchet is!)
  */
 
 if (CakePlugin::loaded('PhuninCake')) {

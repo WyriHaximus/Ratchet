@@ -28,10 +28,32 @@ use Ratchet\Server\FlashPolicy;
 
 class WebsocketShell extends Shell {
     
+    /**
+     * The ReactPHP event loop making async programming in PHP possible
+     * 
+     * @var \React\EventLoop\LoopInterface 
+     */
     private $loop;
+    
+    /**
+     * The IO server handling the incoming websocket connections
+     * 
+     * @var \Ratchet\Server\IoServer 
+     */
     private $ioServer;
+    
+    /**
+     * Flash policy server
+     * 
+     * @var \Ratchet\Server\FlashPolicy 
+     */
     private $flashPolicy;
     
+    /**
+     * Starts the websocket server
+     * 
+     * @return void
+     */
     public function start() {
         
         $this->loop = LoopFactory::create();
@@ -60,6 +82,11 @@ class WebsocketShell extends Shell {
         $this->loop->run();
     }
     
+    /**
+     * Stops the websocket server
+     * 
+     * @return void
+     */
     public function stop() {
         $command = new RatchetMessageQueueKillSwitchCommand();
         $command->setShell($this);
@@ -70,7 +97,12 @@ class WebsocketShell extends Shell {
         RatchetMessageQueueProxy::instance()->queueMessage($command);
     }
     
-    function getOptionParser() {
+    /**
+     * Gets the option parser for this shell and populates it with the command information for this shell
+     * 
+     * @return ConsoleOptionParser
+     */
+    public function getOptionParser() {
         $parser = parent::getOptionParser();
         $parser->addSubcommand('start', array(
             'help' => __('Starts and runs both the websocket service and the flashpolicy.')

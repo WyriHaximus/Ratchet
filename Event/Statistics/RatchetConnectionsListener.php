@@ -12,11 +12,33 @@
 App::uses('CakeEventListener', 'Event');
 
 class RatchetConnectionsListener implements CakeEventListener {
-
+    
+    /**
+     * Open connection count for authenticated users
+     * 
+     * @var int 
+     */
     private $userConnectionCount = 0;
+    
+    /**
+     * Open connection count for non-authenticated users
+     * 
+     * @var int 
+     */
     private $guestConnectionCount = 0;
+    
+    /**
+     * Holds the broadcast topic for 
+     * 
+     * @var \Ratchet\Wamp\Topic|boolean 
+     */
     private $topic = false;
     
+    /**
+     * Returns an array with the events this listener hooks into
+     * 
+     * @return array
+     */
     public function implementedEvents() {
         return array(
             'Rachet.WampServer.onOpen' => 'onOpen',
@@ -27,8 +49,15 @@ class RatchetConnectionsListener implements CakeEventListener {
             'Rachet.WebsocketServer.getConnectionCounts' => 'getConnectionCounts',
         );
     }
-
-    public function onOpen($event) {
+    
+    /**
+     * Event that triggers when a new client connects,
+     * determens if the connection is authenticated and 
+     * broadcasts a message to all clients listening on connectionCount
+     * 
+     * @param CakeEvent $event
+     */
+    public function onOpen(CakeEvent $event) {
         if (isset($event->data['connectionData']['session']['Auth']['User']['id'])) {
             $this->userConnectionCount++;
         } else {
@@ -42,8 +71,15 @@ class RatchetConnectionsListener implements CakeEventListener {
             ));
         }
     }
-
-    public function onClose($event) {
+    
+    /**
+     * Event that triggers when a new client connects,
+     * determens if the connection is authenticated and 
+     * broadcasts a message to all clients listening on connectionCount
+     * 
+     * @param CakeEvent $event
+     */
+    public function onClose(CakeEvent $event) {
         if (isset($event->data['connectionData']['session']['Auth']['User']['id'])) {
             $this->userConnectionCount--;
         } else {
@@ -58,22 +94,42 @@ class RatchetConnectionsListener implements CakeEventListener {
         }
     }
     
-    public function onSubscribeNewTopic($event) {
+    /**
+     * Stores the \Ratchet\Wamp\Topic instance for connectionCount
+     * 
+     * @param CakeEvent $event
+     */
+    public function onSubscribeNewTopic(CakeEvent $event) {
         $this->topic = $event->data['topic'];
     }
     
-    public function onSubscribe($event) {
+    /**
+     * Sends newly listening clients the current situation
+     * 
+     * @param CakeEvent $event
+     */
+    public function onSubscribe(CakeEvent $event) {
         $event->data['connection']->event($this->topic->getId(), array(
             'guests' => $this->guestConnectionCount,
             'users' => $this->userConnectionCount,
         ));
     }
     
-    public function onUnSubscribeStaleTopic($event) {
+    /**
+     * Get rid of the \Ratchet\Wamp\Topic instance when no one is listening
+     * 
+     * @param CakeEvent $event
+     */
+    public function onUnSubscribeStaleTopic(CakeEvent $event) {
         $this->topic = false;
     }
     
-    public function getConnectionCounts($event) {
+    /**
+     * Event that returns the current connection counts
+     * 
+     * @param CakeEvent $event
+     */
+    public function getConnectionCounts(CakeEvent $event) {
         $event->result = array(
             'guests' => $this->guestConnectionCount,
             'users' => $this->userConnectionCount,

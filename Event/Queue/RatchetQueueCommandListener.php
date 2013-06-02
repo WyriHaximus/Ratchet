@@ -13,9 +13,19 @@ App::uses('CakeEventListener', 'Event');
 App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue');
 
 abstract class RatchetQueueCommandListener implements CakeEventListener {
-
+    
+    /**
+     * The main eventloop
+     * 
+     * @var \React\EventLoop\LoopInterface
+     */
     protected $loop;
     
+    /**
+     * Returns the event all classes extending this abstract class will listen on
+     * 
+     * @return array
+     */
     public function implementedEvents() {
         return array(
             'Rachet.WampServer.construct' => 'construct',

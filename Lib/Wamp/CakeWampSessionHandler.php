@@ -11,47 +11,29 @@
 
 class CakeWampSessionHandler implements SessionHandlerInterface {
     
+    /**
+     * Start the session on instance construction
+     */
     public function __construct() {
         session_start();
     }
     
     /**
-     * Open session.
-     *
-     * @see http://php.net/sessionhandlerinterface.open
-     *
-     * @param string $savePath    Save path.
-     * @param string $sessionName Session Name.
-     *
-     * @throws \RuntimeException If something goes wrong starting the session.
-     *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function open($savePath, $sessionName) {
         return true;
     }
 
     /**
-     * Close session.
-     *
-     * @see http://php.net/sessionhandlerinterface.close
-     *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function close() {
         return true;
     }
 
     /**
-     * Read session.
-     *
-     * @param string $sessionId
-     *
-     * @see http://php.net/sessionhandlerinterface.read
-     *
-     * @throws \RuntimeException On fatal error but not "record not found".
-     *
-     * @return string String as stored in persistent storage or empty string in all other cases.
+     * {@inheritdoc}
      */
     public function read($sessionId) {
         $sessionData = Cache::read($sessionId, Configure::read('Session.handler.config'));
@@ -64,23 +46,22 @@ class CakeWampSessionHandler implements SessionHandlerInterface {
     }
 
     /**
-     * Commit session to storage.
-     *
-     * @see http://php.net/sessionhandlerinterface.write
-     *
-     * @param string $sessionId Session ID.
-     * @param string $data      Session serialized data to save.
-     *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function write($sessionId, $data) {
         return true;
     }
-
+    
+    /**
+     * {@inheritdoc}
+     */
     public function destroy($sessionId) {
         return true;
     }
-
+    
+    /**
+     * {@inheritdoc}
+     */
     public function gc($lifetime) {
         return true;
     }

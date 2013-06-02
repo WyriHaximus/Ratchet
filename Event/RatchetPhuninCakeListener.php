@@ -20,18 +20,38 @@ App::uses('RatchetMessageQueueGetUptimeCommand', 'Ratchet.Lib/MessageQueue/Comma
 App::uses('RatchetPhuninMemoryUsage', 'Ratchet.Lib/Phunin');
 App::uses('RatchetMessageQueueGetMemoryUsageCommand', 'Ratchet.Lib/MessageQueue/Command');
 
-
 class RatchetPhuninCakeListener implements CakeEventListener {
-
+    
+    /**
+     * The ReactPHP event
+     * 
+     * @var \React\EventLoop\LoopInterface 
+     */
     private $loop;
     
+    /**
+     * The PhuninNode server
+     * 
+     * @var \PhuninNode\Node 
+     */
+    private $node;
+    
+    /**
+     * Return an array with events this listener implements
+     * @return array
+     */
     public function implementedEvents() {
         return array(
             'PhuninCake.Node.start' => 'start',
         );
     }
     
-    public function start($event) {
+    /**
+     * Attach all PhuninNode plugins for the Ratchet plugin
+     * 
+     * @param CakeEvent $event
+     */
+    public function start(CakeEvent $event) {
         $this->loop = $event->data['loop'];
         $this->node = $event->data['node'];
         

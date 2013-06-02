@@ -11,6 +11,8 @@
 
 class CakeWampServer extends \Ratchet\Wamp\WampServer {
     
-    
+    /**
+     * void, to be removed or used before
+     */
     
 }

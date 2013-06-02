@@ -14,7 +14,13 @@ App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue');
 
 class RatchetQueueCommandPredisListener extends RatchetQueueCommandListener {
     
-    public function construct($event) {
+    /**
+     * Eventlistener for the Rachet.WampServer.construct event and 
+     * waits for incoming commands over he message queue
+     * 
+     * @param CakeEvent $event
+     */
+    public function construct(CakeEvent $event) {
         $this->loop = $event->data['loop'];
         
         $client = new Predis\Async\Client(Configure::read('Ratchet.Queue.server'), array(

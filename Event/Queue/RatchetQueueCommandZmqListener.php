@@ -14,10 +14,16 @@ App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue');
 
 class RatchetQueueCommandZmqListener extends RatchetQueueCommandListener {
     
-    public function construct($event) {
+    /**
+     * Eventlistener for the Rachet.WampServer.construct event and 
+     * waits for incoming commands over he message queue
+     * 
+     * @param CakeEvent $event
+     */
+    public function construct(CakeEvent $event) {
         $this->loop = $event->data['loop'];
         
-        $context = new React\ZMQ\Context($this->loop);
+        $context = new \React\ZMQ\Context($this->loop);
         $socket = $context->getSocket(ZMQ::SOCKET_REP);
         $socket->bind(Configure::read('Ratchet.Queue.server'));
         $socket->on('message', function($msg) use ($event, $socket) {

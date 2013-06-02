@@ -10,12 +10,32 @@
  */
 
 class PredisTransport implements RatchetMessageQueueTransportInterface {
+    
+    /**
+     * Contains all the server connection configuration
+     * 
+     * @var array
+     */
     private $serverConfiguration;
+    
+    /**
+     * Contains the server connection
+     * 
+     * @var array
+     */
     private $serverConnection;
+    
+    /**
+     * {@inheritdoc}
+     */
     public function __construct($serverConfiguration) {
         $this->serverConfiguration = $serverConfiguration;
         $this->serverConnection = new Predis\Client($this->serverConfiguration['server']);
     }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function queueMessage(RatchetMessageQueueCommand $command) {
         $client = new Predis\Client($this->serverConfiguration['server']);
         $pubsub = $client->pubSub();
