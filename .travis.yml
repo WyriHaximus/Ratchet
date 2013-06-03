@@ -19,18 +19,8 @@ before_script:
   - cp -R ../../markstory/asset_compress plugins/AssetCompress
   - chmod -R 777 ../cakephp/app/tmp
   - set +H
-  - echo "<?php
-    class DATABASE_CONFIG {
-    public \$test = array(
-      'datasource' => 'Database/Mysql',
-      'database' => 'cakephp_test',
-      'host' => '0.0.0.0',
-      'login' => 'travis'
-      'host' => '',
-      'persistent' => false,
-    );
-    }" > ../cakephp/app/Config/database.php
   - cp ../Ratchet/Test/test_app/Config/asset_compress.ini app/Config/
+  - cp ../Ratchet/Test/test_app/Config/database.php app/Config/
 
 script:
   - ./lib/Cake/Console/cake test Ratchet AllRatchetTests --stderr
