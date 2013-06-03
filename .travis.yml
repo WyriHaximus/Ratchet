@@ -21,7 +21,6 @@ before_script:
   - set +H
   - cp ../Ratchet/Test/test_app/Config/asset_compress.ini app/Config/
   - cp ../Ratchet/Test/test_app/Config/database.php app/Config/
-  - cp ../Ratchet/Test/test_app/composer.json app/Config/
   - cp ../Ratchet/composer.* app/
   - cd app
   - composer install
