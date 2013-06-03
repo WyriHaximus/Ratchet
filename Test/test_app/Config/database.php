@@ -4,7 +4,7 @@ class DATABASE_CONFIG {
         'datasource' => 'Database/Mysql',
         'database' => 'cakephp_test',
         'host' => '127.0.0.1',
-        'login' => 'root',
+        'login' => 'travis',
         'host' => '',
         'persistent' => false,
     );
