@@ -59,7 +59,9 @@ class TransportProxy implements RatchetMessageQueueTransportInterface {
     }
     
     /**
-     * {@inheritdoc}
+     * Return the used transporter
+     * 
+     * @return RatchetMessageQueueTransportInterface
      */
     public function getTransport() {
         return $this->transport;

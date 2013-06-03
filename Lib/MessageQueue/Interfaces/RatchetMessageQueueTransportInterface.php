@@ -16,10 +16,4 @@ interface RatchetMessageQueueTransportInterface {
      */
     public function queueMessage(RatchetMessageQueueCommand $command);
     
-    /**
-     * Return the used transporter
-     * 
-     * @return RatchetMessageQueueTransportInterface
-     */
-    public function getTransport();
 }

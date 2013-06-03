@@ -10,13 +10,33 @@
  */
 
 class DummyTransport implements RatchetMessageQueueTransportInterface {
+    
+    /**
+     * Event subject dummy used for unit testing the transport proxy
+     * 
+     * @var stdClass
+     */
     private $eventSubject;
+    
+    /**
+     * {@inheritdoc}
+     */
     public function __construct($serverConfiguration) {
         $this->eventSubject = new stdClass();
     }
+    
+    /**
+     * Sets tje event subject used in the queueMessage method
+     * 
+     * @param stdClass $eventSubject
+     */
     public function setEventSubject($eventSubject) {
         $this->eventSubject = $eventSubject;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function queueMessage(RatchetMessageQueueCommand $command) {
         $command->response($command->execute($this->eventSubject));
     }
