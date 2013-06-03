@@ -22,9 +22,11 @@ before_script:
   - cp ../Ratchet/Test/test_app/Config/asset_compress.ini app/Config/
   - cp ../Ratchet/Test/test_app/Config/database.php app/Config/
   - cp ../Ratchet/Test/test_app/composer.json app/Config/
-  - cp ../Ratchet/composer.* ./
+  - cp ../Ratchet/composer.* app/
+  - cd app
   - composer install
-  - echo "App::import('Vendor', array('file' => 'autoload'));" >> app/Config/bootstrap.php
+  - echo "App::import('vendor', array('file' => 'autoload'));" >> Config/bootstrap.php
+  - cd ../
 
 script:
   - ./lib/Cake/Console/cake test Ratchet AllRatchetTests --stderr
