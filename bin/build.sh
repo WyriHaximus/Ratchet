@@ -1,8 +1,11 @@
-sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
+#!/bin/bash
+mysql -e 'CREATE DATABASE cakephp_test;'
 cd ../../
 git clone --depth=50 --branch=master git://github.com/markstory/asset_compress.git markstory/asset_compress
 cd WyriHaximus/Ratchet
-git clone --depth 1 git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp && git checkout $CAKE_VERSION
+git clone --depth 1 git://github.com/cakephp/cakephp ../cakephp
+cd ../cakephp
+git checkout $CAKE_VERSION
 cp -R ../Ratchet plugins/Ratchet
 cp -R ../../markstory/asset_compress plugins/AssetCompress
 chmod -R 777 ../cakephp/app/tmp
