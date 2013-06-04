@@ -9,6 +9,9 @@
         "cakephp",
         "websockets"
     ],
+    "config": {
+        "vendor-dir": "Vendor"
+    },
     "authors": [
         {
             "name": "Cees-Jan Kiewiet",
