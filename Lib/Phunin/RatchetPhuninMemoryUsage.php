@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
+App::uses('TransportProxy', 'Ratchet.Lib/MessageQueue/Transports');
 App::uses('RatchetMessageQueueGetMemoryUsageCommand', 'Ratchet.Lib/MessageQueue/Command');
 
 class RatchetPhuninMemoryUsage implements \PhuninNode\Interfaces\Plugin {
@@ -90,7 +90,7 @@ class RatchetPhuninMemoryUsage implements \PhuninNode\Interfaces\Plugin {
         $command = new RatchetMessageQueueGetMemoryUsageCommand();
         $command->setDeferedResolver($deferredResolver);
         $command->setHash(Security::hash(serialize(Configure::read('PhuninCake.Node')), 'sha256', true));
-        RatchetMessageQueueProxy::instance()->queueMessage($command);
+        TransportProxy::instance()->queueMessage($command);
     }
     
 }

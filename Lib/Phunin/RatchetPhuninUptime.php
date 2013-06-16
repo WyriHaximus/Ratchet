@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
+App::uses('TransportProxy', 'Ratchet.Lib/MessageQueue/Transports');
 App::uses('RatchetMessageQueueGetUptimeCommand', 'Ratchet.Lib/MessageQueue/Command');
 
 class RatchetPhuninUptime implements \PhuninNode\Interfaces\Plugin {
@@ -92,7 +92,7 @@ class RatchetPhuninUptime implements \PhuninNode\Interfaces\Plugin {
         $command = new RatchetMessageQueueGetUptimeCommand();
         $command->setDeferedResolver($deferredResolver);
         $command->setHash(Security::hash(serialize(Configure::read('PhuninCake.Node')), 'sha256', true));
-        RatchetMessageQueueProxy::instance()->queueMessage($command);
+        TransportProxy::instance()->queueMessage($command);
     }
     
 }
