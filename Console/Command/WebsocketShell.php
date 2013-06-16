@@ -14,7 +14,7 @@ App::uses('CakeWampServer', 'Ratchet.Lib/Wamp');
 App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
 App::uses('PhpSerializeHandler', 'Ratchet.Lib');
 App::uses('CakeWampSessionProvider', 'Ratchet.Lib/Wamp');
-App::uses('CakeWampSessionHandler', 'Ratchet.Lib/Wamp');
+App::uses('CakeWampSessionHandler', 'Ratchet.Model/Datasource/Session');
 App::uses('RatchetCakeSession', 'Ratchet.Lib');
 App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
 App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue/Command');
