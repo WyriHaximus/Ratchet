@@ -11,6 +11,8 @@
 
 class CakeRatchetTestCase extends CakeTestCase {
     
+    private $preservedEventListeners = array();
+    
     protected function hibernateListeners($eventKey) {
         $this->preservedEventListeners = CakeEventManager::instance()->listeners($eventKey);
         

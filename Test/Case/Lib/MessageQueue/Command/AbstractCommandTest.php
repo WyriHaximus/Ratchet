@@ -15,8 +15,6 @@ App::uses('CakeEventManager', 'Event');
 
 abstract class AbstractCommandTest extends CakeRatchetTestCase {
     
-    private $preservedEventListeners = array();
-    
     /**
      * {@inheritdoc}
      */
