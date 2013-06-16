@@ -71,7 +71,7 @@ class WebsocketShell extends Shell {
         $this->ioServer = new IoServer(new WsServer(
             new CakeWampSessionProvider(
                 new CakeWampServer(
-                    new CakeWampAppServer($this, $this->loop)
+                    new CakeWampAppServer($this, $this->loop, $this->params['verbose'])
                 ),
                 new CakeWampSessionHandler(),
                 array(),
@@ -106,7 +106,11 @@ class WebsocketShell extends Shell {
         $parser = parent::getOptionParser();
         $parser->addSubcommand('start', array(
             'help' => __('Starts and runs both the websocket service and the flashpolicy.')
-        ))->description(__('Ratchet Websocket service.'));
+        ))->description(__('Ratchet Websocket service.'))->addOption('verbose', array(
+            'help' => 'Enable verbose output.',
+            'short' => 'v',
+            'boolean' => true
+        ));
         return $parser;
     }
     

@@ -31,6 +31,13 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     protected $loop;
     
     /**
+     *
+     * @var boolen
+     */
+    protected $verbose;
+
+
+    /**
      * Contains metadata for all open connections
      * 
      * @var array 
@@ -50,13 +57,16 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
      * @param WebsocketShell $shell
      * @param \React\EventLoop\LoopInterface $loop
      */
-    public function __construct($shell, $loop) {
+    public function __construct($shell, $loop, $verbose = false) {
         $this->shell = $shell;
         $this->loop = $loop;
+        $this->verbose = $verbose;
         
+        $this->outVerbose('Event begin: Rachet.WampServer.construct');
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.construct', $this, array(
             'loop' => $this->loop,
         )));
+        $this->outVerbose('Event end: Rachet.WampServer.construct');
     }
     
     /**
@@ -73,6 +83,14 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
      */
     public function getLoop() {
         return $this->loop;
+    }
+    
+    /**
+     * 
+     * @return \React\EventLoop\LoopInterface
+     */
+    public function getVerbose() {
+        return $this->verbose;
     }
     
     /**
@@ -96,13 +114,16 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     public function onPublish(Conn $conn, $topic, $event, array $exclude, array $eligible) {
         $topic->broadcast($event);
         
+        $this->outVerbose('Event begin: Rachet.WampServer.onPublish.<info>' . $topic->getId() . '</info>');
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onPublish.' . $topic->getId(), $this, array(
             'connection' => $conn,
             'topic' => $topic,
             'exclude' => $exclude,
             'eligible' => $eligible,
+            'wampServer' => $this,
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         )));
+        $this->outVerbose('Event end: Rachet.WampServer.onPublish.<info>' . $topic->getId() . '</info>');
     }
     
     /**
@@ -114,13 +135,16 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
      * @param array $params
      */
     public function onCall(Conn $conn, $id, $topic, array $params) {
+        $this->outVerbose('Event begin: Rachet.WampServer.onPublish.<info>' . $topic->getId() . '</info>');
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.Rpc.' . $topic->getId(), $this, array(
             'connection' => $conn,
             'id' => $id,
             'topic' => $topic,
             'params' => $params,
+            'wampServer' => $this,
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         )));
+        $this->outVerbose('Event end: Rachet.WampServer.onPublish.<info>' . $topic->getId() . '</info>');
     }
     
     /**
@@ -133,18 +157,24 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
         if (!isset($this->topics[$topic->getId()])) {
             $this->topics[$topic->getId()] = $topic;
             
+            $this->outVerbose('Event begin: Rachet.WampServer.onSubscribeNewTopic.<info>' . $topic->getId() . '</info>');
             CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onSubscribeNewTopic.' . $topic->getId(), $this, array(
                 'connection' => $conn,
                 'topic' => $topic,
+                'wampServer' => $this,
                 'connectionData' => $this->connections[$conn->WAMP->sessionId],
             )));
+            $this->outVerbose('Event end: Rachet.WampServer.onSubscribeNewTopic.<info>' . $topic->getId() . '</info>');
         }
         
+        $this->outVerbose('Event begin: Rachet.WampServer.onSubscribe.<info>' . $topic->getId() . '</info>');
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onSubscribe.' . $topic->getId(), $this, array(
             'connection' => $conn,
             'topic' => $topic,
+            'wampServer' => $this,
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         )));
+        $this->outVerbose('Event end: Rachet.WampServer.onSubscribe.<info>' . $topic->getId() . '</info>');
     }
     
     /**
@@ -157,18 +187,24 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
         if (isset($this->topics[$topic->getId()]) && $topic->count() > 0) {
             unset($this->topics[$topic->getId()]);
             
+            $this->outVerbose('Event begin: Rachet.WampServer.onUnSubscribeStaleTopic.<info>' . $topic->getId() . '</info>');
             CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onUnSubscribeStaleTopic.' . $topic->getId(), $this, array(
                 'connection' => $conn,
                 'topic' => $topic,
+                'wampServer' => $this,
                 'connectionData' => $this->connections[$conn->WAMP->sessionId],
             )));
+            $this->outVerbose('Event end: Rachet.WampServer.onUnSubscribeStaleTopic.<info>' . $topic->getId() . '</info>');
         }
         
+        $this->outVerbose('Event begin: Rachet.WampServer.onUnSubscribe.<info>' . $topic->getId() . '</info>');
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onUnSubscribe.' . $topic->getId(), $this, array(
             'connection' => $conn,
             'topic' => $topic,
+            'wampServer' => $this,
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         )));
+        $this->outVerbose('Event end: Rachet.WampServer.onUnSubscribe.<info>' . $topic->getId() . '</info>');
     }
     
     /**
@@ -177,14 +213,19 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
      * @param \Ratchet\ConnectionInterface $conn
      */
     public function onOpen(Conn $conn) {
+        $this->outVerbose('New connection: <info>' . $conn->WAMP->sessionId . '</info>');
+        
         $this->connections[$conn->WAMP->sessionId] = array(
             'session' => $conn->Session->all(),
         );
         
+        $this->outVerbose('Event begin: Rachet.WampServer.onOpen');
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onOpen', $this, array(
             'connection' => $conn,
+            'wampServer' => $this,
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         )));
+        $this->outVerbose('Event end: Rachet.WampServer.onOpen');
     }
     
     /**
@@ -193,12 +234,17 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
      * @param \Ratchet\ConnectionInterface $conn
      */
     public function onClose(Conn $conn) {
+        $this->outVerbose('Event begin: Rachet.WampServer.onClose');
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onClose', $this, array(
             'connection' => $conn,
+            'wampServer' => $this,
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         )));
+        $this->outVerbose('Event end: Rachet.WampServer.onClose');
         
         unset($this->connections[$conn->WAMP->sessionId]);
+        
+        $this->outVerbose('Closed connection: <info>' . $conn->WAMP->sessionId . '</info>');
     }
     
     /**
@@ -209,4 +255,19 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
      * @todo do da error handling shuffle
      */
     public function onError(Conn $conn, \Exception $e) {}
+    
+    /**
+     * Output $message when verbose mode is on
+     * 
+     * @param string $message
+     */
+    public function outVerbose($message) {
+        if ($this->verbose) {
+            $time = microtime(true);
+            $time = explode('.', $time);
+            $time[1] = str_pad($time[1], 4, 0);
+            $time = implode('.', $time);
+            $this->shell->out('[<info>' . $time . '</info>] ' . $message);
+        }
+    }
 }
