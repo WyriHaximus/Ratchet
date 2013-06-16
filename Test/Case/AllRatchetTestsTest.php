@@ -16,7 +16,12 @@ CakePlugin::loadAll(array(
 	'Ratchet' => array(
 		'bootstrap' => true
 	),
+	'PhuninCake' => array(
+		'bootstrap' => true
+	),
 ));
+
+App::import('Ratchet.Test', array('file' => 'Case/CakeRatchetTestCase'));
 
 class AllRatchetTestsTest extends PHPUnit_Framework_TestSuite {
 
