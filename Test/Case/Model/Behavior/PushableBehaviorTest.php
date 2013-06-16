@@ -12,42 +12,6 @@
 App::uses('TransportProxy', 'Ratchet.Lib/MessageQueue/Transports');
 App::uses('PushableBehavior', 'Ratchet.Model/Behavior');
 
-class PushableBehaviorTestEvent {
-    
-    public function __construct($callback) {
-        $this->callback = $callback;
-    }
-    
-    public function broadcast($data) {
-        call_user_func($this->callback, $data);
-    }
-}
-
-class PushableBehaviorTestLoop {
-    public function addTimer($timeout, $callback) {
-        call_user_func($callback);
-    }
-}
-
-class PushableBehaviorEventSubjectTestImposer {
-    
-    public function __construct($callbacks) {
-        $this->callbacks = $callbacks;
-    }
-    
-    public function getLoop() {
-        return new PushableBehaviorTestLoop();
-    }
-    
-    public function getTopics() {
-        return array(
-            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.created' => new PushableBehaviorTestEvent($this->callbacks['created']),
-            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.updated' => new PushableBehaviorTestEvent($this->callbacks['updated']),
-            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.refetch' => new PushableBehaviorTestEvent($this->callbacks['refetch']),
-        );
-    }
-}
-
 class PushableBehaviorTestCapsule extends PushableBehavior {
     public function afterSavePrepareEventNameTest($eventName, $id, $data) {
         return parent::afterSavePrepareEventName($eventName, $id, $data);
@@ -169,7 +133,11 @@ class PushableBehaviorTest extends CakeTestCase {
             $that->assertEqual($resultData, $expectedData);
             $callbackFired = true;
         };
-        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        $this->TransportProxy->getTransport()->setEventSubject(new DummyTransportEventSubjectTestImposer($this->callbacks, array(
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.created' => new DummyTransportTestEvent($this->callbacks['created']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.updated' => new DummyTransportTestEvent($this->callbacks['updated']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.refetch' => new DummyTransportTestEvent($this->callbacks['refetch']),
+        )));
         
         $this->PushableModel->create();
         $this->PushableModel->save($expectedData);
@@ -201,7 +169,11 @@ class PushableBehaviorTest extends CakeTestCase {
             $that->assertEqual($resultData, $expectedData);
             $callbackFired = true;
         };
-        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        $this->TransportProxy->getTransport()->setEventSubject(new DummyTransportEventSubjectTestImposer($this->callbacks, array(
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.created' => new DummyTransportTestEvent($this->callbacks['created']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.updated' => new DummyTransportTestEvent($this->callbacks['updated']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.refetch' => new DummyTransportTestEvent($this->callbacks['refetch']),
+        )));
         
         $this->PushableModel->id = 1;
         $this->PushableModel->save($expectedData);
@@ -233,7 +205,11 @@ class PushableBehaviorTest extends CakeTestCase {
             $that->assertEqual($resultData, $expectedData);
             $callbackFired = true;
         };
-        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        $this->TransportProxy->getTransport()->setEventSubject(new DummyTransportEventSubjectTestImposer($this->callbacks, array(
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.created' => new DummyTransportTestEvent($this->callbacks['created']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.updated' => new DummyTransportTestEvent($this->callbacks['updated']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.refetch' => new DummyTransportTestEvent($this->callbacks['refetch']),
+        )));
         
         $this->PushableModel->id = 1;
         $this->PushableModel->save($expectedData);
@@ -265,7 +241,11 @@ class PushableBehaviorTest extends CakeTestCase {
             $that->assertEqual($resultData, $expectedData);
             $callbackFired = true;
         };
-        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        $this->TransportProxy->getTransport()->setEventSubject(new DummyTransportEventSubjectTestImposer($this->callbacks, array(
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.created' => new DummyTransportTestEvent($this->callbacks['created']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.updated' => new DummyTransportTestEvent($this->callbacks['updated']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.refetch' => new DummyTransportTestEvent($this->callbacks['refetch']),
+        )));
         
         $this->PushableModel->id = 1;
         $this->PushableModel->save($expectedData);
@@ -304,7 +284,11 @@ class PushableBehaviorTest extends CakeTestCase {
             $that->assertEqual($resultData, $expectedData);
             $callbackFired = true;
         };
-        $this->TransportProxy->getTransport()->setEventSubject(new PushableBehaviorEventSubjectTestImposer($this->callbacks));
+        $this->TransportProxy->getTransport()->setEventSubject(new DummyTransportEventSubjectTestImposer($this->callbacks, array(
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.created' => new DummyTransportTestEvent($this->callbacks['created']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.updated' => new DummyTransportTestEvent($this->callbacks['updated']),
+            RatchetMessageQueueModelUpdateCommand::EVENT_PREFIX . 'Ratchet.Pushable.refetch' => new DummyTransportTestEvent($this->callbacks['refetch']),
+        )));
         
         $this->PushableModelAssociated->id = 1;
         $this->PushableModelAssociated->save($expectedData['PushableModelAssociated']);

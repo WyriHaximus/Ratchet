@@ -9,6 +9,39 @@
  * file that was distributed with this source code.
  */
 
+class DummyTransportTestEvent {
+    
+    public function __construct($callback) {
+        $this->callback = $callback;
+    }
+    
+    public function broadcast($data) {
+        call_user_func($this->callback, $data);
+    }
+}
+
+class DummyTransportTestLoop {
+    public function addTimer($timeout, $callback) {
+        call_user_func($callback);
+    }
+}
+
+class DummyTransportEventSubjectTestImposer {
+    
+    public function __construct($callbacks, $topics) {
+        $this->callbacks = $callbacks;
+        $this->topics = $topics;
+    }
+    
+    public function getLoop() {
+        return new DummyTransportTestLoop();
+    }
+    
+    public function getTopics() {
+        return $this->topics;
+    }
+}
+
 class DummyTransport implements RatchetMessageQueueTransportInterface {
     
     /**
