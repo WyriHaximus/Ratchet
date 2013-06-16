@@ -21,20 +21,30 @@ class DummyTransportTestEvent {
 }
 
 class DummyTransportTestLoop {
+    
+    public $addTimerCalled = false;
+    public $stopCalled = false;
+    
     public function addTimer($timeout, $callback) {
         call_user_func($callback);
+        $this->addTimerCalled = true;
+    }
+    
+    public function stop() {
+        $this->stopCalled = true;
     }
 }
 
 class DummyTransportEventSubjectTestImposer {
     
-    public function __construct($callbacks, $topics) {
+    public function __construct($callbacks, $topics = array()) {
         $this->callbacks = $callbacks;
         $this->topics = $topics;
+        $this->loop = new DummyTransportTestLoop();
     }
     
     public function getLoop() {
-        return new DummyTransportTestLoop();
+        return $this->loop;
     }
     
     public function getTopics() {
