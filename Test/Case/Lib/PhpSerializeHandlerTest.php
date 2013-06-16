@@ -75,4 +75,13 @@ class PhpSerializeHandlerTest extends CakeTestCase {
         $this->assertEqual($result, $expected);
     }
     
+    public function testUnserializeFalse() {
+        $result = $this->PhpSerializeHandler->unserialize('');
+        $expected = array(
+            '_sf2_attributes' => array(),
+        );
+        
+        $this->assertEqual($result, $expected);
+    }
+    
 }
