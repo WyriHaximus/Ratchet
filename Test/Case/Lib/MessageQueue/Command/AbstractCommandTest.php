@@ -69,7 +69,7 @@ abstract class AbstractCommandTest extends CakeTestCase {
         return $eventSubject;
     }
     
-    protected function clearListeners($eventKey) {
+    protected function hibernateListeners($eventKey) {
         $this->preservedEventListeners = CakeEventManager::instance()->listeners($eventKey);
         
         foreach ($this->preservedEventListeners as $eventListener) {
@@ -77,7 +77,7 @@ abstract class AbstractCommandTest extends CakeTestCase {
         }
     }
     
-    protected function restoreListeners($eventKey) {
+    protected function wakeupListeners($eventKey) {
         foreach ($this->preservedEventListeners as $eventListener) {
             CakeEventManager::instance()->attach($eventListener['callable'], $eventKey, array(
                 'passParams' => $eventListener['passParams'],

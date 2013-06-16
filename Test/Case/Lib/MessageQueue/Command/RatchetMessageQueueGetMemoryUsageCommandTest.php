@@ -22,7 +22,7 @@ class RatchetMessageQueueGetMemoryUsageCommandTest extends AbstractCommandTest {
     public function setUp() {
         parent::setUp();
         
-        $this->clearListeners('Rachet.WebsocketServer.getMemoryUsage');
+        $this->hibernateListeners('Rachet.WebsocketServer.getMemoryUsage');
         $this->eventCallback = function($event) {
             $event->result = array(
                 'memory_usage' => RatchetMessageQueueGetMemoryUsageCommandTest::EXECUTE_RESULT_NORMAL,
@@ -38,7 +38,7 @@ class RatchetMessageQueueGetMemoryUsageCommandTest extends AbstractCommandTest {
      * {@inheritdoc}
      */
     public function tearDown() {
-        $this->restoreListeners('Rachet.WebsocketServer.getMemoryUsage');
+        $this->wakeupListeners('Rachet.WebsocketServer.getMemoryUsage');
         
         parent::tearDown();
     }

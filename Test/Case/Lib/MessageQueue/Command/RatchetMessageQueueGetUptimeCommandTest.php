@@ -21,7 +21,7 @@ class RatchetMessageQueueGetUptimeCommandTest extends AbstractCommandTest {
     public function setUp() {
         parent::setUp();
         
-        $this->clearListeners('Rachet.WebsocketServer.getUptime');
+        $this->hibernateListeners('Rachet.WebsocketServer.getUptime');
         $this->eventCallback = function($event) {
             $event->result = RatchetMessageQueueGetUptimeCommandTest::EXECUTE_RESULT;
         };
@@ -34,7 +34,7 @@ class RatchetMessageQueueGetUptimeCommandTest extends AbstractCommandTest {
      * {@inheritdoc}
      */
     public function tearDown() {
-        $this->restoreListeners('Rachet.WebsocketServer.getUptime');
+        $this->wakeupListeners('Rachet.WebsocketServer.getUptime');
         
         parent::tearDown();
     }

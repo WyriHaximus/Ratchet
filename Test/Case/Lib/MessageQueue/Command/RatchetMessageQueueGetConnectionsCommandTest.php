@@ -22,7 +22,7 @@ class RatchetMessageQueueGetConnectionsCommandTest extends AbstractCommandTest {
     public function setUp() {
         parent::setUp();
         
-        $this->clearListeners('Rachet.WebsocketServer.getConnectionCounts');
+        $this->hibernateListeners('Rachet.WebsocketServer.getConnectionCounts');
         $this->eventCallback = function($event) {
             $event->result = array(
                 'users' => RatchetMessageQueueGetConnectionsCommandTest::EXECUTE_RESULT_USERS,
@@ -38,7 +38,7 @@ class RatchetMessageQueueGetConnectionsCommandTest extends AbstractCommandTest {
      * {@inheritdoc}
      */
     public function tearDown() {
-        $this->restoreListeners('Rachet.WebsocketServer.getConnectionCounts');
+        $this->wakeupListeners('Rachet.WebsocketServer.getConnectionCounts');
         
         parent::tearDown();
     }
