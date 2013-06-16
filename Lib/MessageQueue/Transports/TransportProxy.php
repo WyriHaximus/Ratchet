@@ -10,8 +10,6 @@
  */
 
 App::uses('RatchetMessageQueueTransportInterface', 'Ratchet.Lib/MessageQueue/Interfaces');
-App::uses('RatchetMessageQueuePredis', 'Ratchet.Lib/MessageQueue/Transports');
-App::uses('RatchetMessageQueueZmq', 'Ratchet.Lib/MessageQueue/Transports');
 
 class TransportProxy implements RatchetMessageQueueTransportInterface {
     
