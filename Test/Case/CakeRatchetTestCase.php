@@ -14,15 +14,19 @@ class CakeRatchetTestCase extends CakeTestCase {
     private $preservedEventListeners = array();
     
     protected function hibernateListeners($eventKey) {
-        $this->preservedEventListeners = CakeEventManager::instance()->listeners($eventKey);
+        $this->preservedEventListeners[$eventKey] = CakeEventManager::instance()->listeners($eventKey);
         
-        foreach ($this->preservedEventListeners as $eventListener) {
+        foreach ($this->preservedEventListeners[$eventKey] as $eventListener) {
             CakeEventManager::instance()->detach($eventListener['callable'], $eventKey);
         }
     }
     
     protected function wakeupListeners($eventKey) {
-        foreach ($this->preservedEventListeners as $eventListener) {
+        if (isset($this->preservedEventListeners[$eventKey])) {
+            return;
+        }
+        
+        foreach ($this->preservedEventListeners[$eventKey] as $eventListener) {
             CakeEventManager::instance()->attach($eventListener['callable'], $eventKey, array(
                 'passParams' => $eventListener['passParams'],
             ));
