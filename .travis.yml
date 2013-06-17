@@ -23,7 +23,7 @@ before_script:
   - cp ../Ratchet/Test/test_app/Config/database.php app/Config/
   - cp ../Ratchet/composer.* app/
   - cd app
-  - composer install
+  - composer install --dev
   - echo "App::import('Vendor', array('file' => 'autoload'));" >> Config/bootstrap.php
   - cd ../
 
