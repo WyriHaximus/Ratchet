@@ -10,6 +10,7 @@
  */
 
 App::uses('RatchetMessageQueueGetConnectionsCommand', 'Ratchet.Lib/MessageQueue/Command');
+App::uses('AbstractCommandTest', 'Ratchet.Test/Case/Lib/MessageQueue/Command');
 
 class RatchetMessageQueueGetConnectionsCommandTest extends AbstractCommandTest {
     

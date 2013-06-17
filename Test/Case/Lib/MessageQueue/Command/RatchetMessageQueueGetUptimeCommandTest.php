@@ -10,6 +10,7 @@
  */
 
 App::uses('RatchetMessageQueueGetUptimeCommand', 'Ratchet.Lib/MessageQueue/Command');
+App::uses('AbstractCommandTest', 'Ratchet.Test/Case/Lib/MessageQueue/Command');
 
 class RatchetMessageQueueGetUptimeCommandTest extends AbstractCommandTest {
     

@@ -10,6 +10,7 @@
  */
 
 App::uses('RatchetMessageQueueGetMemoryUsageCommand', 'Ratchet.Lib/MessageQueue/Command');
+App::uses('AbstractCommandTest', 'Ratchet.Test/Case/Lib/MessageQueue/Command');
 
 class RatchetMessageQueueGetMemoryUsageCommandTest extends AbstractCommandTest {
     
