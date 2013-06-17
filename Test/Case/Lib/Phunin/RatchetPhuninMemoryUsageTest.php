@@ -10,6 +10,7 @@
  */
 
 App::uses('RatchetPhuninMemoryUsage', 'Ratchet.Lib/Phunin');
+App::uses('AbstractPhuninPluginTest', 'Ratchet.Test/Case/Lib/Phunin');
 
 class RatchetPhuninMemoryUsageTest extends AbstractPhuninPluginTest {
     

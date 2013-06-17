@@ -10,6 +10,7 @@
  */
 
 App::uses('RatchetPhuninConnections', 'Ratchet.Lib/Phunin');
+App::uses('AbstractPhuninPluginTest', 'Ratchet.Test/Case/Lib/Phunin');
 
 class RatchetPhuninConnectionsTest extends AbstractPhuninPluginTest {
     

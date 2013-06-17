@@ -10,6 +10,7 @@
  */
 
 App::uses('RatchetPhuninUptime', 'Ratchet.Lib/Phunin');
+App::uses('AbstractPhuninPluginTest', 'Ratchet.Test/Case/Lib/Phunin');
 
 class RatchetPhuninUptimeTest extends AbstractPhuninPluginTest {
     
