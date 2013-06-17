@@ -25,6 +25,12 @@
         "composer/installers": "*",
         "markstory/asset_compress": "dev-master"
     },
+    "require-dev": {
+        "wyrihaximus/phunin-cake": "dev-master",
+        "predis/predis": "0.8.*",
+        "predis/predis-async": "dev-master",
+        "react/zmq": "0.1.*"
+    },
     "suggest": {
         "wyrihaximus/phunin-cake": "0.1.0",
         "predis/predis": "0.8.*",
