@@ -89,7 +89,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
         $conn = new Ratchet\Wamp\WampConnection($mock);
         $conn->Session = new SessionHandlerImposer();
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
         
@@ -122,12 +122,12 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
         $conn = new Ratchet\Wamp\WampConnection($mock);
         $conn->Session = new SessionHandlerImposer();
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onClose#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onClose#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Closed connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Closed connection: [<info>0-9a-zA-Z</info>]+#';
         
         $callbackFired = false;
         $that = $this;
@@ -173,11 +173,11 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
         $conn = new Ratchet\Wamp\WampConnection($mock);
         $conn->Session = new SessionHandlerImposer();
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc.<info>' . $topic . '</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc.' . $topic . '#';
         
         $callbackFired = false;
         $that = $this;
@@ -230,11 +230,11 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
         $conn = new Ratchet\Wamp\WampConnection($mock);
         $conn->Session = new SessionHandlerImposer();
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onPublish.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onPublish.<info>' . $topic . '</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onPublish.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onPublish.' . $topic . '#';
         
         $exclude = array(
             'foo' => 'bar',
@@ -297,19 +297,19 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
         $conn2 = new Ratchet\Wamp\WampConnection($mock);
         $conn2->Session = new SessionHandlerImposer();
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribeNewTopic.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribeNewTopic.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.<info>' . $topic . '</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribeNewTopic.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribeNewTopic.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.' . $topic . '#';
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.<info>' . $topic . '</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.' . $topic . '#';
         
         $callbackFired = array(
             false,
@@ -395,26 +395,26 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
         $conn2 = new Ratchet\Wamp\WampConnection($mock);
         $conn2->Session = new SessionHandlerImposer();
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribeNewTopic.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribeNewTopic.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.<info>' . $topic . '</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribeNewTopic.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribeNewTopic.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.' . $topic . '#';
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: <info>[0-9a-zA-Z]+</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.<info>' . $topic . '</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.' . $topic . '#';
         
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onUnSubscribe.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onUnSubscribe.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onUnSubscribeStaleTopic.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onUnSubscribeStaleTopic.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onUnSubscribe.<info>' . $topic . '</info>#';
-        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onUnSubscribe.<info>' . $topic . '</info>#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onUnSubscribe.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onUnSubscribe.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onUnSubscribeStaleTopic.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onUnSubscribeStaleTopic.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onUnSubscribe.' . $topic . '#';
+        $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onUnSubscribe.' . $topic . '#';
         
         $callbackFired = array(
             false,
