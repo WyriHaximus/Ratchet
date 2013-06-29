@@ -31,12 +31,19 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     protected $loop;
     
     /**
-     *
-     * @var boolen
+     * Ratchet Topic Manager
+     * 
+     * @var \Ratchet\Wamp\TopicManager
+     */
+    protected $topicManager;
+    
+    /**
+     * Flag wether or not to display verbose output for debugging or troubleshooting
+     * 
+     * @var boolean
      */
     protected $verbose;
-
-
+    
     /**
      * Contains metadata for all open connections
      * 
@@ -99,6 +106,14 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
      */
     public function getTopics() {
         return $this->topics;
+    }
+    
+    /**
+     * 
+     * @param \Ratchet\Wamp\TopicManager $topicManager
+     */
+    public function setTopicManager(\Ratchet\Wamp\TopicManager $topicManager) {
+        $this->topicManager = $topicManager;
     }
     
     /**

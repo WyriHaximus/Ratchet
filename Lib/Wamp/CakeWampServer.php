@@ -12,7 +12,12 @@
 class CakeWampServer extends \Ratchet\Wamp\WampServer {
     
     /**
-     * void, to be removed or used before
+     * {@inheritdoc}
      */
+    public function __construct(WampServerInterface $app) {
+        $topicManager = new Ratchet\Wamp\TopicManager($app);
+        $app->setTopicManager($topicManager);
+        $this->wampProtocol = new ServerProtocol($topicManager);
+    }
     
 }
