@@ -34,7 +34,6 @@ class RatchetHelperTest extends CakeTestCase {
 		$this->Helper->Html = new HtmlHelper($this->view);
 
 		Router::reload();
-		Configure::write('debug', 2);
 	}
 
 /**
