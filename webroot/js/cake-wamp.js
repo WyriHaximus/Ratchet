@@ -67,7 +67,7 @@ cakeWamp.onhangup = function(code, reason) {
  * Wrapper around AB's session.call method
  */
 cakeWamp.call = function() {
-    cakeWamp.session.call.apply(cakeWamp.session, arguments);
+    return cakeWamp.session.call.apply(cakeWamp.session, arguments);
 };
 
 /**
