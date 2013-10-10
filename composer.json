@@ -1,12 +1,13 @@
 {
     "name": "wyrihaximus/ratchet",
+    "version": "0.1.0-DEV",
     "description": "Ratchet websockets integration plugin for CakePHP",
     "homepage": "http://wyrihaximus.net/projects/cakephp/ratchet.html",
     "type": "cakephp-plugin",
     "license": "MIT",
     "keywords": [
-        "ratchet",
         "cakephp",
+        "ratchet",
         "websockets"
     ],
     "config": {
@@ -24,17 +25,5 @@
         "cboden/Ratchet": "0.2.*",
         "composer/installers": "*",
         "markstory/asset_compress": "dev-master"
-    },
-    "require-dev": {
-        "wyrihaximus/phunin-cake": "dev-master",
-        "predis/predis": "0.8.*",
-        "predis/predis-async": "dev-master",
-        "react/zmq": "0.1.*"
-    },
-    "suggest": {
-        "wyrihaximus/phunin-cake": "0.1.0",
-        "predis/predis": "0.8.*",
-        "predis/predis-async": "dev-master",
-        "react/zmq": "0.1.*"
     }
 }

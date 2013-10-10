@@ -18,6 +18,9 @@ The following code example attaches the Pushable behavior to the `WyriProject` m
 The data is passed into the event as a 1 dimensional array.
 
 ```php
+<?php
+
+class Model extends AppModel {
     public $actsAs = array(
         'Ratchet.Pushable' => array(
             'events' => array(
@@ -35,8 +38,9 @@ The data is passed into the event as a 1 dimensional array.
                     'fields' => true,
                 ),
             ),
-        ),
+        ), 
     );
+}
 ```
 
 ## Client side ##

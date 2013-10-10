@@ -17,8 +17,8 @@ App::uses('CakeWampSessionProvider', 'Ratchet.Lib/Wamp');
 App::uses('CakeWampSessionHandler', 'Ratchet.Model/Datasource/Session');
 App::uses('RatchetCakeSession', 'Ratchet.Lib');
 App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
-App::uses('RatchetMessageQueueModelUpdateCommand', 'Ratchet.Lib/MessageQueue/Command');
-App::uses('RatchetMessageQueueKillSwitchCommand', 'Ratchet.Lib/MessageQueue/Command');
+App::uses('RatchetMessageQueueModelUpdateCommand', 'RatchetModelPush.Lib/MessageQueue/Command');
+App::uses('RatchetMessageQueueKillSwitchCommand', 'RatchetCommands.Lib/MessageQueue/Command');
 
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;

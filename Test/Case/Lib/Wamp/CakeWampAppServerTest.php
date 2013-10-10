@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+App::uses('WebsocketShell', 'Ratchet.Console/Command');
 App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
 
 App::import('Vendor', array('file' => 'cboden/ratchet/tests/Ratchet/Tests/Mock/Connection'));
@@ -34,7 +35,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.construct#';
         $this->expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.construct#';
         
-        $this->loop = React\EventLoop\Factory::create();
+        $this->loop = $this->getMock('React\\EventLoop\\LoopInterface');
         $this->AppServer = new CakeWampAppServer($this, $this->loop, true);
     }
     

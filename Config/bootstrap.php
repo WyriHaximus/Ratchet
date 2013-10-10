@@ -15,8 +15,8 @@
  */
 Configure::write('Ratchet', array(
     'Client' => array(
-        'retryDelay' => 500, // Not the best option but it speeds up development
-        'maxRetries' => 500, // Keep on trying! (Also not the best option)
+        'retryDelay' => 5000, // Not the best option but it speeds up development
+        'maxRetries' => 25, // Keep on trying! (Also not the best option)
     ),
     'Connection' => array(
         'flashPolicy' => array(
@@ -35,36 +35,9 @@ Configure::write('Ratchet', array(
         ),
         'keepaliveInterval' => 23,
     ),
-    'Queue' => array(
-        /*'type' => 'Predis',
-        'key' => 'test_reddis_opuapugfoyiufgiawe',
-        'server' => array(
-            'scheme' => 'tcp',
-            'host' => '127.0.0.1',
-            'port' => 6379,
-            'database' => 12,
-        ),*/
-        'transporter' => 'Ratchet.ZMQTransport',
-        'configuration' => array(
-            'server' => 'tcp://127.0.0.1:13001',
-        ),
-    ),
 ));
 
 App::uses('CakeEventManager', 'Event');
-
-/**
- * Statistical listeners
- */
-
-App::uses('RatchetConnectionsListener', 'Ratchet.Event/Statistics');
-CakeEventManager::instance()->attach(new RatchetConnectionsListener());
-
-App::uses('RatchetUptimeListener', 'Ratchet.Event/Statistics');
-CakeEventManager::instance()->attach(new RatchetUptimeListener());
-
-App::uses('RatchetMemoryUsageListener', 'Ratchet.Event/Statistics');
-CakeEventManager::instance()->attach(new RatchetMemoryUsageListener());
 
 /**
  * Client services listener
@@ -72,14 +45,3 @@ CakeEventManager::instance()->attach(new RatchetMemoryUsageListener());
 
 App::uses('RatchetKeepAliveListener', 'Ratchet.Event');
 CakeEventManager::instance()->attach(new RatchetKeepAliveListener());
-
-/**
- * PhuninCake listener
- * 
- * (Make sure PhuninCake is loaded before Ratchet is!)
- */
-
-if (CakePlugin::loaded('PhuninCake')) {
-    App::uses('RatchetPhuninCakeListener', 'Ratchet.Event');
-    CakeEventManager::instance()->attach(new RatchetPhuninCakeListener());
-}

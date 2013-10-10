@@ -63,8 +63,9 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
      * 
      * @param WebsocketShell $shell
      * @param \React\EventLoop\LoopInterface $loop
+     * @param boolean $verbose
      */
-    public function __construct($shell, $loop, $verbose = false) {
+    public function __construct($shell, \React\EventLoop\LoopInterface $loop, $verbose = false) {
         $this->shell = $shell;
         $this->loop = $loop;
         $this->verbose = $verbose;
@@ -175,7 +176,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
         $topicName = self::getTopicName($topic);
         
         if (!isset($this->topics[$topicName])) {
-            $this->topics[$topicName] = 0;
+            $this->topics[$topicName] = array();
             
             $this->dispatchEvent('Rachet.WampServer.onSubscribeNewTopic.' . $topicName, $this, array(
                 'connection' => $conn,
@@ -192,7 +193,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         ));
         
-        $this->topics[$topicName]++;
+        $this->topics[$topicName][$conn->WAMP->sessionId] = true;
     }
     
     /**
@@ -206,7 +207,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
         
         $this->topics[$topicName]--;
         
-        if (isset($this->topics[$topicName]) && $this->topics[$topicName] === 0) {
+        if (isset($this->topics[$topicName]) && count($this->topics[$topicName]) == 0) {
             unset($this->topics[$topicName]);
             
             $this->dispatchEvent('Rachet.WampServer.onUnSubscribeStaleTopic.' . $topicName, $this, array(
@@ -223,6 +224,8 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
             'wampServer' => $this,
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         ));
+        
+        unset($this->topics[$topicName][$conn->WAMP->sessionId]);
     }
     
     /**

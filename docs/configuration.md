@@ -62,7 +62,7 @@ Ratchet comes with a message queue to send messages to the server instance. (For
 ZMQ requires little configuration, just an IP and port.
 
 ```php
-Configure::write('Ratchet.Queue', array(
+Configure::write('RatchetCommands.Queue', array(
     'type' => 'ZMQ',
     'server' => 'tcp://127.0.0.1:13001',
 ),
@@ -73,7 +73,7 @@ Configure::write('Ratchet.Queue', array(
 Predis requires a bit more configuration as it's not a dedicated socket but a database. Therefore we need to specify the database number and key we'll be using to communicate over.
 
 ```php
-Configure::write('Ratchet.Queue', array(
+Configure::write('RatchetCommands.Queue', array(
 	'type' => 'Predis',
     'key' => 'test_reddis_opuapugfoyiufgiawe',
     'server' => array(
