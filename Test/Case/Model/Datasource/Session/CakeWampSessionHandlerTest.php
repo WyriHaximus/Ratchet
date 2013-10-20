@@ -13,12 +13,14 @@ App::uses('CakeWampSessionHandler', 'Ratchet.Model/Datasource/Session');
 
 class CakeWampSessionHandlerTest extends CakeTestCase {
 
+	const SESSION_READ_RESULT = 'a:1:{s:3:"foo";s:3:"bar";}';
+
 	public function setUp() {
 		parent::setUp();
+		$this->handler = new CakeWampSessionHandler();
 		$_SESSION = array(
 			'foo' => 'bar',
 		);
-		$this->handler = new CakeWampSessionHandler();
 	}
 
 	public function tearDown() {
@@ -36,15 +38,17 @@ class CakeWampSessionHandlerTest extends CakeTestCase {
 	}
 
 	public function testRead() {
-		$this->assertSame('a:1:{s:3:"foo";s:3:"bar";}', $this->handler->read('foo'));
+		$this->assertSame(self::SESSION_READ_RESULT, $this->handler->read('foo'));
 	}
 
 	public function testWrite() {
-		$this->assertTrue($this->handler->write('foo', 'bar'));
+		$this->assertTrue($this->handler->write('foo', 'beer'));
+		$this->assertSame(self::SESSION_READ_RESULT, $this->handler->read('foo'));
 	}
 
 	public function testDestroy() {
 		$this->assertTrue($this->handler->destroy('foo'));
+		$this->assertSame(self::SESSION_READ_RESULT, $this->handler->read('foo'));
 	}
 
 	public function testGc() {

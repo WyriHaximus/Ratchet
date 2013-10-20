@@ -15,7 +15,7 @@ class CakeWampSessionHandler implements SessionHandlerInterface {
  * Start the session on instance construction
  */
 	public function __construct() {
-		session_start();
+		@session_start();
 	}
 
 /**

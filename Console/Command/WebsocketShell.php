@@ -10,10 +10,8 @@
  */
 
 App::uses('Security', 'Utility');
-App::uses('CakeWampServer', 'Ratchet.Lib/Wamp');
 App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
 App::uses('PhpSerializeHandler', 'Ratchet.Lib');
-App::uses('CakeWampSessionProvider', 'Ratchet.Lib/Wamp');
 App::uses('CakeWampSessionHandler', 'Ratchet.Model/Datasource/Session');
 App::uses('RatchetCakeSession', 'Ratchet.Lib');
 App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
@@ -66,10 +64,8 @@ class WebsocketShell extends Shell {
 		$socket = new Reactor($this->__loop);
 		$socket->listen(Configure::read('Ratchet.Connection.websocket.port'), Configure::read('Ratchet.Connection.websocket.address'));
 		$this->__ioServer = new IoServer(new WsServer(
-			new CakeWampSessionProvider(
-				new CakeWampServer(
-					new CakeWampAppServer($this, $this->__loop, $this->params['verbose'])
-				),
+			new \Ratchet\Session\SessionProvider(
+				new CakeWampAppServer($this, $this->__loop, $this->params['verbose']),
 				new CakeWampSessionHandler(),
 				array(),
 				new PhpSerializeHandler()
