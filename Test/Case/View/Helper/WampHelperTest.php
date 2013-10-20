@@ -1,13 +1,13 @@
 <?php
 
 /*
- * This file is part of Ratchet for CakePHP.
- *
- ** (c) 2012 - 2013 Cees-Jan Kiewiet
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+* This file is part of Ratchet for CakePHP.
+*
+** (c) 2012 - 2013 Cees-Jan Kiewiet
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
 
 App::uses('WampHelper', 'Ratchet.View/Helper');
 
@@ -52,8 +52,8 @@ class RatchetHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testInit() {
-                $this->Helper->init();
-                $this->assertEqual($this->view->fetch('script'), "<script type=\"text/javascript\">\n//<![CDATA[\nWEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 500,maxRetries: 500};\nvar wsuri = \"ws://localhost:80/websocket\";\n//]]>\n</script><script type=\"text/javascript\" src=\"/js/cache/Ratchet.wamp.js\"></script>");
+		$this->Helper->init();
+		$this->assertEqual($this->view->fetch('script'), "<script type=\"text/javascript\">\n//<![CDATA[\nWEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";\n//]]>\n</script><script type=\"text/javascript\" src=\"/js/cache/Ratchet.wamp.js\"></script>");
 	}
 
 }

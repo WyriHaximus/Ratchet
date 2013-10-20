@@ -1,4 +1,5 @@
 <?php
+
 /**
  * All Ratchet plugin tests
  */

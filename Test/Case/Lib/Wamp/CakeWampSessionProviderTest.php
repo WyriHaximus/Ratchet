@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of Ratchet for CakePHP.
  *
  ** (c) 2012 - 2013 Cees-Jan Kiewiet
@@ -14,24 +14,25 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler;
 App::uses('CakeWampSessionProvider', 'Ratchet.Lib/Wamp');
 
 class CakeWampSessionProviderTest extends CakeRatchetTestCase {
-    protected function newConn() {
-        $conn = $this->getMock('Ratchet\\ConnectionInterface');
 
-        $headers = $this->getMock('Guzzle\\Http\\Message\\Request', array('getCookie'), array('POST', '/', array()));
-        $headers->expects($this->once())->method('getCookie', array(ini_get('session.name')))->will($this->returnValue(null));
+	protected function _newConn() {
+		$conn = $this->getMock('Ratchet\\ConnectionInterface');
 
-        $conn->WebSocket          = new \StdClass;
-        $conn->WebSocket->request = $headers;
+		$headers = $this->getMock('Guzzle\\Http\\Message\\Request', array('getCookie'), array('POST', '/', array()));
+		$headers->expects($this->once())->method('getCookie', array(ini_get('session.name')))->will($this->returnValue(null));
 
-        return $conn;
-    }
+		$conn->WebSocket					= new \StdClass;
+		$conn->WebSocket->request	= $headers;
 
-    public function testOnOpenBubbles() {
-        $conn = $this->newConn();
-        $mock = $this->getMock('Ratchet\\MessageComponentInterface');
-        $comp = new CakeWampSessionProvider($mock, new NullSessionHandler);
+		return $conn;
+	}
 
-        $mock->expects($this->once())->method('onOpen')->with($conn);
-        $comp->onOpen($conn);
-    }
+	public function testOnOpenBubbles() {
+		$conn = $this->_newConn();
+		$mock = $this->getMock('Ratchet\\MessageComponentInterface');
+		$comp = new CakeWampSessionProvider($mock, new NullSessionHandler);
+
+		$mock->expects($this->once())->method('onOpen')->with($conn);
+		$comp->onOpen($conn);
+	}
 }
