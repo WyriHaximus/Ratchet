@@ -1,5 +1,7 @@
 <?php
 
+App::import('Vendor', array('file' => 'autoload.php'));
+
 /**
  * All Ratchet plugin tests
  */
