@@ -11,7 +11,7 @@
 
 App::uses('WebsocketShell', 'Ratchet.Console/Command');
 App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
-App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case/Wamp');
+App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
 
 class SessionHandlerImposer {
 
