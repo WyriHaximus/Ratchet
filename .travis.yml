@@ -28,14 +28,14 @@ matrix:
         - DB=mysql CAKE_VERSION=master FOC_VALIDATE=1
 
 before_script:
-  - git clone https://github.com/FriendsOfCake/travis.git
-  - ./travis/before_script.sh
+  - git clone https://github.com/FriendsOfCake/travis.git --depth 1 ../travis
+  - ../travis/before_script.sh
 
 script:
-  - ./travis/script.sh
+  - ../travis/script.sh
 
 after_success:
-  - ./travis/after_success.sh
+  - ../travis/after_success.sh
 
 notifications:
   email: false
