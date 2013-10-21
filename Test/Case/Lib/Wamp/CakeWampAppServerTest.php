@@ -12,8 +12,6 @@
 App::uses('WebsocketShell', 'Ratchet.Console/Command');
 App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
 
-App::import('Vendor', array('file' => 'cboden/ratchet/tests/Ratchet/Tests/Mock/Connection'));
-
 class SessionHandlerImposer {
 
 	public function all() {
