@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-App::uses('WampHelper', 'Ratchet.View/Helper');
-
-App::uses('HtmlHelper', 'View/Helper');
 App::uses('View', 'View');
+App::uses('WampHelper', 'Ratchet.View/Helper');
+App::uses('HtmlHelper', 'View/Helper');
+App::uses('AssetCompressHelper', 'AssetCompress.View/Helper');
 
 
 class RatchetHelperTest extends CakeTestCase {
@@ -31,7 +31,8 @@ class RatchetHelperTest extends CakeTestCase {
 		$this->view = new View($controller);
 		$this->view->request = $request;
 		$this->Helper = new WampHelper($this->view, array('noconfig' => true));
-		$this->Helper->Html = new HtmlHelper($this->view);
+		$this->Helper->Html = $this->getMock('HtmlHelper', array('scriptBlock'), array($this->view));
+		$this->Helper->AssetCompress = $this->getMock('AssetCompressHelper', array('script'), array($this->view, array('noconfig' => true)));
 
 		Router::reload();
 	}
@@ -52,8 +53,18 @@ class RatchetHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testInit() {
+		$expectedScriptBlock = "WEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";";
+		$this->Helper->Html->expects($this->once())
+			->method('scriptBlock')
+			->with($expectedScriptBlock, $this->equalTo(array(
+				'inline' => false,
+			)));
+
+		$this->Helper->AssetCompress->expects($this->once())
+			->method('script')
+			->with($this->equalTo('Ratchet.wamp'), $this->equalTo(array('block' => 'script')));
+
 		$this->Helper->init();
-		$this->assertEqual($this->view->fetch('script'), "<script type=\"text/javascript\">\n//<![CDATA[\nWEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";\n//]]>\n</script><script type=\"text/javascript\" src=\"/js/cache/Ratchet.wamp.js\"></script>");
 	}
 
 }
