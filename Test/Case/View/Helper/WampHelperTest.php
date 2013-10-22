@@ -35,6 +35,21 @@ class RatchetHelperTest extends CakeTestCase {
 		$this->Helper->AssetCompress = $this->getMock('AssetCompressHelper', array('script'), array($this->view, array('noconfig' => true)));
 
 		Router::reload();
+
+		Configure::write('Ratchet', array(
+			'Client' => array(
+				'retryDelay' => 5000, // Not the best option but it speeds up development
+				'maxRetries' => 25, // Keep on trying! (Also not the best option)
+			),
+			'Connection' => array(
+				'external' => array(
+					'hostname' => 'localhost',
+					'port' => 80,
+					'path' => 'websocket',
+					'secure' => false,
+				),
+			),
+		));
 	}
 
 /**
