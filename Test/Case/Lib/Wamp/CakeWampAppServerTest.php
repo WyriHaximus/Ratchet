@@ -96,7 +96,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$callbackFired = false;
 		$that = $this;
 		$eventCallback = function($event) use($that, &$callbackFired, $conn) {
-			$that->assertEqual($event->data, array(
+			$that->assertEquals($event->data, array(
 				'connection' => $conn,
 				'wampServer' => $that->AppServer,
 				'connectionData' => array(
@@ -132,7 +132,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$callbackFired = false;
 		$that = $this;
 		$eventCallback = function($event) use($that, &$callbackFired, $conn) {
-			$that->assertEqual($event->data, array(
+			$that->assertEquals($event->data, array(
 				'connection' => $conn,
 				'wampServer' => $that->AppServer,
 				'connectionData' => array(
@@ -182,7 +182,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$callbackFired = false;
 		$that = $this;
 		$eventCallback = function($event) use($that, &$callbackFired, $conn, $topic) {
-			$that->assertEqual($event->data, array(
+			$that->assertEquals($event->data, array(
 				'connection' => $conn,
 				'id' => 1,
 				'topic' => $topic,
@@ -249,7 +249,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$callbackFired = false;
 		$that = $this;
 		$eventCallback = function($event) use($that, &$callbackFired, $conn, $topic, $exclude, $eligible, $eventData) {
-			$that->assertEqual($event->data, array(
+			$that->assertEquals($event->data, array(
 				'connection' => $conn,
 				'topic' => $topic,
 				'event' => $eventData,
@@ -320,7 +320,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$that = $this;
 
 		$eventCallback1 = function($event) use($that, &$callbackFired, &$callbackFiredI, $conn1, $topic) {
-			$that->assertEqual($event->data, array(
+			$that->assertEquals($event->data, array(
 				'connection' => $conn1,
 				'topic' => $topic,
 				'wampServer' => $that->AppServer,
@@ -340,7 +340,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		CakeEventManager::instance()->detach($eventCallback1, 'Rachet.WampServer.onSubscribe.' . $topic);
 
 		$eventCallback2 = function($event) use($that, &$callbackFired, &$callbackFiredI, $conn2, $topic) {
-			$that->assertEqual($event->data, array(
+			$that->assertEquals($event->data, array(
 				'connection' => $conn2,
 				'topic' => $topic,
 				'wampServer' => $that->AppServer,
@@ -428,7 +428,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$that = $this;
 
 		$eventCallback1 = function($event) use($that, &$callbackFired, &$callbackFiredI, $conn1, $topic) {
-			$that->assertEqual($event->data, array(
+			$that->assertEquals($event->data, array(
 				'connection' => $conn1,
 				'topic' => $topic,
 				'wampServer' => $that->AppServer,
@@ -447,7 +447,7 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		CakeEventManager::instance()->detach($eventCallback1, 'Rachet.WampServer.onSubscribe.' . $topic);
 
 		$eventCallback2 = function($event) use($that, &$callbackFired, &$callbackFiredI, $conn2, $topic) {
-			$that->assertEqual($event->data, array(
+			$that->assertEquals($event->data, array(
 				'connection' => $conn2,
 				'topic' => $topic,
 				'wampServer' => $that->AppServer,
