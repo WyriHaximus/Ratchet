@@ -24,6 +24,6 @@
         "php": ">=5.3.3",
         "cboden/Ratchet": "0.2.*",
         "composer/installers": "*",
-        "markstory/asset_compress": "dev-master"
+        "markstory/asset_compress": "v0.9"
     }
 }
