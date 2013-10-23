@@ -264,11 +264,10 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 	}
 
 /**
- * Error catching
+ * Silently ignore exceptions
  *
  * @param \Ratchet\ConnectionInterface $conn
  * @param \Exception $e
- * @todo do da error handling shuffle
  */
 	public function onError(Conn $conn, \Exception $e) {
 	}
