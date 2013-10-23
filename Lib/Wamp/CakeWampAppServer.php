@@ -125,7 +125,6 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * @param string $event
  * @param array $exclude
  * @param array $eligible
- * @todo Add a test if $topic is a string
  */
 	public function onPublish(Conn $conn, $topic, $event, array $exclude, array $eligible) {
 		if ($topic instanceof \Ratchet\Wamp\Topic) {
