@@ -52,7 +52,13 @@ class WebsocketShell extends Shell {
 		$socket->listen(Configure::read('Ratchet.Connection.websocket.port'), Configure::read('Ratchet.Connection.websocket.address'));
 		$this->__ioServer = new IoServer(new WsServer(
 			new \Ratchet\Session\SessionProvider(
-				new CakeWampAppServer($this, $this->__loop, $this->params['verbose']),
+				new Ratchet\Wamp\WampServer(
+					new CakeWampAppServer(
+						$this,
+						$this->__loop,
+						$this->params['verbose']
+					)
+				),
 				new CakeWampSessionHandler(),
 				array(),
 				new PhpSerializeHandler()
