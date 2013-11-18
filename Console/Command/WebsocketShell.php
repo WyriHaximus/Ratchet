@@ -55,12 +55,6 @@ class WebsocketShell extends Shell {
 	public function start() {
 		$this->__loop = LoopFactory::create();
 
-		$flashSock = new Reactor($this->__loop);
-		$flashSock->listen(Configure::read('Ratchet.Connection.flashPolicy.port'), Configure::read('Ratchet.Connection.flashPolicy.address'));
-		$policy = new FlashPolicy;
-		$policy->addAllowedAccess('*', '*');
-		$this->__flashPolicy = new IoServer($policy, $flashSock);
-
 		$socket = new Reactor($this->__loop);
 		$socket->listen(Configure::read('Ratchet.Connection.websocket.port'), Configure::read('Ratchet.Connection.websocket.address'));
 		$this->__ioServer = new IoServer(new WsServer(

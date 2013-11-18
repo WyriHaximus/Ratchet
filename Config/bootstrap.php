@@ -19,10 +19,6 @@ Configure::write('Ratchet', array(
 		'maxRetries' => 25, // Keep on trying! (Also not the best option)
 	),
 	'Connection' => array(
-		'flashPolicy' => array(
-			'address' => '0.0.0.0',
-			'port' => 12001,
-		),
 		'websocket' => array(
 			'address' => '0.0.0.0',
 			'port' => 11001,
