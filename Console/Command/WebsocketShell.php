@@ -41,13 +41,6 @@ class WebsocketShell extends Shell {
 	private $__ioServer;
 
 /**
- * Flash policy server
- *
- * @var \Ratchet\Server\FlashPolicy
- */
-	private $__flashPolicy;
-
-/**
  * Starts the websocket server
  *
  * @return void
