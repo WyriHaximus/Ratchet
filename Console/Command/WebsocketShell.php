@@ -20,7 +20,10 @@ App::uses('RatchetMessageQueueKillSwitchCommand', 'RatchetCommands.Lib/MessageQu
 
 use Ratchet\Server\FlashPolicy;
 use Ratchet\Server\IoServer;
+use Ratchet\Wamp\WampServer;
 use Ratchet\WebSocket\WsServer;
+use Ratchet\Http\HttpServer;
+use Ratchet\Session\SessionProvider;
 use React\EventLoop\Factory as LoopFactory;
 use React\Socket\Server as Reactor;
 
@@ -50,20 +53,26 @@ class WebsocketShell extends Shell {
 
 		$socket = new Reactor($this->__loop);
 		$socket->listen(Configure::read('Ratchet.Connection.websocket.port'), Configure::read('Ratchet.Connection.websocket.address'));
-		$this->__ioServer = new IoServer(new WsServer(
-			new \Ratchet\Session\SessionProvider(
-				new Ratchet\Wamp\WampServer(
-					new CakeWampAppServer(
-						$this,
-						$this->__loop,
-						$this->params['verbose']
+		$this->__ioServer = new IoServer(
+			new HttpServer(
+				new WsServer(
+					new SessionProvider(
+						new WampServer(
+							new CakeWampAppServer(
+								$this,
+								$this->__loop,
+								$this->params['verbose']
+							)
+						),
+						new CakeWampSessionHandler(),
+						array(),
+						new PhpSerializeHandler()
 					)
-				),
-				new CakeWampSessionHandler(),
-				array(),
-				new PhpSerializeHandler()
-			)
-		), $socket, $this->__loop);
+				)
+			),
+			$socket,
+			$this->__loop
+		);
 
 		$this->__loop->run();
 	}
