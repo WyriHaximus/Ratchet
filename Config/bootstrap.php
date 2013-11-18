@@ -29,7 +29,7 @@ Configure::write('Ratchet', array(
 			'path' => 'websocket',
 			'secure' => false,
 		),
-		'keepaliveInterval' => 23,
+		'keepaliveInterval' => 23, // Why 23? Because NGINX kills after 30 seconds
 	),
 ));
 
