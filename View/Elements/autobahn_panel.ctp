@@ -1,21 +1,28 @@
-<h3>Debug</h3>
-<?php
-echo $this->Form->input('debugws', array(
-    'label' => 'WebSocket Protocol',
-    'type' => 'checkbox',
-    'onchange' => 'if(this.checked) { ab._debugws = true; } else { ab._debugws = false; }',
-));
-echo $this->Form->input('debugrpc', array(
+<h3>Debug to console</h3>
+<fieldset>
+	<?php echo $this->Form->input('debugws', array(
+		'label' => 'WebSocket Protocol',
+		'type' => 'checkbox',
+		'onchange' => 'if(this.checked) { ab._debugws = true; } else { ab._debugws = false; }',
+	)); ?>
+</fieldset>
+<fieldset>
+	<?php echo $this->Form->input('debugrpc', array(
     'label' => 'RPC\'s',
     'type' => 'checkbox',
     'onchange' => 'if(this.checked) { ab._debugrpc = true; } else { ab._debugrpc = false; }',
-));
-echo $this->Form->input('debugpubsub', array(
+)); ?>
+</fieldset>
+<fieldset>
+	<?php echo $this->Form->input('debugpubsub', array(
     'label' => 'PubSub',
     'type' => 'checkbox',
     'onchange' => 'if(this.checked) { ab._debugpubsub = true; } else { ab._debugpubsub = false; }',
-));
-?>
+)); ?>
+</fieldset>
+
+<ul class="neat-array depth-0" id="autobahn_subscriptions">
+</ul>
 
 <script>
     if (ab._debugws) {
@@ -38,4 +45,12 @@ echo $this->Form->input('debugpubsub', array(
             ab_debugpubsub_element.checked = true;
         }
     }
+
+	setInterval(function() {
+		var html = '';
+		for (var i in cakeWamp.subscriptions) {
+			html += '<li>' + cakeWamp.subscriptions[i].topic + '</li>';
+		}
+		document.getElementById('autobahn_subscriptions').innerHTML = html;
+	}, 1000)
 </script>
