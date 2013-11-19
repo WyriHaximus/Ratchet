@@ -39,8 +39,6 @@ cakeWamp.connect = function() {
  * @returns void
  */
 cakeWamp.onconnect = function() {
-    cakeWamp.session.subscribe('Rachet.connection.keepAlive', function (topic, event) {});
-    
     for (var i in cakeWamp.onconnectListeners) {
         cakeWamp.onconnectListeners[i](cakeWamp.session);
     }
@@ -102,3 +100,8 @@ cakeWamp.publish = function() {
  * Connect to the websocket server
  */
 cakeWamp.connect();
+
+/**
+ * Listen to the default keepalive ping
+ */
+cakeWamp.subscribe('Rachet.connection.keepAlive', function (topic, event) {});
