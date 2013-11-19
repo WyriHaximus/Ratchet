@@ -252,6 +252,14 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * @param \Ratchet\ConnectionInterface $conn
  */
 	public function onClose(Conn $conn) {
+		foreach ($this->_topics as $topicName => $connections) {
+			foreach ($connections as $connectionId => $boolean) {
+				if ($connectionId == $conn->WAMP->sessionId) {
+					$this->onUnSubscribe($conn, $topicName);
+				}
+			}
+		}
+
 		$this->dispatchEvent('Rachet.WampServer.onClose', $this, array(
 			'connection' => $conn,
 			'wampServer' => $this,
