@@ -35,6 +35,13 @@ class WampHelper extends AppHelper {
 			'inline' => false,
 		));
 		$this->AssetCompress->script('Ratchet.wamp', array('block' => 'script'));
+
+		if (Configure::read('Ratchet.Connection.keepaliveInterval') > 0) {
+			$block = 'cakeWamp.subscribe(\'Rachet.connection.keepAlive\', function (topic, event) {});';
+			$this->Html->scriptBlock($block, array(
+				'inline' => false,
+			));
+		}
 	}
 
 }

@@ -100,8 +100,3 @@ cakeWamp.publish = function() {
  * Connect to the websocket server
  */
 cakeWamp.connect();
-
-/**
- * Listen to the default keepalive ping
- */
-cakeWamp.subscribe('Rachet.connection.keepAlive', function (topic, event) {});

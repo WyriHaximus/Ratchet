@@ -25,7 +25,7 @@ class RatchetKeepAliveListener implements CakeEventListener {
  *
  * @var string
  */
-	private $__timer;
+	private $__timer = null;
 
 /**
  * Return an array with events this listener implements
@@ -54,11 +54,13 @@ class RatchetKeepAliveListener implements CakeEventListener {
  * @param CakeEvent $event
  */
 	public function onSubscribeNewTopic(CakeEvent $event) {
-		$this->__timer = $this->__loop->addPeriodicTimer(Configure::read('Ratchet.Connection.keepaliveInterval'), function() use ($event) {
-			$event->data['topic']->broadcast('ping');
-		}, true);
+		if (Configure::read('Ratchet.Connection.keepaliveInterval') > 0) {
+			$this->__timer = $this->__loop->addPeriodicTimer(Configure::read('Ratchet.Connection.keepaliveInterval'), function() use ($event) {
+				$event->data['topic']->broadcast('ping');
+			}, true);
 
-		$event->data['topic']->broadcast('ping');
+			$event->data['topic']->broadcast('ping');
+		}
 	}
 
 /**
@@ -67,6 +69,8 @@ class RatchetKeepAliveListener implements CakeEventListener {
  * @param CakeEvent $event
  */
 	public function onUnSubscribeStaleTopic(CakeEvent $event) {
-		$this->__loop->cancelTimer($this->__timer);
+		if ($this->__timer !== null) {
+			$this->__loop->cancelTimer($this->__timer);
+		}
 	}
 }
