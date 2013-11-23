@@ -11,14 +11,14 @@
     'label' => 'RPC\'s',
     'type' => 'checkbox',
     'onchange' => 'if(this.checked) { ab._debugrpc = true; } else { ab._debugrpc = false; }',
-)); ?>
+	)); ?>
 </fieldset>
 <fieldset>
 	<?php echo $this->Form->input('debugpubsub', array(
     'label' => 'PubSub',
     'type' => 'checkbox',
     'onchange' => 'if(this.checked) { ab._debugpubsub = true; } else { ab._debugpubsub = false; }',
-)); ?>
+	)); ?>
 </fieldset>
 
 <ul class="neat-array depth-0" id="autobahn_subscriptions">
