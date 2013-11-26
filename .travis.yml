@@ -2,7 +2,6 @@ language: php
 
 php:
   - 5.3
-  - 5.3.3
   - 5.4
   - 5.5
 
@@ -10,6 +9,7 @@ env:
   global:
     - REPO_NAME=Ratchet
     - PLUGIN_NAME=Ratchet
+    - COMPOSER_VENDOR=Vendor
     - REQUIRE=""
 
   matrix:
