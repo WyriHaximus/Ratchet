@@ -1,6 +1,7 @@
 Ratchet
 =======
 
+[![Build Status](https://travis-ci.org/WyriHaximus/Ratchet.png)](https://travis-ci.org/WyriHaximus/Ratchet)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/WyriHaximus/ratchet/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 CakePHP plugin wrapping Ratchet
