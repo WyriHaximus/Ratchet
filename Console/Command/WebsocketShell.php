@@ -18,12 +18,12 @@ App::uses('RatchetMessageQueueProxy', 'Ratchet.Lib/MessageQueue/Transports');
 App::uses('RatchetMessageQueueModelUpdateCommand', 'RatchetModelPush.Lib/MessageQueue/Command');
 App::uses('RatchetMessageQueueKillSwitchCommand', 'RatchetCommands.Lib/MessageQueue/Command');
 
+use Ratchet\Http\HttpServer;
 use Ratchet\Server\FlashPolicy;
 use Ratchet\Server\IoServer;
+use Ratchet\Session\SessionProvider;
 use Ratchet\Wamp\WampServer;
 use Ratchet\WebSocket\WsServer;
-use Ratchet\Http\HttpServer;
-use Ratchet\Session\SessionProvider;
 use React\EventLoop\Factory as LoopFactory;
 use React\Socket\Server as Reactor;
 
