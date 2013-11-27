@@ -4,6 +4,7 @@ Ratchet
 [![Build Status](https://travis-ci.org/WyriHaximus/Ratchet.png)](https://travis-ci.org/WyriHaximus/Ratchet)
 [![Latest Stable Version](https://poser.pugx.org/WyriHaximus/Ratchet/v/stable.png)](https://packagist.org/packages/WyriHaximus/Ratchet)
 [![Total Downloads](https://poser.pugx.org/WyriHaximus/Ratchet/downloads.png)](https://packagist.org/packages/WyriHaximus/Ratchet)
+[![Coverage Status](https://coveralls.io/repos/WyriHaximus/Ratchet/badge.png)](https://coveralls.io/r/WyriHaximus/Ratchet)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/WyriHaximus/ratchet/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 CakePHP plugin wrapping Ratchet
