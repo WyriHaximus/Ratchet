@@ -51,6 +51,10 @@ class WebsocketShell extends Shell {
 	public function start() {
 		$this->__loop = LoopFactory::create();
 
+		if ($this->__loop instanceof \React\EventLoop\StreamSelectLoop) {
+			$this->out('<warning>Your configuration doesn\'t seem to support \'ext-libevent\'. It is highly reccomended that you install and configure it as it provides significant performance gains over stream select!</warning>');
+		}
+
 		$socket = new Reactor($this->__loop);
 		$socket->listen(Configure::read('Ratchet.Connection.websocket.port'), Configure::read('Ratchet.Connection.websocket.address'));
 		$this->__ioServer = new IoServer(
