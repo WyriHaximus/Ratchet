@@ -31,6 +31,8 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		$this->_hibernateListeners('Rachet.WampServer.construct');
+
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.construct#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.construct#';
 
@@ -43,6 +45,8 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
  */
 	public function tearDown() {
 		unset($this->AppServer);
+
+		$this->_wakeupListeners('Rachet.WampServer.construct');
 
 		parent::tearDown();
 	}
