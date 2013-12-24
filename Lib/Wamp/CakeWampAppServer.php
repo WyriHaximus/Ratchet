@@ -327,6 +327,9 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 		if ($this->_verbose) {
 			$time = microtime(true);
 			$time = explode('.', $time);
+			if (!isset($time[1])) {
+				$time[1] = 0;
+			}
 			$time[1] = str_pad($time[1], 4, 0);
 			$time = implode('.', $time);
 			$this->_shell->out('[<info>' . $time . '</info>] ' . $message);
