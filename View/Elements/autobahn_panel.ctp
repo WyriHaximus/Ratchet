@@ -1,24 +1,24 @@
 <h3>Debug to console</h3>
 <fieldset>
-	<?php echo $this->Form->input('debugws', array(
+	<?php echo $this->Form->input('debugws', [
 		'label' => 'WebSocket Protocol',
 		'type' => 'checkbox',
 		'onchange' => 'if(this.checked) { ab._debugws = true; } else { ab._debugws = false; }',
-	)); ?>
+	]); ?>
 </fieldset>
 <fieldset>
-	<?php echo $this->Form->input('debugrpc', array(
+	<?php echo $this->Form->input('debugrpc', [
     'label' => 'RPC\'s',
     'type' => 'checkbox',
     'onchange' => 'if(this.checked) { ab._debugrpc = true; } else { ab._debugrpc = false; }',
-	)); ?>
+	]); ?>
 </fieldset>
 <fieldset>
-	<?php echo $this->Form->input('debugpubsub', array(
+	<?php echo $this->Form->input('debugpubsub', [
     'label' => 'PubSub',
     'type' => 'checkbox',
     'onchange' => 'if(this.checked) { ab._debugpubsub = true; } else { ab._debugpubsub = false; }',
-	)); ?>
+	]); ?>
 </fieldset>
 
 <ul class="neat-array depth-0" id="autobahn_subscriptions">

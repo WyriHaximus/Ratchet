@@ -13,10 +13,10 @@ App::uses('AppHelper', 'View/Helper');
 
 class WampHelper extends AppHelper {
 
-	public $helpers = array(
+	public $helpers = [
 		'Html',
 		'AssetCompress.AssetCompress',
-	);
+	];
 
 	public function init() {
 		$block = '';
@@ -31,16 +31,16 @@ class WampHelper extends AppHelper {
 		$block .= Configure::read('Ratchet.Connection.external.hostname');
 		$block .= ':' . Configure::read('Ratchet.Connection.external.port');
 		$block .= '/' . Configure::read('Ratchet.Connection.external.path') . '";';
-		$this->Html->scriptBlock($block, array(
+		$this->Html->scriptBlock($block, [
 			'inline' => false,
-		));
-		$this->AssetCompress->script('Ratchet.wamp', array('block' => 'script'));
+		]);
+		$this->AssetCompress->script('Ratchet.wamp', ['block' => 'script']);
 
 		if (Configure::read('Ratchet.Connection.keepaliveInterval') > 0) {
 			$block = 'cakeWamp.subscribe(\'Rachet.connection.keepAlive\', function (topic, event) {});';
-			$this->Html->scriptBlock($block, array(
+			$this->Html->scriptBlock($block, [
 				'inline' => false,
-			));
+			]);
 		}
 	}
 

@@ -18,9 +18,9 @@ class CakeWampSessionHandlerTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->handler = new CakeWampSessionHandler();
-		$_SESSION = array(
+		$_SESSION = [
 			'foo' => 'bar',
-		);
+		];
 	}
 
 	public function tearDown() {

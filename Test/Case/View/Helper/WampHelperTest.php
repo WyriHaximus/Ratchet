@@ -30,26 +30,26 @@ class WampHelperTest extends CakeTestCase {
 		$request->webroot = '';
 		$this->view = new View($controller);
 		$this->view->request = $request;
-		$this->Helper = new WampHelper($this->view, array('noconfig' => true));
-		$this->Helper->Html = $this->getMock('HtmlHelper', array('scriptBlock'), array($this->view));
-		$this->Helper->AssetCompress = $this->getMock('AssetCompressHelper', array('script'), array($this->view, array('noconfig' => true)));
+		$this->Helper = new WampHelper($this->view, ['noconfig' => true]);
+		$this->Helper->Html = $this->getMock('HtmlHelper', ['scriptBlock'], [$this->view]);
+		$this->Helper->AssetCompress = $this->getMock('AssetCompressHelper', ['script'], [$this->view, ['noconfig' => true]]);
 
 		Router::reload();
 
-		Configure::write('Ratchet', array(
-			'Client' => array(
+		Configure::write('Ratchet', [
+			'Client' => [
 				'retryDelay' => 5000, // Not the best option but it speeds up development
 				'maxRetries' => 25, // Keep on trying! (Also not the best option)
-			),
-			'Connection' => array(
-				'external' => array(
+			],
+			'Connection' => [
+				'external' => [
 					'hostname' => 'localhost',
 					'port' => 80,
 					'path' => 'websocket',
 					'secure' => false,
-				),
-			),
-		));
+				],
+			],
+		]);
 	}
 
 /**
@@ -71,13 +71,13 @@ class WampHelperTest extends CakeTestCase {
 		$expectedScriptBlock = "WEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";";
 		$this->Helper->Html->expects($this->once())
 			->method('scriptBlock')
-			->with($expectedScriptBlock, $this->equalTo(array(
+			->with($expectedScriptBlock, $this->equalTo([
 				'inline' => false,
-			)));
+			]));
 
 		$this->Helper->AssetCompress->expects($this->once())
 			->method('script')
-			->with($this->equalTo('Ratchet.wamp'), $this->equalTo(array('block' => 'script')));
+			->with($this->equalTo('Ratchet.wamp'), $this->equalTo(['block' => 'script']));
 
 		$this->Helper->init();
 	}
@@ -94,18 +94,18 @@ class WampHelperTest extends CakeTestCase {
 
 		$this->Helper->Html->expects($this->at(0))
 			->method('scriptBlock')
-			->with($expectedScriptBlockA, $this->equalTo(array(
+			->with($expectedScriptBlockA, $this->equalTo([
 				'inline' => false,
-			)));
+			]));
 		$this->Helper->Html->expects($this->at(1))
 			->method('scriptBlock')
-			->with($expectedScriptBlockB, $this->equalTo(array(
+			->with($expectedScriptBlockB, $this->equalTo([
 				'inline' => false,
-			)));
+			]));
 
 		$this->Helper->AssetCompress->expects($this->once())
 			->method('script')
-			->with($this->equalTo('Ratchet.wamp'), $this->equalTo(array('block' => 'script')));
+			->with($this->equalTo('Ratchet.wamp'), $this->equalTo(['block' => 'script']));
 
 		$this->Helper->init();
 	}

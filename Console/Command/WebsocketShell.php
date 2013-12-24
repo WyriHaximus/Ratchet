@@ -69,7 +69,7 @@ class WebsocketShell extends Shell {
 							)
 						),
 						new CakeWampSessionHandler(),
-						array(),
+						[],
 						new PhpSerializeHandler()
 					)
 				)
@@ -103,13 +103,13 @@ class WebsocketShell extends Shell {
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-		$parser->addSubcommand('start', array(
+		$parser->addSubcommand('start', [
 			'help' => __('Starts and runs both the websocket service and the flashpolicy.')
-		))->description(__('Ratchet Websocket service.'))->addOption('verbose', array(
-					'help' => 'Enable verbose output.',
-					'short' => 'v',
-					'boolean' => true
-				));
+		])->description(__('Ratchet Websocket service.'))->addOption('verbose', [
+			'help' => 'Enable verbose output.',
+			'short' => 'v',
+			'boolean' => true
+		]);
 		return $parser;
 	}
 

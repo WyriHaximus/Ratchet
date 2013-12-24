@@ -16,14 +16,14 @@ App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
 class SessionHandlerImposer {
 
 	public function all() {
-		return array();
+		return [];
 	}
 
 }
 
 class CakeWampAppServerTest extends CakeRatchetTestCase {
 
-	private $__expectedOutput = array();
+	private $__expectedOutput = [];
 
 /**
  * {@inheritdoc}
@@ -64,19 +64,19 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 	}
 
 	public function testGetTopics() {
-		$this->assertEquals($this->AppServer->getTopics(), array());
+		$this->assertEquals($this->AppServer->getTopics(), []);
 		$this->assertEquals(count($this->AppServer->getTopics()), 0);
 	}
 
 	public function testGetTopicNameProvider() {
-		return array(
-			array(
+		return [
+			[
 				'test',
-			),
-			array(
+			],
+			[
 				new \Ratchet\Wamp\Topic('test'),
-			),
-		);
+			],
+		];
 	}
 
 /**
@@ -98,15 +98,14 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
 
 		$callbackFired = false;
-		$that = $this;
-		$eventCallback = function($event) use($that, &$callbackFired, $conn) {
-			$that->assertEquals($event->data, array(
+		$eventCallback = function($event) use(&$callbackFired, $conn) {
+			$this->assertEquals($event->data, [
 				'connection' => $conn,
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired = true;
 		};
 		CakeEventManager::instance()->attach($eventCallback, 'Rachet.WampServer.onOpen');
@@ -134,15 +133,14 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Closed connection: [<info>0-9a-zA-Z</info>]+#';
 
 		$callbackFired = false;
-		$that = $this;
-		$eventCallback = function($event) use($that, &$callbackFired, $conn) {
-			$that->assertEquals($event->data, array(
+		$eventCallback = function($event) use(&$callbackFired, $conn) {
+			$this->assertEquals($event->data, [
 				'connection' => $conn,
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired = true;
 		};
 		CakeEventManager::instance()->attach($eventCallback, 'Rachet.WampServer.onClose');
@@ -157,41 +155,41 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 	}
 
 	public function testOnCallProvider() {
-		return array(
-			array(
+		return [
+			[
 				'test',
-			),
-			array(
+			],
+			[
 				new \Ratchet\Wamp\Topic('test'),
-			),
-		);
+			],
+		];
 	}
 
 /**
  * @dataProvider testOnCallProvider
  */
 	public function testOnCall($topic) {
-		$that = $this;
-
 		$callbackFired = false;
-		$results = array('foo:bar');
+		$results = [
+			'foo:bar',
+		];
 
 		$this->_hibernateListeners('Rachet.WampServer.Rpc.' . $topic);
 
-		$mock = $this->getMock('\\Ratchet\\ConnectionInterface', array(
+		$mock = $this->getMock('\\Ratchet\\ConnectionInterface', [
 			'send',
 			'close',
-		));
+		]);
 
 		$deferred = new \React\Promise\Deferred();
 		$deferred->promise()->then(function($results) {
 		}, function($results) {
 		});
-		$conn = $this->getMock('\\Ratchet\\Wamp\\WampConnection', array(
+		$conn = $this->getMock('\\Ratchet\\Wamp\\WampConnection', [
 			'callResult',
-		), array(
+		], [
 			$mock,
-		));
+		]);
 		$conn->expects($this->once())
 			->method('callResult')
 			->with(1, $results);
@@ -204,22 +202,22 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info> Rachet.WampServer.Rpc.test call (1) took <info>[0-9]+.[0-9]+ms</info>] and succeeded#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc.' . $topic . '#';
 
-		$eventCallback = function($event) use($that, &$callbackFired, $conn, $topic, $deferred, $results) {
+		$eventCallback = function($event) use(&$callbackFired, $conn, $topic, $deferred, $results) {
 			$resolver = $deferred->resolver();
 
-			$that->assertEquals($event->data, array(
+			$this->assertEquals($event->data, [
 				'connection' => $conn,
 				'promise' => $resolver,
 				'id' => 1,
 				'topic' => $topic,
-				'params' => array(
+				'params' => [
 					'foo' => 'bar',
-				),
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				],
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired = true;
 
 			$event->data['promise']->resolve($results);
@@ -227,9 +225,9 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		CakeEventManager::instance()->attach($eventCallback, 'Rachet.WampServer.Rpc.' . $topic);
 
 		$this->AppServer->onOpen($conn);
-		$this->AppServer->onCall($conn, 1, $topic, array(
+		$this->AppServer->onCall($conn, 1, $topic, [
 			'foo' => 'bar',
-		));
+		]);
 
 		$this->assertTrue($callbackFired);
 		$this->assertSame(0, count($this->__expectedOutput));
@@ -238,41 +236,39 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 	}
 
 	public function testOnCallRejectProvider() {
-		return array(
-			array(
+		return [
+			[
 				'test',
-			),
-			array(
+			],
+			[
 				new \Ratchet\Wamp\Topic('test'),
-			),
-		);
+			],
+		];
 	}
 
 /**
  * @dataProvider testOnCallRejectProvider
  */
 	public function testOnCallReject($topic) {
-		$that = $this;
-
 		$callbackFired = false;
 		$results = 'foo:bar';
 
 		$this->_hibernateListeners('Rachet.WampServer.Rpc.' . $topic);
 
-		$mock = $this->getMock('\\Ratchet\\ConnectionInterface', array(
+		$mock = $this->getMock('\\Ratchet\\ConnectionInterface', [
 			'send',
 			'close',
-		));
+		]);
 
 		$deferred = new \React\Promise\Deferred();
 		$deferred->promise()->then(function($results) {
 		}, function($results) {
 		});
-		$conn = $this->getMock('\\Ratchet\\Wamp\\WampConnection', array(
+		$conn = $this->getMock('\\Ratchet\\Wamp\\WampConnection', [
 			'callError',
-		), array(
+		], [
 			$mock,
-		));
+		]);
 		$conn->expects($this->once())
 			->method('callError')
 			->with(1, $results, '', null);
@@ -285,22 +281,22 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info> Rachet.WampServer.Rpc.test call (1) took <info>[0-9]+.[0-9]+ms</info>] and failed#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc.' . $topic . '#';
 
-		$eventCallback = function($event) use($that, &$callbackFired, $conn, $topic, $deferred, $results) {
+		$eventCallback = function($event) use(&$callbackFired, $conn, $topic, $deferred, $results) {
 			$resolver = $deferred->resolver();
 
-			$that->assertEquals($event->data, array(
+			$this->assertEquals($event->data, [
 				'connection' => $conn,
 				'promise' => $resolver,
 				'id' => 1,
 				'topic' => $topic,
-				'params' => array(
+				'params' => [
 					'foo' => 'bar',
-				),
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				],
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired = true;
 
 			$event->data['promise']->reject($results);
@@ -308,9 +304,9 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		CakeEventManager::instance()->attach($eventCallback, 'Rachet.WampServer.Rpc.' . $topic);
 
 		$this->AppServer->onOpen($conn);
-		$this->AppServer->onCall($conn, 1, $topic, array(
+		$this->AppServer->onCall($conn, 1, $topic, [
 			'foo' => 'bar',
-		));
+		]);
 
 		$this->assertTrue($callbackFired);
 		$this->assertSame(0, count($this->__expectedOutput));
@@ -319,14 +315,14 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 	}
 
 	public function testOnPublishProvider() {
-		return array(
-			array(
+		return [
+			[
 				'test',
-			),
-			array(
+			],
+			[
 				new \Ratchet\Wamp\Topic('test'),
-			),
-		);
+			],
+		];
 	}
 
 /**
@@ -345,30 +341,29 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onPublish.' . $topic . '#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onPublish.' . $topic . '#';
 
-		$exclude = array(
+		$exclude = [
 			'foo' => 'bar',
-		);
-		$eligible = array(
+		];
+		$eligible = [
 			'bar' => 'foo',
-		);
-		$eventData = array(
+		];
+		$eventData = [
 			'faa' => 'bor',
-		);
+		];
 
 		$callbackFired = false;
-		$that = $this;
-		$eventCallback = function($event) use($that, &$callbackFired, $conn, $topic, $exclude, $eligible, $eventData) {
-			$that->assertEquals($event->data, array(
+		$eventCallback = function($event) use(&$callbackFired, $conn, $topic, $exclude, $eligible, $eventData) {
+			$this->assertEquals($event->data, [
 				'connection' => $conn,
 				'topic' => $topic,
 				'event' => $eventData,
 				'exclude' => $exclude,
 				'eligible' => $eligible,
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired = true;
 		};
 		CakeEventManager::instance()->attach($eventCallback, 'Rachet.WampServer.onPublish.' . $topic);
@@ -383,14 +378,14 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 	}
 
 	public function testOnSubscribeProvider() {
-		return array(
-			array(
+		return [
+			[
 				'test',
-			),
-			array(
+			],
+			[
 				new \Ratchet\Wamp\Topic('test'),
-			),
-		);
+			],
+		];
 	}
 
 /**
@@ -420,23 +415,22 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onSubscribe.' . $topic . '#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onSubscribe.' . $topic . '#';
 
-		$callbackFired = array(
+		$callbackFired = [
 			false,
 			false,
 			false,
-		);
+		];
 		$callbackFiredI = 0;
-		$that = $this;
 
-		$eventCallback1 = function($event) use($that, &$callbackFired, &$callbackFiredI, $conn1, $topic) {
-			$that->assertEquals($event->data, array(
+		$eventCallback1 = function($event) use(&$callbackFired, &$callbackFiredI, $conn1, $topic) {
+			$this->assertEquals($event->data, [
 				'connection' => $conn1,
 				'topic' => $topic,
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired[$callbackFiredI++] = true;
 		};
 		CakeEventManager::instance()->attach($eventCallback1, 'Rachet.WampServer.onSubscribeNewTopic.' . $topic);
@@ -448,15 +442,15 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		CakeEventManager::instance()->detach($eventCallback1, 'Rachet.WampServer.onSubscribe.' . $topic);
 		CakeEventManager::instance()->detach($eventCallback1, 'Rachet.WampServer.onSubscribe.' . $topic);
 
-		$eventCallback2 = function($event) use($that, &$callbackFired, &$callbackFiredI, $conn2, $topic) {
-			$that->assertEquals($event->data, array(
+		$eventCallback2 = function($event) use(&$callbackFired, &$callbackFiredI, $conn2, $topic) {
+			$this->assertEquals($event->data, [
 				'connection' => $conn2,
 				'topic' => $topic,
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired[$callbackFiredI++] = true;
 		};
 		CakeEventManager::instance()->attach($eventCallback2, 'Rachet.WampServer.onSubscribeNewTopic.' . $topic);
@@ -479,14 +473,14 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 	}
 
 	public function testOnUnSubscribeProvider() {
-		return array(
-			array(
+		return [
+			[
 				'test',
-			),
-			array(
+			],
+			[
 				new \Ratchet\Wamp\Topic('test'),
-			),
-		);
+			],
+		];
 	}
 
 /**
@@ -525,26 +519,25 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onUnSubscribe.' . $topic . '#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onUnSubscribe.' . $topic . '#';
 
-		$callbackFired = array(
+		$callbackFired = [
 			false,
 			false,
 			false,
 			false,
 			false,
 			false,
-		);
+		];
 		$callbackFiredI = 0;
-		$that = $this;
 
-		$eventCallback1 = function($event) use($that, &$callbackFired, &$callbackFiredI, $conn1, $topic) {
-			$that->assertEquals($event->data, array(
+		$eventCallback1 = function($event) use(&$callbackFired, &$callbackFiredI, $conn1, $topic) {
+			$this->assertEquals($event->data, [
 				'connection' => $conn1,
 				'topic' => $topic,
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired[$callbackFiredI++] = true;
 		};
 
@@ -555,15 +548,15 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		CakeEventManager::instance()->detach($eventCallback1, 'Rachet.WampServer.onSubscribe.' . $topic);
 		CakeEventManager::instance()->detach($eventCallback1, 'Rachet.WampServer.onSubscribe.' . $topic);
 
-		$eventCallback2 = function($event) use($that, &$callbackFired, &$callbackFiredI, $conn2, $topic) {
-			$that->assertEquals($event->data, array(
+		$eventCallback2 = function($event) use(&$callbackFired, &$callbackFiredI, $conn2, $topic) {
+			$this->assertEquals($event->data, [
 				'connection' => $conn2,
 				'topic' => $topic,
-				'wampServer' => $that->AppServer,
-				'connectionData' => array(
-					'session' => array(),
-				),
-			));
+				'wampServer' => $this->AppServer,
+				'connectionData' => [
+					'session' => [],
+				],
+			]);
 			$callbackFired[$callbackFiredI++] = true;
 		};
 		CakeEventManager::instance()->attach($eventCallback2, 'Rachet.WampServer.onSubscribeNewTopic.' . $topic);

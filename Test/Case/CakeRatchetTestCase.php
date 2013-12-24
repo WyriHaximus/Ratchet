@@ -13,7 +13,7 @@ App::uses('CakeEventManager', 'Event');
 
 abstract class CakeRatchetTestCase extends CakeTestCase {
 
-	private $__preservedEventListeners = array();
+	private $__preservedEventListeners = [];
 
 	protected function _hibernateListeners($eventKey) {
 		$this->__preservedEventListeners[$eventKey] = CakeEventManager::instance()->listeners($eventKey);
@@ -29,12 +29,12 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 		}
 
 		foreach ($this->__preservedEventListeners[$eventKey] as $eventListener) {
-			CakeEventManager::instance()->attach($eventListener['callable'], $eventKey, array(
+			CakeEventManager::instance()->attach($eventListener['callable'], $eventKey, [
 				'passParams' => $eventListener['passParams'],
-			));
+			]);
 		}
 
-		$this->__preservedEventListeners = array();
+		$this->__preservedEventListeners = [];
 	}
 
 }

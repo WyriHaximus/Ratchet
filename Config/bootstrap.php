@@ -13,25 +13,25 @@
 /**
  * Configuration
  */
-Configure::write('Ratchet', array(
-	'Client' => array(
+Configure::write('Ratchet', [
+	'Client' => [
 		'retryDelay' => 5000, // Not the best option but it speeds up development
 		'maxRetries' => 25, // Keep on trying! (Also not the best option)
-	),
-	'Connection' => array(
-		'websocket' => array(
+	],
+	'Connection' => [
+		'websocket' => [
 			'address' => '0.0.0.0',
 			'port' => 11001,
-		),
-		'external' => array(
+		],
+		'external' => [
 			'hostname' => 'localhost',
 			'port' => 80,
 			'path' => 'websocket',
 			'secure' => false,
-		),
+		],
 		'keepaliveInterval' => 23, // Why 23? Because NGINX kills after 30 seconds, set to 0 to disable
-	),
-));
+	],
+]);
 
 App::uses('CakeEventManager', 'Event');
 

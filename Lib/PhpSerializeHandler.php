@@ -26,11 +26,11 @@ class PhpSerializeHandler implements HandlerInterface {
 	public function unserialize($raw) {
 		$data = unserialize($raw);
 		if (!$data) {
-			$data = array();
+			$data = [];
 		}
 
-		return array(
+		return [
 			'_sf2_attributes' => $data,
-		);
+		];
 	}
 }
