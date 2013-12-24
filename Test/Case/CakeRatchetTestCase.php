@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+App::uses('CakeEventManager', 'Event');
+
 abstract class CakeRatchetTestCase extends CakeTestCase {
 
 	private $__preservedEventListeners = array();
