@@ -171,23 +171,45 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
  * @dataProvider testOnCallProvider
  */
 	public function testOnCall($topic) {
+		$that = $this;
+
+		$callbackFired = false;
+		$results = array('foo:bar');
+
 		$this->_hibernateListeners('Rachet.WampServer.Rpc.' . $topic);
 
-		$mock = $this->getMock('\\Ratchet\\ConnectionInterface');
-		$conn = new Ratchet\Wamp\WampConnection($mock);
+		$mock = $this->getMock('\\Ratchet\\ConnectionInterface', array(
+			'send',
+			'close',
+		));
+
+		$deferred = new \React\Promise\Deferred();
+		$deferred->promise()->then(function($results) {
+		}, function($results) {
+		});
+		$conn = $this->getMock('\\Ratchet\\Wamp\\WampConnection', array(
+			'callResult',
+		), array(
+			$mock,
+		));
+		$conn->expects($this->once())
+			->method('callResult')
+			->with(1, $results);
 		$conn->Session = new SessionHandlerImposer();
 
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc.' . $topic . '#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info> Rachet.WampServer.Rpc.test call (1) took <info>[0-9]+.[0-9]+ms</info>] and succeeded#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc.' . $topic . '#';
 
-		$callbackFired = false;
-		$that = $this;
-		$eventCallback = function($event) use($that, &$callbackFired, $conn, $topic) {
+		$eventCallback = function($event) use($that, &$callbackFired, $conn, $topic, $deferred, $results) {
+			$resolver = $deferred->resolver();
+
 			$that->assertEquals($event->data, array(
 				'connection' => $conn,
+				'promise' => $resolver,
 				'id' => 1,
 				'topic' => $topic,
 				'params' => array(
@@ -199,6 +221,89 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 				),
 			));
 			$callbackFired = true;
+
+			$event->data['promise']->resolve($results);
+		};
+		CakeEventManager::instance()->attach($eventCallback, 'Rachet.WampServer.Rpc.' . $topic);
+
+		$this->AppServer->onOpen($conn);
+		$this->AppServer->onCall($conn, 1, $topic, array(
+			'foo' => 'bar',
+		));
+
+		$this->assertTrue($callbackFired);
+		$this->assertSame(0, count($this->__expectedOutput));
+		CakeEventManager::instance()->detach($eventCallback, 'Rachet.WampServer.Rpc.' . $topic);
+		$this->_wakeupListeners('Rachet.WampServer.Rpc.' . $topic);
+	}
+
+	public function testOnCallRejectProvider() {
+		return array(
+			array(
+				'test',
+			),
+			array(
+				new \Ratchet\Wamp\Topic('test'),
+			),
+		);
+	}
+
+/**
+ * @dataProvider testOnCallRejectProvider
+ */
+	public function testOnCallReject($topic) {
+		$that = $this;
+
+		$callbackFired = false;
+		$results = 'foo:bar';
+
+		$this->_hibernateListeners('Rachet.WampServer.Rpc.' . $topic);
+
+		$mock = $this->getMock('\\Ratchet\\ConnectionInterface', array(
+			'send',
+			'close',
+		));
+
+		$deferred = new \React\Promise\Deferred();
+		$deferred->promise()->then(function($results) {
+		}, function($results) {
+		});
+		$conn = $this->getMock('\\Ratchet\\Wamp\\WampConnection', array(
+			'callError',
+		), array(
+			$mock,
+		));
+		$conn->expects($this->once())
+			->method('callError')
+			->with(1, $results, '', null);
+		$conn->Session = new SessionHandlerImposer();
+
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc.' . $topic . '#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info> Rachet.WampServer.Rpc.test call (1) took <info>[0-9]+.[0-9]+ms</info>] and failed#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc.' . $topic . '#';
+
+		$eventCallback = function($event) use($that, &$callbackFired, $conn, $topic, $deferred, $results) {
+			$resolver = $deferred->resolver();
+
+			$that->assertEquals($event->data, array(
+				'connection' => $conn,
+				'promise' => $resolver,
+				'id' => 1,
+				'topic' => $topic,
+				'params' => array(
+					'foo' => 'bar',
+				),
+				'wampServer' => $that->AppServer,
+				'connectionData' => array(
+					'session' => array(),
+				),
+			));
+			$callbackFired = true;
+
+			$event->data['promise']->reject($results);
 		};
 		CakeEventManager::instance()->attach($eventCallback, 'Rachet.WampServer.Rpc.' . $topic);
 

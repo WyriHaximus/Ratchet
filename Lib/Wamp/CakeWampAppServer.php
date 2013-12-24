@@ -155,19 +155,28 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 	public function onCall(Conn $conn, $id, $topic, array $params) {
 		$topicName = self::getTopicName($topic);
 
+		$start = microtime(true);
+
 		$deferred = new \React\Promise\Deferred();
-		$deferred->promise()->then(function($results) use ($conn, $id) {
+		$deferred->promise()->then(function($results) use ($conn, $id, $topicName, $start) {
+			$end = microtime(true);
 			$conn->callResult(
 				$id,
 				$results
 			);
-		}, function($errorUri, $desc = '', $details = null) use ($conn, $id) {
+
+			$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 'ms</info> and succeeded');
+		}, function($errorUri, $desc = '', $details = null) use ($conn, $id, $topicName, $start) {
+			$end = microtime(true);
+
 			$conn->callError(
 				$id,
 				$errorUri,
 				$desc,
 				$details
 			);
+
+			$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 'ms</info> and failed');
 		});
 
 		$this->dispatchEvent('Rachet.WampServer.Rpc.' . $topicName, $this, array(
