@@ -21,9 +21,9 @@ The plusOne function has to call `callResult` sending the RPC result back to the
 
 ```php
 	public function plusOne($event) {
-		$event->data['connection']->callResult($event->data['id'], [
-			++$event->data['value'],
-		]);
+		$event->data['promise']->resolve([
+            ++$event->data['value'],
+        ]);
 	}
 ```
 
