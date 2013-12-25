@@ -12,10 +12,10 @@ There are a few different connection settings groups involved.
 The websocket group contains 2 settings `ip` and `port`.
 
 ```php
-Configure::write('Ratchet.Connection.websocket', array(
+Configure::write('Ratchet.Connection.websocket', [
     'address' => '0.0.0.0', // The IP to listen on
     'port' => 11001, // The port to listen on
-));
+]);
 ```
 
 
@@ -24,12 +24,12 @@ Configure::write('Ratchet.Connection.websocket', array(
 The external group defines the external interface of the websocket server.
 
 ```php
-Configure::write('Ratchet.Connection.external', array(
+Configure::write('Ratchet.Connection.external', [
     'hostname' => 'cakeplugindev.xps8500dev', // The hostname (or IP) serving the websocket server
     'port' => 80, The port the websocket server is served over (note that this can be on the same ort as your HTTP server due to proxies like HAproxy or nginx)
     'path' => 'websocket', // Path
     'secure' => false, // Secure connection or not
-));
+]);
 ```
 
 Note for [HAproxy check here](http://socketo.me/docs/deploy#serverconfiguration) and [nginx here](http://blog.wyrihaximus.net/2013/05/serving-websockets-and-cakephp-on-the-same-domain-and-port-with-nginx/).
@@ -47,10 +47,10 @@ Configure::write('Ratchet.Connection.keepaliveInterval', 23);
 On the client side there are 2 settings. The retry delay (in miliseconds) and the number of times to try reconnecting to the server.
 
 ```php
-Configure::write('Ratchet.Client', array(
+Configure::write('Ratchet.Client', [
 	'retryDelay' => 500, // Not the best option but it speeds up development
 	'maxRetries' => 500, // Keep on trying! (Also not the best option)
-));
+]);
 ```
 
 # Queue #
@@ -62,10 +62,10 @@ Ratchet comes with a message queue to send messages to the server instance. (For
 ZMQ requires little configuration, just an IP and port.
 
 ```php
-Configure::write('RatchetCommands.Queue', array(
+Configure::write('RatchetCommands.Queue', [
     'type' => 'ZMQ',
     'server' => 'tcp://127.0.0.1:13001',
-),
+]);
 ```
 
 ## (P)Redis ##
@@ -73,14 +73,14 @@ Configure::write('RatchetCommands.Queue', array(
 Predis requires a bit more configuration as it's not a dedicated socket but a database. Therefore we need to specify the database number and key we'll be using to communicate over.
 
 ```php
-Configure::write('RatchetCommands.Queue', array(
+Configure::write('RatchetCommands.Queue', [
 	'type' => 'Predis',
     'key' => 'test_reddis_opuapugfoyiufgiawe',
-    'server' => array(
+    'server' => [
         'scheme' => 'tcp',
         'host' => '127.0.0.1',
         'port' => 6379,
         'database' => 12,
-    ),
-),
+    ],
+];
 ```

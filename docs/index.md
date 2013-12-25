@@ -12,21 +12,21 @@ On the client side:
 
 On the serverside in your model file:
 -------------------------------------
-    public $actsAs = array(
-        'Ratchet.Pushable' => array(
-            'events' => array(
-                array( // Only fire when a reccord is created
+    public $actsAs = [
+        'Ratchet.Pushable' => [
+            'events' => [
+                [ // Only fire when a reccord is created
                     'eventName' => 'Model.created',
                     'created' => true,
-                ),
-                array( // Fires for all updated reccords
+                ],
+                [ // Fires for all updated reccords
                     'eventName' => 'Model.updated',
                     'created' => false,
-                ),
-                array( // Fires 'Model.updated.1' for model with the id 1
+                ],
+                [ // Fires 'Model.updated.1' for model with the id 1
                     'eventName' => 'Model.updated.{id}',
                     'created' => false,
-                ),
-            ),
+                ],
+            ],
         ),
     );

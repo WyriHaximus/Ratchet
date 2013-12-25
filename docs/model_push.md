@@ -21,24 +21,24 @@ The data is passed into the event as a 1 dimensional array.
 <?php
 
 class Model extends AppModel {
-    public $actsAs = array(
-        'Ratchet.Pushable' => array(
-            'events' => array(
-                array(
+    public $actsAs = [
+        'Ratchet.Pushable' => [
+            'events' => [
+                [
                     'eventName' => 'WyriProject.created',
                     'created' => true,
-                ),
-                array(
+                ],
+                [
                     'eventName' => 'WyriProject.updated',
                     'created' => false,
-                ),
-                array(
+                ],
+                [
                     'eventName' => 'WyriProject.updated.{id}',
                     'created' => false,
                     'fields' => true,
-                ),
-            ),
-        ), 
+                ],
+            ],
+        ],
     );
 }
 ```

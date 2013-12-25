@@ -10,9 +10,9 @@ Creating an RPC is simple and requires you to listen to `Rachet.WampServer.Rpc.Y
 ```php
 class PlusOnelListener implements CakeEventListener {
     public function implementedEvents() {
-        return array(
+        return [
             'Rachet.WampServer.Rpc.plusOne' => 'plusOne'
-        );
+        ];
     }
 }
 ```
@@ -21,9 +21,9 @@ The plusOne function has to call `callResult` sending the RPC result back to the
 
 ```php
 	public function plusOne($event) {
-		$event->data['connection']->callResult($event->data['id'], array(
+		$event->data['connection']->callResult($event->data['id'], [
 			++$event->data['value'],
-		));
+		]);
 	}
 ```
 
