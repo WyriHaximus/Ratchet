@@ -15,6 +15,8 @@ Ratchet for CakePHP brings [the Ratchet websocket](http://socketo.me/) server to
 
 ## Getting started ##
 
+Keep in mind that this should only be used to push data around. Handling and processing that data is the applications job this plugin is only to get it from and to the client.
+
 #### 1. Requirements ####
 
 This plugin depends on the following plugins and libraries and are pulled in by composer later on:
