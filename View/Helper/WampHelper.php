@@ -24,7 +24,7 @@ class WampHelper extends AppHelper {
 		$block .= 'var cakeWamp = window.cakeWamp || {};' . PHP_EOL;
 		$block .= 'cakeWamp.options = {';
 		$block .= 'retryDelay: ' . (int)Configure::read('Ratchet.Client.retryDelay') . ',';
-		$block .= 'maxRetries: ' . (int)Configure::read('Ratchet.Client.maxRetries') . '';
+		$block .= 'maxRetries: ' . (int)Configure::read('Ratchet.Client.maxRetries');
 		$block .= '};' . PHP_EOL;
 		$block .= 'var wsuri = "';
 		$block .= ((Configure::read('Ratchet.Connection.external.secure')) ? 'wss' : 'ws') . '://';
