@@ -23,6 +23,10 @@ class WampHelper extends AppHelper {
 		$block .= 'WEB_SOCKET_SWF_LOCATION = "' . $this->Html->url('/Ratchet/swf/WebSocketMain.swf', true) . '";' . PHP_EOL;
 		$block .= 'var cakeWamp = window.cakeWamp || {};' . PHP_EOL;
 		$block .= 'cakeWamp.options = {';
+		if (Configure::read('debug') == 2) {
+			//$block .= 'debugWs: true,';
+			$block .= 'debugWamp: true,';
+		}
 		$block .= 'retryDelay: ' . (int)Configure::read('Ratchet.Client.retryDelay') . ',';
 		$block .= 'maxRetries: ' . (int)Configure::read('Ratchet.Client.maxRetries');
 		$block .= '};' . PHP_EOL;

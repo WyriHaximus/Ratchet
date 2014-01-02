@@ -24,6 +24,16 @@ cakeWamp.onhangupListeners = [];
  * @returns void
  */
 cakeWamp.connect = function() {
+
+    if (cakeWamp.options.debugWamp) {
+        ab._debugrpc = true;
+        ab._debugpubsub = true;
+    }
+
+    if (cakeWamp.options.debugWs) {
+        ab._debugws = true;
+    }
+
     ab.connect(wsuri, function(session) {
         cakeWamp.session = session;
         
