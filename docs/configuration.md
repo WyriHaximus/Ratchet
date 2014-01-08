@@ -26,7 +26,7 @@ The external group defines the external interface of the websocket server.
 ```php
 Configure::write('Ratchet.Connection.external', [
     'hostname' => 'cakeplugindev.xps8500dev', // The hostname (or IP) serving the websocket server
-    'port' => 80, The port the websocket server is served over (note that this can be on the same ort as your HTTP server due to proxies like HAproxy or nginx)
+    'port' => 80, // The port the websocket server is served over (note that this can be on the same ort as your HTTP server due to proxies like HAproxy or nginx)
     'path' => 'websocket', // Path
     'secure' => false, // Secure connection or not
 ]);
