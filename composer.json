@@ -26,5 +26,8 @@
         "cboden/Ratchet": "0.3.*",
         "composer/installers": "*",
         "markstory/asset_compress": "v0.9"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "~0.6"
     }
 }
