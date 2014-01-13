@@ -165,7 +165,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 				$results
 			);
 
-			$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 'ms</info> and succeeded');
+			$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 's</info> and succeeded');
 		}, function($errorUri, $desc = '', $details = null) use ($conn, $id, $topicName, $start) {
 			$end = microtime(true);
 
@@ -176,7 +176,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 				$details
 			);
 
-			$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 'ms</info> and failed');
+			$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 's</info> and failed');
 		});
 
 		$this->dispatchEvent('Rachet.WampServer.Rpc.' . $topicName, $this, [
