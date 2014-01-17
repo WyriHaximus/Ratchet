@@ -133,6 +133,16 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 
 		$topicName = self::getTopicName($topic);
 
+		$this->dispatchEvent('Rachet.WampServer.onPublish', $this, [
+			'connection' => $conn,
+			'topic' => $topic,
+			'event' => $event,
+			'exclude' => $exclude,
+			'eligible' => $eligible,
+			'wampServer' => $this,
+			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+		]);
+
 		$this->dispatchEvent('Rachet.WampServer.onPublish.' . $topicName, $this, [
 			'connection' => $conn,
 			'topic' => $topic,
@@ -202,6 +212,14 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 		if (!isset($this->_topics[$topicName])) {
 			$this->_topics[$topicName] = [];
 
+
+            $this->dispatchEvent('Rachet.WampServer.onSubscribeNewTopic', $this, [
+                'connection' => $conn,
+                'topic' => $topic,
+                'wampServer' => $this,
+                'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+            ]);
+
 			$this->dispatchEvent('Rachet.WampServer.onSubscribeNewTopic.' . $topicName, $this, [
 				'connection' => $conn,
 				'topic' => $topic,
@@ -210,7 +228,14 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 			]);
 		}
 
-		$this->dispatchEvent('Rachet.WampServer.onSubscribe.' . $topicName, $this, [
+		$this->dispatchEvent('Rachet.WampServer.onSubscribe', $this, [
+			'connection' => $conn,
+			'topic' => $topic,
+			'wampServer' => $this,
+			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+		]);
+
+        $this->dispatchEvent('Rachet.WampServer.onSubscribe.' . $topicName, $this, [
 			'connection' => $conn,
 			'topic' => $topic,
 			'wampServer' => $this,
@@ -234,6 +259,13 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 		if (isset($this->_topics[$topicName]) && count($this->_topics[$topicName]) == 0) {
 			unset($this->_topics[$topicName]);
 
+			$this->dispatchEvent('Rachet.WampServer.onUnSubscribeStaleTopic', $this, [
+				'connection' => $conn,
+				'topic' => $topic,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+			]);
+
 			$this->dispatchEvent('Rachet.WampServer.onUnSubscribeStaleTopic.' . $topicName, $this, [
 				'connection' => $conn,
 				'topic' => $topic,
@@ -241,6 +273,13 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]);
 		}
+
+        $this->dispatchEvent('Rachet.WampServer.onUnSubscribe', $this, [
+            'connection' => $conn,
+            'topic' => $topic,
+            'wampServer' => $this,
+            'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+        ]);
 
 		$this->dispatchEvent('Rachet.WampServer.onUnSubscribe.' . $topicName, $this, [
 			'connection' => $conn,
