@@ -134,6 +134,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 		$topicName = self::getTopicName($topic);
 
 		$this->dispatchEvent('Rachet.WampServer.onPublish', $this, [
+            'topicName' => $topicName,
 			'connection' => $conn,
 			'topic' => $topic,
 			'event' => $event,
@@ -214,6 +215,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 
 
             $this->dispatchEvent('Rachet.WampServer.onSubscribeNewTopic', $this, [
+                'topicName' => $topicName,
                 'connection' => $conn,
                 'topic' => $topic,
                 'wampServer' => $this,
@@ -229,6 +231,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 		}
 
 		$this->dispatchEvent('Rachet.WampServer.onSubscribe', $this, [
+			'topicName' => $topicName,
 			'connection' => $conn,
 			'topic' => $topic,
 			'wampServer' => $this,
@@ -260,6 +263,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 			unset($this->_topics[$topicName]);
 
 			$this->dispatchEvent('Rachet.WampServer.onUnSubscribeStaleTopic', $this, [
+				'topicName' => $topicName,
 				'connection' => $conn,
 				'topic' => $topic,
 				'wampServer' => $this,
@@ -275,6 +279,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 		}
 
         $this->dispatchEvent('Rachet.WampServer.onUnSubscribe', $this, [
+            'topicName' => $topicName,
             'connection' => $conn,
             'topic' => $topic,
             'wampServer' => $this,
