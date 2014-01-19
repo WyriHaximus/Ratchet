@@ -198,6 +198,8 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc.' . $topic . '#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info> Rachet.WampServer.Rpc.test call (1) took <info>[0-9]+.[0-9]+s</info>] and succeeded#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc.' . $topic . '#';
@@ -277,6 +279,8 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] New connection: [<info>0-9a-zA-Z</info>]+#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#';
+		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc.' . $topic . '#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info> Rachet.WampServer.Rpc.test call (1) took <info>[0-9]+.[0-9]+s</info>] and failed#';
 		$this->__expectedOutput[] = '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc.' . $topic . '#';

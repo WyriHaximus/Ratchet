@@ -166,6 +166,29 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 	public function onCall(Conn $conn, $id, $topic, array $params) {
 		$topicName = self::getTopicName($topic);
 
+        $event = $this->dispatchEvent('Rachet.WampServer.Rpc', $this, [
+            'topicName' => $topicName,
+            'connection' => $conn,
+            'id' => $id,
+            'topic' => $topic,
+            'params' => $params,
+            'wampServer' => $this,
+            'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+        ]);
+
+        if ($event->isStopped()) {
+            $conn->callError(
+                $id,
+                $event->result['stop_reason']['error_uri'],
+                $event->result['stop_reason']['desc'],
+                $event->result['stop_reason']['details']
+            );
+
+            $this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') was blocked');
+
+            return false;
+        }
+
 		$start = microtime(true);
 
 		$deferred = new \React\Promise\Deferred();
@@ -357,9 +380,13 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * @param array $params
  */
 	public function dispatchEvent($eventName, $scope, $params) {
+        $event = new CakeEvent($eventName, $scope, $params);
+
 		$this->outVerbose('Event begin: ' . $eventName);
-		CakeEventManager::instance()->dispatch(new CakeEvent($eventName, $scope, $params));
+		CakeEventManager::instance()->dispatch($event);
 		$this->outVerbose('Event end: ' . $eventName);
+
+        return $event;
 	}
 
 /**
