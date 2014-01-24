@@ -13,12 +13,31 @@ App::uses('CakeEventManager', 'Event');
 
 abstract class CakeRatchetTestCase extends CakeTestCase {
 
-	private $__cbi = [];
+    private $__cbi = [];
 
+    /**
+     * {@inheritdoc}
+     */
     public function setUp() {
         parent::setUp();
 
         $this->__cbi = [];
+
+        $this->loop = $this->getMock('React\\EventLoop\\LoopInterface');
+        $this->eventManagerOld = CakeEventManager::instance();
+        $this->eventManager = CakeEventManager::instance(new CakeEventManager());
+        $this->AppServer = new CakeWampAppServer($this, $this->loop, $this->eventManager, true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function tearDown() {
+        unset($this->AppServer, $this->eventManager);
+
+        CakeEventManager::instance($this->eventManagerOld);
+
+        parent::tearDown();
     }
 
     protected function _expectedEventCalls(&$asserts, $events) {
@@ -37,5 +56,4 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 
         return $asserts;
     }
-
 }
