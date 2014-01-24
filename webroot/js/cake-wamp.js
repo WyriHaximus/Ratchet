@@ -1,3 +1,7 @@
+/**
+ * Define cakeWamp if it hasn't already been created
+ * @type {cakeWamp|*|{}}
+ */
 var cakeWamp = window.cakeWamp || {};
 
 /**
