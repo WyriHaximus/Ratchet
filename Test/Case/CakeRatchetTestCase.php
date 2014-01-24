@@ -13,28 +13,29 @@ App::uses('CakeEventManager', 'Event');
 
 abstract class CakeRatchetTestCase extends CakeTestCase {
 
-	private $__preservedEventListeners = [];
+	private $__cbi = [];
 
-	protected function _hibernateListeners($eventKey) {
-		$this->__preservedEventListeners[$eventKey] = CakeEventManager::instance()->listeners($eventKey);
+    public function setUp() {
+        parent::setUp();
 
-		foreach ($this->__preservedEventListeners[$eventKey] as $eventListener) {
-			CakeEventManager::instance()->detach($eventListener['callable'], $eventKey);
-		}
-	}
+        $this->__cbi = [];
+    }
 
-	protected function _wakeupListeners($eventKey) {
-		if (isset($this->__preservedEventListeners[$eventKey])) {
-			return;
-		}
+    protected function _expectedEventCalls(&$asserts, $events) {
+        foreach ($events as $eventName => $event) {
+            $count = count($events[$eventName]['callback']);
+            for ($i = 0; $i < $count; $i++) {
+                $asserts[$eventName . '_' . $i] = false;
+            }
+            $this->__cbi[$eventName] = 0;
+            $this->eventManager->attach(function($event) use(&$events, $eventName, &$asserts) {
+                $asserts[$eventName . '_' . $this->__cbi[$eventName]] = true;
+                call_user_func($events[$eventName]['callback'][$this->__cbi[$eventName]], $event);
+                    $this->__cbi[$eventName]++;
+            }, $eventName);
+        }
 
-		foreach ($this->__preservedEventListeners[$eventKey] as $eventListener) {
-			CakeEventManager::instance()->attach($eventListener['callable'], $eventKey, [
-				'passParams' => $eventListener['passParams'],
-			]);
-		}
-
-		$this->__preservedEventListeners = [];
-	}
+        return $asserts;
+    }
 
 }

@@ -31,6 +31,13 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 	protected $_loop;
 
 /**
+ * CakeEventManager
+ *
+ * @var CakeEventManager
+ */
+	protected $_eventManager;
+
+/**
  * Ratchet Topic Manager
  *
  * @var \Ratchet\Wamp\TopicManager
@@ -65,16 +72,15 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * @param \React\EventLoop\LoopInterface $loop
  * @param boolean $verbose
  */
-	public function __construct($shell, \React\EventLoop\LoopInterface $loop, $verbose = false) {
+	public function __construct($shell, \React\EventLoop\LoopInterface $loop, CakeEventManager $eventManager, $verbose = false) {
 		$this->_shell = $shell;
 		$this->_loop = $loop;
+		$this->_eventManager = $eventManager;
 		$this->_verbose = $verbose;
 
-		$this->outVerbose('Event begin: Rachet.WampServer.construct');
-		CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.construct', $this, [
-			'loop' => $this->_loop,
-		]));
-		$this->outVerbose('Event end: Rachet.WampServer.construct');
+        $this->dispatchEvent('Rachet.WampServer.construct', $this, [
+            'loop' => $this->_loop,
+        ]);
 	}
 
 /**
@@ -383,7 +389,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
         $event = new CakeEvent($eventName, $scope, $params);
 
 		$this->outVerbose('Event begin: ' . $eventName);
-		CakeEventManager::instance()->dispatch($event);
+		$this->_eventManager->dispatch($event);
 		$this->outVerbose('Event end: ' . $eventName);
 
         return $event;
