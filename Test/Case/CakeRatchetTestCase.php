@@ -9,7 +9,17 @@
  * file that was distributed with this source code.
  */
 
+App::uses('WebsocketShell', 'Ratchet.Console/Command');
+App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
 App::uses('CakeEventManager', 'Event');
+
+class SessionHandlerImposer {
+
+    public function all() {
+        return [];
+    }
+
+}
 
 abstract class CakeRatchetTestCase extends CakeTestCase {
 
@@ -55,5 +65,9 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
         }
 
         return $asserts;
+    }
+
+    public function out() {
+
     }
 }
