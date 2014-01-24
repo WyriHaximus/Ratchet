@@ -65,6 +65,7 @@ class WebsocketShell extends Shell {
 							new CakeWampAppServer(
 								$this,
 								$this->__loop,
+                                CakeEventManager::instance(),
 								$this->params['verbose']
 							)
 						),
