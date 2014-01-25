@@ -52,11 +52,16 @@ class WebsocketShell extends Shell {
 		$this->__loop = LoopFactory::create();
 
 		if ($this->__loop instanceof \React\EventLoop\StreamSelectLoop) {
-			$this->out('<warning>Your configuration doesn\'t seem to support \'ext-libevent\'. It is highly reccomended that you install and configure it as it provides significant performance gains over stream select!</warning>');
+			$this->out(
+				'<warning>Your configuration doesn\'t seem to support \'ext-libevent\'. It is highly reccomended that you install and configure it as it provides significant performance gains over stream select!</warning>'
+			);
 		}
 
 		$socket = new Reactor($this->__loop);
-		$socket->listen(Configure::read('Ratchet.Connection.websocket.port'), Configure::read('Ratchet.Connection.websocket.address'));
+		$socket->listen(
+			Configure::read('Ratchet.Connection.websocket.port'),
+			Configure::read('Ratchet.Connection.websocket.address')
+		);
 		$this->__ioServer = new IoServer(
 			new HttpServer(
 				new WsServer(
@@ -65,7 +70,7 @@ class WebsocketShell extends Shell {
 							new CakeWampAppServer(
 								$this,
 								$this->__loop,
-                                CakeEventManager::instance(),
+								CakeEventManager::instance(),
 								$this->params['verbose']
 							)
 						),
@@ -104,13 +109,20 @@ class WebsocketShell extends Shell {
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-		$parser->addSubcommand('start', [
+		$parser->addSubcommand(
+			'start',
+			[
 			'help' => __('Starts and runs both the websocket service and the flashpolicy.')
-		])->description(__('Ratchet Websocket service.'))->addOption('verbose', [
-			'help' => 'Enable verbose output.',
-			'short' => 'v',
-			'boolean' => true
-		]);
+			]
+		)->description(__('Ratchet Websocket service.'))->addOption(
+				'verbose',
+				[
+				'help' => 'Enable verbose output.',
+				'short' => 'v',
+				'boolean' => true
+				]
+			);
+
 		return $parser;
 	}
 

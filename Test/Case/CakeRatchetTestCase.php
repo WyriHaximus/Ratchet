@@ -15,59 +15,62 @@ App::uses('CakeEventManager', 'Event');
 
 class SessionHandlerImposer {
 
-    public function all() {
-        return [];
-    }
+	public function all() {
+		return [];
+	}
 
 }
 
 abstract class CakeRatchetTestCase extends CakeTestCase {
 
-    private $__cbi = [];
+	private $__cbi = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setUp() {
-        parent::setUp();
+/**
+ * {@inheritdoc}
+ */
+	public function setUp() {
+		parent::setUp();
 
-        $this->__cbi = [];
+		$this->__cbi = [];
 
-        $this->loop = $this->getMock('React\\EventLoop\\LoopInterface');
-        $this->eventManagerOld = CakeEventManager::instance();
-        $this->eventManager = CakeEventManager::instance(new CakeEventManager());
-        $this->AppServer = new CakeWampAppServer($this, $this->loop, $this->eventManager, true);
-    }
+		$this->loop = $this->getMock('React\\EventLoop\\LoopInterface');
+		$this->eventManagerOld = CakeEventManager::instance();
+		$this->eventManager = CakeEventManager::instance(new CakeEventManager());
+		$this->AppServer = new CakeWampAppServer($this, $this->loop, $this->eventManager, true);
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function tearDown() {
-        unset($this->AppServer, $this->eventManager);
+/**
+ * {@inheritdoc}
+ */
+	public function tearDown() {
+		unset($this->AppServer, $this->eventManager);
 
-        CakeEventManager::instance($this->eventManagerOld);
+		CakeEventManager::instance($this->eventManagerOld);
 
-        parent::tearDown();
-    }
+		parent::tearDown();
+	}
 
-    protected function _expectedEventCalls(&$asserts, $events) {
-        foreach ($events as $eventName => $event) {
-            $count = count($events[$eventName]['callback']);
-            for ($i = 0; $i < $count; $i++) {
-                $asserts[$eventName . '_' . $i] = false;
-            }
-            $this->__cbi[$eventName] = 0;
-            $this->eventManager->attach(function($event) use(&$events, $eventName, &$asserts) {
-                $asserts[$eventName . '_' . $this->__cbi[$eventName]] = true;
-                call_user_func($events[$eventName]['callback'][$this->__cbi[$eventName]], $event);
-                    $this->__cbi[$eventName]++;
-            }, $eventName);
-        }
+	protected function _expectedEventCalls(&$asserts, $events) {
+		foreach ($events as $eventName => $event) {
+			$count = count($events[$eventName]['callback']);
+			for ($i = 0; $i < $count; $i++) {
+				$asserts[$eventName . '_' . $i] = false;
+			}
+			$this->__cbi[$eventName] = 0;
+			$this->eventManager->attach(
+				function ($event) use (&$events, $eventName, &$asserts) {
+					$asserts[$eventName . '_' . $this->__cbi[$eventName]] = true;
+					call_user_func($events[$eventName]['callback'][$this->__cbi[$eventName]], $event);
+					$this->__cbi[$eventName]++;
+				},
+				$eventName
+			);
+		}
 
-        return $asserts;
-    }
+		return $asserts;
+	}
 
-    public function out() {
-
-    }
+	public function out() {
+		// Do nothing for now
+	}
 }

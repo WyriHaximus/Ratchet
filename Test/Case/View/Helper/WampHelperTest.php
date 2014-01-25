@@ -32,13 +32,19 @@ class WampHelperTest extends CakeTestCase {
 		$this->view->request = $request;
 		$this->Helper = new WampHelper($this->view, ['noconfig' => true]);
 		$this->Helper->Html = $this->getMock('HtmlHelper', ['scriptBlock'], [$this->view]);
-		$this->Helper->AssetCompress = $this->getMock('AssetCompressHelper', ['script'], [$this->view, ['noconfig' => true]]);
+		$this->Helper->AssetCompress = $this->getMock(
+			'AssetCompressHelper',
+			['script'],
+			[$this->view, ['noconfig' => true]]
+		);
 
 		Router::reload();
 
 		Configure::write('debug', 0);
 
-		Configure::write('Ratchet', [
+		Configure::write(
+			'Ratchet',
+			[
 			'Client' => [
 				'retryDelay' => 5000, // Not the best option but it speeds up development
 				'maxRetries' => 25, // Keep on trying! (Also not the best option)
@@ -51,7 +57,8 @@ class WampHelperTest extends CakeTestCase {
 					'secure' => false,
 				],
 			],
-		]);
+			]
+		);
 	}
 
 /**
@@ -70,12 +77,18 @@ class WampHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testInit() {
-		$expectedScriptBlock = "WEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";";
+		$expectedScriptBlock
+			= "WEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";";
 		$this->Helper->Html->expects($this->once())
 			->method('scriptBlock')
-			->with($expectedScriptBlock, $this->equalTo([
-				'inline' => false,
-			]));
+			->with(
+				$expectedScriptBlock,
+				$this->equalTo(
+					[
+					'inline' => false,
+					]
+				)
+			);
 
 		$this->Helper->AssetCompress->expects($this->once())
 			->method('script')
@@ -91,19 +104,30 @@ class WampHelperTest extends CakeTestCase {
  */
 	public function testInitKeepAlive() {
 		Configure::write('Ratchet.Connection.keepaliveInterval', 21);
-		$expectedScriptBlockA = "WEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";";
+		$expectedScriptBlockA
+			= "WEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";";
 		$expectedScriptBlockB = "cakeWamp.subscribe('Rachet.connection.keepAlive', function (topic, event) {});";
 
 		$this->Helper->Html->expects($this->at(0))
 			->method('scriptBlock')
-			->with($expectedScriptBlockA, $this->equalTo([
-				'inline' => false,
-			]));
+			->with(
+				$expectedScriptBlockA,
+				$this->equalTo(
+					[
+					'inline' => false,
+					]
+				)
+			);
 		$this->Helper->Html->expects($this->at(1))
 			->method('scriptBlock')
-			->with($expectedScriptBlockB, $this->equalTo([
-				'inline' => false,
-			]));
+			->with(
+				$expectedScriptBlockB,
+				$this->equalTo(
+					[
+					'inline' => false,
+					]
+				)
+			);
 
 		$this->Helper->AssetCompress->expects($this->once())
 			->method('script')
@@ -119,12 +143,18 @@ class WampHelperTest extends CakeTestCase {
  */
 	public function testInitDebug() {
 		Configure::write('debug', 2);
-		$expectedScriptBlock = "WEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {debugWamp: true,retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";";
+		$expectedScriptBlock
+			= "WEB_SOCKET_SWF_LOCATION = \"http://localhost/Ratchet/swf/WebSocketMain.swf\";\nvar cakeWamp = window.cakeWamp || {};\ncakeWamp.options = {debugWamp: true,retryDelay: 5000,maxRetries: 25};\nvar wsuri = \"ws://localhost:80/websocket\";";
 		$this->Helper->Html->expects($this->once())
 			->method('scriptBlock')
-			->with($expectedScriptBlock, $this->equalTo([
-				'inline' => false,
-			]));
+			->with(
+				$expectedScriptBlock,
+				$this->equalTo(
+					[
+					'inline' => false,
+					]
+				)
+			);
 
 		$this->Helper->AssetCompress->expects($this->once())
 			->method('script')

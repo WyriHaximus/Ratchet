@@ -12,68 +12,81 @@
 App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
 
 class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
-    public function testOnOpen() {
-        $mock = $this->getMock('\\Ratchet\\ConnectionInterface');
-        $conn = new Ratchet\Wamp\WampConnection($mock);
-        $conn->Session = new SessionHandlerImposer();
 
-        $asserts = [];
-        $this->_expectedEventCalls($asserts, [
-                'Rachet.WampServer.onOpen' => [
-                    'output' => [
-                        '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#',
-                        '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#',
-                    ],
-                    'callback' => [
-                        function($event) use($conn) {
-                            $this->assertEquals($event->data, [
-                                    'connection' => $conn,
-                                    'wampServer' => $this->AppServer,
-                                    'connectionData' => [
-                                        'session' => [],
-                                    ],
-                                ]);
-                        },
-                    ],
-                ],
-            ]);
-        $this->AppServer->onOpen($conn);
+	public function testOnOpen() {
+		$mock = $this->getMock('\\Ratchet\\ConnectionInterface');
+		$conn = new Ratchet\Wamp\WampConnection($mock);
+		$conn->Session = new SessionHandlerImposer();
 
-        foreach ($asserts as $assert) {
-            $this->assertTrue($assert);
-        }
-    }
+		$asserts = [];
+		$this->_expectedEventCalls(
+			$asserts,
+			[
+			'Rachet.WampServer.onOpen' => [
+				'output' => [
+					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#',
+					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#',
+				],
+				'callback' => [
+					function ($event) use ($conn) {
+						$this->assertEquals(
+							$event->data,
+							[
+							'connection' => $conn,
+							'wampServer' => $this->AppServer,
+							'connectionData' => [
+								'session' => [],
+							],
+							]
+						);
+					},
+				],
+			],
+			]
+		);
+		$this->AppServer->onOpen($conn);
 
-    public function testOnClose() {
-        $mock = $this->getMock('\\Ratchet\\ConnectionInterface');
-        $conn = new Ratchet\Wamp\WampConnection($mock);
-        $conn->Session = new SessionHandlerImposer();
+		foreach ($asserts as $assert) {
+			$this->assertTrue($assert);
+		}
+	}
 
-        $asserts = [];
-        $this->_expectedEventCalls($asserts, [
-                'Rachet.WampServer.onClose' => [
-                    'output' => [
-                        '#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onClose#',
-                        '#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onClose#',
-                    ],
-                    'callback' => [
-                        function($event) use($conn) {
-                            $this->assertEquals($event->data, [
-                                    'connection' => $conn,
-                                    'wampServer' => $this->AppServer,
-                                    'connectionData' => [
-                                        'session' => [],
-                                    ],
-                                ]);
-                        },
-                    ],
-                ],
-            ]);
-        $this->AppServer->onOpen($conn);
-        $this->AppServer->onClose($conn);
+	public function testOnClose() {
+		$mock = $this->getMock('\\Ratchet\\ConnectionInterface');
+		$conn = new Ratchet\Wamp\WampConnection($mock);
+		$conn->Session = new SessionHandlerImposer();
 
-        foreach ($asserts as $assert) {
-            $this->assertTrue($assert);
-        }
-    }
+		$asserts = [];
+		$this->_expectedEventCalls(
+			$asserts,
+			[
+			'Rachet.WampServer.onClose' => [
+				'output' => [
+					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onClose#',
+					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onClose#',
+				],
+				'callback' => [
+					function ($event) use ($conn) {
+						$this->assertEquals(
+							$event->data,
+							[
+							'connection' => $conn,
+							'wampServer' => $this->AppServer,
+							'connectionData' => [
+								'session' => [],
+							],
+							]
+						);
+					},
+				],
+			],
+			]
+		);
+		$this->AppServer->onOpen($conn);
+		$this->AppServer->onClose($conn);
+
+		foreach ($asserts as $assert) {
+			$this->assertTrue($assert);
+		}
+	}
 }

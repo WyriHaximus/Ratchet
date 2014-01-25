@@ -44,6 +44,7 @@ class CakeWampSessionHandler implements SessionHandlerInterface {
 		foreach ($_SESSION as $key => $value) {
 			unset($_SESSION[$key]);
 		}
+
 		return serialize($restoredSessionData);
 	}
 

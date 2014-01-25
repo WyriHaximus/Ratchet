@@ -19,7 +19,10 @@ use Ratchet\ConnectionInterface as Conn;
 
 class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 
-    use CakeWampAppConnectionTrait, CakeWampAppRpcTrait, CakeWampAppPubSubTrait;
+	use CakeWampAppConnectionTrait;
+	use CakeWampAppPubSubTrait;
+	use CakeWampAppRpcTrait;
+
 /**
  * WebsocketShell instance
  *
@@ -76,15 +79,24 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * @param \React\EventLoop\LoopInterface $loop
  * @param boolean $verbose
  */
-	public function __construct($shell, \React\EventLoop\LoopInterface $loop, CakeEventManager $eventManager, $verbose = false) {
+	public function __construct(
+		$shell,
+		\React\EventLoop\LoopInterface $loop,
+		CakeEventManager $eventManager,
+		$verbose = false
+	) {
 		$this->_shell = $shell;
 		$this->_loop = $loop;
 		$this->_eventManager = $eventManager;
 		$this->_verbose = $verbose;
 
-        $this->dispatchEvent('Rachet.WampServer.construct', $this, [
-            'loop' => $this->_loop,
-        ]);
+		$this->dispatchEvent(
+			'Rachet.WampServer.construct',
+			$this,
+			[
+			'loop' => $this->_loop,
+			]
+		);
 	}
 
 /**
@@ -144,13 +156,13 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * @param array $params
  */
 	public function dispatchEvent($eventName, $scope, $params) {
-        $event = new CakeEvent($eventName, $scope, $params);
+		$event = new CakeEvent($eventName, $scope, $params);
 
 		$this->outVerbose('Event begin: ' . $eventName);
 		$this->_eventManager->dispatch($event);
 		$this->outVerbose('Event end: ' . $eventName);
 
-        return $event;
+		return $event;
 	}
 
 /**
@@ -171,6 +183,11 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 		}
 	}
 
+/**
+ * @param string|\Ratchet\Wamp\Topic $topic
+ *
+ * @return string
+ */
 	static public function getTopicName($topic) {
 		if ($topic instanceof \Ratchet\Wamp\Topic) {
 			return $topic->getId();

@@ -35,7 +35,8 @@ class PhpSerializeHandlerTest extends CakeTestCase {
  * {@inheritdoc}
  */
 	public function testSerialize() {
-		$result = $this->PhpSerializeHandler->serialize([
+		$result = $this->PhpSerializeHandler->serialize(
+			[
 			'movies' => [
 				'The Expendables',
 				'THX 1138',
@@ -46,8 +47,10 @@ class PhpSerializeHandlerTest extends CakeTestCase {
 				'Netgear',
 				'Samsung',
 			],
-		]);
-		$expected = 'a:2:{s:6:"movies";a:2:{i:0;s:15:"The Expendables";i:1;s:8:"THX 1138";}s:14:"infrastructure";a:4:{i:0;s:3:"AWS";i:1;s:7:"Sensson";i:2;s:7:"Netgear";i:3;s:7:"Samsung";}}';
+			]
+		);
+		$expected
+			= 'a:2:{s:6:"movies";a:2:{i:0;s:15:"The Expendables";i:1;s:8:"THX 1138";}s:14:"infrastructure";a:4:{i:0;s:3:"AWS";i:1;s:7:"Sensson";i:2;s:7:"Netgear";i:3;s:7:"Samsung";}}';
 
 		$this->assertEqual($result, $expected);
 	}
@@ -56,7 +59,9 @@ class PhpSerializeHandlerTest extends CakeTestCase {
  * {@inheritdoc}
  */
 	public function testUnserialize() {
-		$result = $this->PhpSerializeHandler->unserialize('a:2:{s:6:"movies";a:2:{i:0;s:15:"The Expendables";i:1;s:8:"THX 1138";}s:14:"infrastructure";a:4:{i:0;s:3:"AWS";i:1;s:7:"Sensson";i:2;s:7:"Netgear";i:3;s:7:"Samsung";}}');
+		$result = $this->PhpSerializeHandler->unserialize(
+			'a:2:{s:6:"movies";a:2:{i:0;s:15:"The Expendables";i:1;s:8:"THX 1138";}s:14:"infrastructure";a:4:{i:0;s:3:"AWS";i:1;s:7:"Sensson";i:2;s:7:"Netgear";i:3;s:7:"Samsung";}}'
+		);
 		$expected = [
 			'_sf2_attributes' => [
 				'movies' => [
