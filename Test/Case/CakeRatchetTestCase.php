@@ -33,10 +33,11 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 
 		$this->__cbi = [];
 
+		$this->shell = $this->getMock('WebsocketShell');
 		$this->loop = $this->getMock('React\\EventLoop\\LoopInterface');
 		$this->eventManagerOld = CakeEventManager::instance();
 		$this->eventManager = CakeEventManager::instance(new CakeEventManager());
-		$this->AppServer = new CakeWampAppServer($this, $this->loop, $this->eventManager, true);
+		$this->AppServer = new CakeWampAppServer($this->shell, $this->loop, $this->eventManager, true);
 	}
 
 /**
@@ -68,9 +69,5 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 		}
 
 		return $asserts;
-	}
-
-	public function out() {
-		// Do nothing for now
 	}
 }

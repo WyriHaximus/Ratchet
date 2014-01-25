@@ -14,6 +14,7 @@ App::uses('CakeEventManager', 'Event');
 App::uses('CakeWampAppConnectionTrait', 'Ratchet.Lib/Wamp');
 App::uses('CakeWampAppRpcTrait', 'Ratchet.Lib/Wamp');
 App::uses('CakeWampAppPubSubTrait', 'Ratchet.Lib/Wamp');
+App::uses('WebsocketShell', 'Ratchet.Console/Command');
 
 use Ratchet\ConnectionInterface as Conn;
 
@@ -80,7 +81,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * @param boolean $verbose
  */
 	public function __construct(
-		$shell,
+		WebsocketShell $shell,
 		\React\EventLoop\LoopInterface $loop,
 		CakeEventManager $eventManager,
 		$verbose = false
@@ -94,7 +95,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 			'Rachet.WampServer.construct',
 			$this,
 			[
-			'loop' => $this->_loop,
+				'loop' => $this->_loop,
 			]
 		);
 	}
@@ -195,5 +196,4 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 			return $topic;
 		}
 	}
-
 }

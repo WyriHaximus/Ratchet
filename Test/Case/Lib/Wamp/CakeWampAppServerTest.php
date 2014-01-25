@@ -14,7 +14,7 @@ App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
 class CakeWampAppServerTest extends CakeRatchetTestCase {
 
 	public function testGetShell() {
-		$this->assertEquals($this->AppServer->getShell(), $this);
+		$this->assertEquals($this->AppServer->getShell(), $this->shell);
 	}
 
 	public function testGetLoop() {
