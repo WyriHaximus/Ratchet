@@ -147,6 +147,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * @param \Exception $e
  */
 	public function onError(Conn $conn, \Exception $e) {
+		$this->outVerbose(get_class($e) . ' for connection <info>' . $conn->WAMP->sessionId . '</info>: <error>' . $e->getMessage() . '</error>');
 	}
 
 /**

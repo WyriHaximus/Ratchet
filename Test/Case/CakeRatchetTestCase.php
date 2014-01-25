@@ -33,7 +33,9 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 
 		$this->__cbi = [];
 
-		$this->shell = $this->getMock('WebsocketShell');
+		$this->shell = $this->getMock('WebsocketShell', [], [
+      'out',
+    ]);
 		$this->loop = $this->getMock('React\\EventLoop\\LoopInterface');
 		$this->eventManagerOld = CakeEventManager::instance();
 		$this->eventManager = CakeEventManager::instance(new CakeEventManager());

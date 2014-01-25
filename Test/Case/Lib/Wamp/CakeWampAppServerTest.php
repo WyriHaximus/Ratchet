@@ -47,4 +47,40 @@ class CakeWampAppServerTest extends CakeRatchetTestCase {
 	public function testGetTopicName($topic) {
 		$this->assertSame('test', CakeWampAppServer::getTopicName($topic));
 	}
+
+	public function testOnErrorProvider() {
+		return [
+			[
+				new Exception('error message'),
+				'#\[<info>[0-9]+.[0-9]+</info>] Exception for connection <info>[0-9a-z]+</info>: <error>error message</error>#',
+			],
+			[
+				new BadMethodCallException('function does not exist'),
+				'#\[<info>[0-9]+.[0-9]+</info>] BadMethodCallException for connection <info>[0-9a-z]+</info>: <error>function does not exist</error>#',
+			],
+		];
+	}
+
+/**
+ * @dataProvider testOnErrorProvider
+ */
+	public function testOnError($exception, $messageRegexp) {
+		$this->shell->expects($this->at(3))
+			->method('out')
+			->with(
+				$this->callback(
+					function ($message) use($messageRegexp) {
+						$this->assertRegexp($messageRegexp, $message);
+						return true;
+					}
+				)
+			);
+
+		$mock = $this->getMock('\\Ratchet\\ConnectionInterface');
+		$conn = new Ratchet\Wamp\WampConnection($mock);
+		$conn->Session = new SessionHandlerImposer();
+
+		$this->AppServer->onOpen($conn);
+		$this->AppServer->onError($conn, $exception);
+	}
 }
