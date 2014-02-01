@@ -14,6 +14,21 @@ use Ratchet\ConnectionInterface as Conn;
 trait CakeWampAppConnectionTrait {
 
 /**
+ * Contains metadata for all open connections
+ *
+ * @var array
+ */
+	protected $_connections = [];
+
+/**
+ *
+ * @return array
+ */
+	public function getConnections() {
+		return $this->_connections;
+	}
+
+/**
  * Stores session information and fires the onOpen event for listening listeners
  *
  * @param \Ratchet\ConnectionInterface $conn
@@ -22,6 +37,7 @@ trait CakeWampAppConnectionTrait {
 		$this->outVerbose('New connection: <info>' . $conn->WAMP->sessionId . '</info>');
 
 		$this->_connections[$conn->WAMP->sessionId] = [
+			'topics' => [],
 			'session' => $conn->Session->all(),
 		];
 

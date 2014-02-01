@@ -60,20 +60,6 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 	protected $_verbose;
 
 /**
- * Contains metadata for all open connections
- *
- * @var array
- */
-	protected $_connections = [];
-
-/**
- * Contains all active topics
- *
- * @var type
- */
-	protected $_topics = [];
-
-/**
  * Assigns the Shell and Loop
  *
  * @param WebsocketShell $shell
@@ -126,14 +112,6 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 
 /**
  *
- * @return array
- */
-	public function getTopics() {
-		return $this->_topics;
-	}
-
-/**
- *
  * @param \Ratchet\Wamp\TopicManager $topicManager
  */
 	public function setTopicManager(\Ratchet\Wamp\TopicManager $topicManager) {
@@ -148,6 +126,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  */
 	public function onError(Conn $conn, \Exception $e) {
 		$this->outVerbose(get_class($e) . ' for connection <info>' . $conn->WAMP->sessionId . '</info>: <error>' . $e->getMessage() . '</error>');
+		CakeLog::write('ratchetWampServer', 'Something did not work');
 	}
 
 /**

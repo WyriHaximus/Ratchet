@@ -35,6 +35,7 @@ class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
 							'connection' => $conn,
 							'wampServer' => $this->AppServer,
 							'connectionData' => [
+								'topics' => [],
 								'session' => [],
 							],
 							]
@@ -73,6 +74,7 @@ class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
 							'connection' => $conn,
 							'wampServer' => $this->AppServer,
 							'connectionData' => [
+								'topics' => [],
 								'session' => [],
 							],
 							]

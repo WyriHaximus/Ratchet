@@ -14,9 +14,26 @@ use Ratchet\ConnectionInterface as Conn;
 trait CakeWampAppPubSubTrait {
 
 /**
+ * Contains all active topics
+ *
  * @var array
  */
-	protected $topics = [];
+	protected $_topics = [];
+
+/**
+ * Contains all active subscribers
+ *
+ * @var array
+ */
+	protected $_subscribers = [];
+
+/**
+ *
+ * @return array
+ */
+	public function getTopics() {
+		return $this->_topics;
+	}
 
 /**
  * When topic is been listened to broadcast to it
@@ -94,9 +111,11 @@ trait CakeWampAppPubSubTrait {
 	public function onSubscribe(Conn $conn, $topic) {
 		$topicName = self::getTopicName($topic);
 
+		$this->_connections[$conn->WAMP->sessionId]['topics'][$topicName] = true;
+
 		if (!isset($this->_topics[$topicName])) {
 			$this->_topics[$topicName] = [
-			  'listeners' => [],
+				'listeners' => [],
 			];
 
 			if ($topic instanceof \Ratchet\Wamp\Topic) {
@@ -182,7 +201,7 @@ trait CakeWampAppPubSubTrait {
 			]
 		);
 
-		unset($this->_topics[$topicName]['listeners'][$conn->WAMP->sessionId]);
+		unset($this->_topics[$topicName]['listeners'][$conn->WAMP->sessionId], $this->_connections[$conn->WAMP->sessionId]['topics'][$topicName]);
 
 		if (isset($this->_topics[$topicName]) && count($this->_topics[$topicName]['listeners']) == 0) {
 			unset($this->_topics[$topicName]);

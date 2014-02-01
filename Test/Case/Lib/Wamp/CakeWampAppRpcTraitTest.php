@@ -84,6 +84,7 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 							],
 							'wampServer' => $this->AppServer,
 							'connectionData' => [
+								'topics' => [],
 								'session' => [],
 							],
 							]
@@ -112,6 +113,7 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 							],
 							'wampServer' => $this->AppServer,
 							'connectionData' => [
+								'topics' => [],
 								'session' => [],
 							],
 							]
@@ -208,6 +210,7 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 								],
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
+									'topics' => [],
 									'session' => [],
 								],
 							]
@@ -237,6 +240,7 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 								],
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
+									'topics' => [],
 									'session' => [],
 								],
 							]
