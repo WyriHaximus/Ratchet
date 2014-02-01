@@ -14,6 +14,33 @@ use Ratchet\ConnectionInterface as Conn;
 trait CakeWampAppPubSubTrait {
 
 /**
+ * @var array
+ */
+	protected $topics = [];
+
+/**
+ * When topic is been listened to broadcast to it
+ *
+ * @param string $topic
+ * @param array $payload
+ */
+	public function broadcast($topic, array $payload) {
+		$topicName = $this->getTopicName($topic);
+		if (isset($this->_topics[$topicName]['topic'])) {
+			$this->_topics[$topicName]['topic']->broadcast($payload);
+
+			$this->dispatchEvent(
+				'Rachet.WampServer.broadcast',
+				$this,
+				[
+					'topicName' => $topicName,
+					'payload' => $payload,
+				]
+			);
+		}
+	}
+
+/**
  * Breadcast the $event to all subscribers on $topic
  *
  * @param \Ratchet\ConnectionInterface $conn
@@ -33,14 +60,13 @@ trait CakeWampAppPubSubTrait {
 			'Rachet.WampServer.onPublish',
 			$this,
 			[
-			'topicName' => $topicName,
-			'connection' => $conn,
-			'topic' => $topic,
-			'event' => $event,
-			'exclude' => $exclude,
-			'eligible' => $eligible,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'topicName' => $topicName,
+				'connection' => $conn,
+				'event' => $event,
+				'exclude' => $exclude,
+				'eligible' => $eligible,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 
@@ -48,13 +74,13 @@ trait CakeWampAppPubSubTrait {
 			'Rachet.WampServer.onPublish.' . $topicName,
 			$this,
 			[
-			'connection' => $conn,
-			'topic' => $topic,
-			'event' => $event,
-			'exclude' => $exclude,
-			'eligible' => $eligible,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'topicName' => $topicName,
+				'connection' => $conn,
+				'event' => $event,
+				'exclude' => $exclude,
+				'eligible' => $eligible,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 	}
@@ -69,17 +95,22 @@ trait CakeWampAppPubSubTrait {
 		$topicName = self::getTopicName($topic);
 
 		if (!isset($this->_topics[$topicName])) {
-			$this->_topics[$topicName] = [];
+			$this->_topics[$topicName] = [
+			  'listeners' => [],
+			];
+
+			if ($topic instanceof \Ratchet\Wamp\Topic) {
+				$this->_topics[$topicName]['topic'] = $topic;
+			}
 
 			$this->dispatchEvent(
 				'Rachet.WampServer.onSubscribeNewTopic',
 				$this,
 				[
-				'topicName' => $topicName,
-				'connection' => $conn,
-				'topic' => $topic,
-				'wampServer' => $this,
-				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+					'topicName' => $topicName,
+					'connection' => $conn,
+					'wampServer' => $this,
+					'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 				]
 			);
 
@@ -87,10 +118,10 @@ trait CakeWampAppPubSubTrait {
 				'Rachet.WampServer.onSubscribeNewTopic.' . $topicName,
 				$this,
 				[
-				'connection' => $conn,
-				'topic' => $topic,
-				'wampServer' => $this,
-				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+					'topicName' => $topicName,
+					'connection' => $conn,
+					'wampServer' => $this,
+					'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 				]
 			);
 		}
@@ -99,11 +130,10 @@ trait CakeWampAppPubSubTrait {
 			'Rachet.WampServer.onSubscribe',
 			$this,
 			[
-			'topicName' => $topicName,
-			'connection' => $conn,
-			'topic' => $topic,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'topicName' => $topicName,
+				'connection' => $conn,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 
@@ -111,14 +141,14 @@ trait CakeWampAppPubSubTrait {
 			'Rachet.WampServer.onSubscribe.' . $topicName,
 			$this,
 			[
-			'connection' => $conn,
-			'topic' => $topic,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'topicName' => $topicName,
+				'connection' => $conn,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 
-		$this->_topics[$topicName][$conn->WAMP->sessionId] = true;
+		$this->_topics[$topicName]['listeners'][$conn->WAMP->sessionId] = true;
 	}
 
 /**
@@ -130,44 +160,14 @@ trait CakeWampAppPubSubTrait {
 	public function onUnSubscribe(Conn $conn, $topic) {
 		$topicName = self::getTopicName($topic);
 
-		$this->_topics[$topicName]--;
-
-		if (isset($this->_topics[$topicName]) && count($this->_topics[$topicName]) == 0) {
-			unset($this->_topics[$topicName]);
-
-			$this->dispatchEvent(
-				'Rachet.WampServer.onUnSubscribeStaleTopic',
-				$this,
-				[
-				'topicName' => $topicName,
-				'connection' => $conn,
-				'topic' => $topic,
-				'wampServer' => $this,
-				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
-				]
-			);
-
-			$this->dispatchEvent(
-				'Rachet.WampServer.onUnSubscribeStaleTopic.' . $topicName,
-				$this,
-				[
-				'connection' => $conn,
-				'topic' => $topic,
-				'wampServer' => $this,
-				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
-				]
-			);
-		}
-
 		$this->dispatchEvent(
 			'Rachet.WampServer.onUnSubscribe',
 			$this,
 			[
-			'topicName' => $topicName,
-			'connection' => $conn,
-			'topic' => $topic,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'topicName' => $topicName,
+				'connection' => $conn,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 
@@ -175,13 +175,39 @@ trait CakeWampAppPubSubTrait {
 			'Rachet.WampServer.onUnSubscribe.' . $topicName,
 			$this,
 			[
-			'connection' => $conn,
-			'topic' => $topic,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'topicName' => $topicName,
+				'connection' => $conn,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 
-		unset($this->_topics[$topicName][$conn->WAMP->sessionId]);
+		unset($this->_topics[$topicName]['listeners'][$conn->WAMP->sessionId]);
+
+		if (isset($this->_topics[$topicName]) && count($this->_topics[$topicName]['listeners']) == 0) {
+			unset($this->_topics[$topicName]);
+
+			$this->dispatchEvent(
+				'Rachet.WampServer.onUnSubscribeStaleTopic',
+				$this,
+				[
+					'topicName' => $topicName,
+					'connection' => $conn,
+					'wampServer' => $this,
+					'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				]
+			);
+
+			$this->dispatchEvent(
+				'Rachet.WampServer.onUnSubscribeStaleTopic.' . $topicName,
+				$this,
+				[
+					'topicName' => $topicName,
+					'connection' => $conn,
+					'wampServer' => $this,
+					'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				]
+			);
+		}
 	}
 } 
