@@ -111,7 +111,7 @@ trait CakeWampAppPubSubTrait {
 	public function onSubscribe(Conn $conn, $topic) {
 		$topicName = self::getTopicName($topic);
 
-		$this->_connections[$conn->WAMP->sessionId]['topics'][$topicName] = true;
+		$this->_connections[$conn->WAMP->sessionId]['topics'][$topicName] = $topic;
 
 		if (!isset($this->_topics[$topicName])) {
 			$this->_topics[$topicName] = [
@@ -201,7 +201,8 @@ trait CakeWampAppPubSubTrait {
 			]
 		);
 
-		unset($this->_topics[$topicName]['listeners'][$conn->WAMP->sessionId], $this->_connections[$conn->WAMP->sessionId]['topics'][$topicName]);
+		unset($this->_topics[$topicName]['listeners'][$conn->WAMP->sessionId]);
+		unset($this->_connections[$conn->WAMP->sessionId]['topics'][$topicName]);
 
 		if (isset($this->_topics[$topicName]) && count($this->_topics[$topicName]['listeners']) == 0) {
 			unset($this->_topics[$topicName]);

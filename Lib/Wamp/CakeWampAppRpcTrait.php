@@ -48,6 +48,18 @@ trait CakeWampAppRpcTrait {
 
 			$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') was blocked');
 
+			$this->dispatchEvent(
+				'Rachet.WampServer.RpcBlocked',
+				$this,
+				[
+					'topicName' => $topicName,
+					'connection' => $conn,
+					'id' => $id,
+					'reason' => $event->result['stop_reason'],
+					'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				]
+			);
+
 			return false;
 		}
 
@@ -65,6 +77,18 @@ trait CakeWampAppRpcTrait {
 				$this->outVerbose(
 					'Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 's</info> and succeeded'
 				);
+
+				$this->dispatchEvent(
+					'Rachet.WampServer.RpcSuccess',
+					$this,
+					[
+						'topicName' => $topicName,
+						'connection' => $conn,
+						'id' => $id,
+						'results' => $results,
+						'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+					]
+				);
 			},
 			function ($errorUri, $desc = '', $details = null) use ($conn, $id, $topicName, $start) {
 				$end = microtime(true);
@@ -78,6 +102,22 @@ trait CakeWampAppRpcTrait {
 
 				$this->outVerbose(
 					'Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 's</info> and failed'
+				);
+
+				$this->dispatchEvent(
+					'Rachet.WampServer.RpcFailed',
+					$this,
+					[
+						'topicName' => $topicName,
+						'connection' => $conn,
+						'id' => $id,
+						'reason' => [
+							$errorUri,
+							$desc,
+							$details,
+						],
+						'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+					]
 				);
 			}
 		);

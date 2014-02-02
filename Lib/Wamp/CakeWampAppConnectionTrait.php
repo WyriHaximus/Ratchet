@@ -58,12 +58,8 @@ trait CakeWampAppConnectionTrait {
  * @param \Ratchet\ConnectionInterface $conn
  */
 	public function onClose(Conn $conn) {
-		foreach ($this->_topics as $topicName => $connections) {
-			foreach ($connections as $connectionId => $boolean) {
-				if ($connectionId == $conn->WAMP->sessionId) {
-					$this->onUnSubscribe($conn, $topicName);
-				}
-			}
+		foreach ($this->_connections[$conn->WAMP->sessionId]['topics'] as $topicName => $topic) {
+			$this->onUnSubscribe($conn, $topic);
 		}
 
 		$this->dispatchEvent(

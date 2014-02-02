@@ -60,8 +60,7 @@ class RatchetKeepAliveListener implements CakeEventListener {
 				Configure::read('Ratchet.Connection.keepaliveInterval'),
 				function () use ($event) {
 					$event->subject()->broadcast('Rachet.connection.keepAlive', ['ping']);
-				},
-				true
+				}
 			);
 
 			$event->subject()->broadcast('Rachet.connection.keepAlive', ['ping']);

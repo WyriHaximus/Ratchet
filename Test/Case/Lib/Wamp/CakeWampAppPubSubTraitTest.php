@@ -144,7 +144,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
 				],
 				'callback' => [
-					function ($event) use ($conn1, $topicName) {
+					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -153,7 +153,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
 									'topics' => [
-										'test' => true,
+										'test' => $topic,
 									],
 									'session' => [],
 								],
@@ -168,7 +168,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
 				],
 				'callback' => [
-					function ($event) use ($conn1, $topicName) {
+					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -177,7 +177,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
 									'topics' => [
-										'test' => true,
+										'test' => $topic,
 									],
 									'session' => [],
 								],
@@ -192,7 +192,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
 				],
 				'callback' => [
-					function ($event) use ($conn1, $topicName) {
+					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -201,14 +201,14 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
 									'topics' => [
-										'test' => true,
+										'test' => $topic,
 									],
 									'session' => [],
 								],
 							]
 						);
 					},
-					function ($event) use ($conn2, $topicName) {
+					function ($event) use ($conn2, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -217,7 +217,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
 									'topics' => [
-										'test' => true,
+										'test' => $topic,
 									],
 									'session' => [],
 								],
@@ -232,7 +232,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
 				],
 				'callback' => [
-					function ($event) use ($conn1, $topicName) {
+					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -241,14 +241,14 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
 									'topics' => [
-										'test' => true,
+										'test' => $topic,
 									],
 									'session' => [],
 								],
 							]
 						);
 					},
-					function ($event) use ($conn2, $topicName) {
+					function ($event) use ($conn2, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -257,7 +257,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
 									'topics' => [
-										'test' => true,
+										'test' => $topic,
 									],
 									'session' => [],
 								],
@@ -356,7 +356,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
 				],
 				'callback' => [
-					function ($event) use ($conn1, $topicName) {
+					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -365,14 +365,14 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
 									'topics' => [
-										'test' => true,
+										'test' => $topic,
 									],
 									'session' => [],
 								],
 							]
 						);
 					},
-					function ($event) use ($conn1, $topicName) {
+					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -394,7 +394,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
 				],
 				'callback' => [
-					function ($event) use ($conn1, $topicName) {
+					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
 							$event->data,
 							[
@@ -403,7 +403,7 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 								'wampServer' => $this->AppServer,
 								'connectionData' => [
 									'topics' => [
-										'test' => true,
+										'test' => $topic,
 									],
 									'session' => [],
 								],
