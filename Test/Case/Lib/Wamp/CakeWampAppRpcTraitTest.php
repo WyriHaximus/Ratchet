@@ -182,9 +182,16 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 			$mock,
 			]
 		);
+
+		$rejectReason = [
+			1,
+			2,
+			3,
+		];
+
 		$conn->expects($this->once())
 			->method('callError')
-			->with(1, $results, '', null);
+			->with(1, $rejectReason, '', null);
 		$conn->Session = new SessionHandlerImposer();
 
 		$asserts = [];
@@ -225,7 +232,7 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
 				],
 				'callback' => [
-					function ($event) use ($conn, $topicName, $topic, $deferred, $results) {
+					function ($event) use ($conn, $topicName, $topic, $deferred, $rejectReason) {
 						$resolver = $deferred->resolver();
 
 						$this->assertEquals(
@@ -246,7 +253,143 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 							]
 						);
 
-						$event->data['promise']->reject($results);
+						$event->data['promise']->reject($rejectReason);
+					},
+				],
+			],
+			'Rachet.WampServer.RpcFailed' => [
+				'output' => [
+					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
+					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
+				],
+				'callback' => [
+					function ($event) use ($conn, $topicName, $topic) {
+						$this->assertEquals(
+							$event->data,
+							[
+								'topicName' => $topicName,
+								'connection' => $conn,
+								'id' => 1,
+								'topic' => $topic,
+								'params' => [
+									'foo' => 'bar',
+								],
+								'wampServer' => $this->AppServer,
+								'connectionData' => [
+									'topics' => [],
+									'session' => [],
+								],
+							]
+						);
+					},
+				],
+			],
+			]
+		);
+		$this->AppServer->onOpen($conn);
+		$this->AppServer->onCall(
+			$conn,
+			1,
+			$topic,
+			[
+			'foo' => 'bar',
+			]
+		);
+
+		foreach ($asserts as $assert) {
+			$this->assertTrue($assert);
+		}
+	}
+
+	public function testOnCallBlockProvider() {
+		return [
+			[
+				'test',
+			],
+			[
+				new \Ratchet\Wamp\Topic('test'),
+			],
+		];
+	}
+
+/**
+ * @dataProvider testOnCallBlockProvider
+ */
+	public function testOnCallBlock($topic) {
+		$topicName = (string)$topic;
+
+		$mock = $this->getMock(
+			'\\Ratchet\\ConnectionInterface',
+			[
+			'send',
+			'close',
+			]
+		);
+
+		$deferred = new \React\Promise\Deferred();
+		$deferred->promise()->then(
+			function ($results) {
+			},
+			function ($results) {
+			}
+		);
+		$conn = $this->getMock(
+			'\\Ratchet\\Wamp\\WampConnection',
+			[
+			'callError',
+			],
+			[
+			$mock,
+			]
+		);
+
+		$blockReason = [
+			'error_uri' => 1,
+			'desc' => 2,
+			'details' => 3,
+		];
+
+		$conn->expects($this->once())
+			->method('callError')
+			->with(1, $blockReason['error_uri'], $blockReason['desc'], $blockReason['details']);
+		$conn->Session = new SessionHandlerImposer();
+
+		$asserts = [];
+		$this->_expectedEventCalls(
+			$asserts,
+			[
+			'Rachet.WampServer.Rpc' => [
+				'output' => [
+					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
+					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
+				],
+				'callback' => [
+					function ($event) use ($blockReason) {
+						$event->result['stop_reason'] = $blockReason;
+						$event->stopPropagation();
+					},
+				],
+			],
+			'Rachet.WampServer.RpcBlocked' => [
+				'output' => [
+					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
+					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
+				],
+				'callback' => [
+					function ($event) use ($conn, $topicName, $topic, $blockReason) {
+						$this->assertEquals(
+							$event->data,
+							[
+								'topicName' => $topicName,
+								'connection' => $conn,
+								'id' => 1,
+								'reason' => $blockReason,
+								'connectionData' => [
+									'topics' => [],
+									'session' => [],
+								],
+							]
+						);
 					},
 				],
 			],
