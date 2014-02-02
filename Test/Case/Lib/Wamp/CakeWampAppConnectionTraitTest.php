@@ -13,6 +13,23 @@ App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
 
 class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
 
+	public function testGetConnections() {
+		$mock = $this->getMock('\\Ratchet\\ConnectionInterface');
+		$conn = new Ratchet\Wamp\WampConnection($mock);
+		$conn->Session = new SessionHandlerImposer();
+
+		$this->assertEquals($this->AppServer->getConnections(), []);
+
+		$this->AppServer->onOpen($conn);
+
+		$this->assertEquals($this->AppServer->getConnections(), [
+				$conn->WAMP->sessionId => [
+					'topics' => [],
+					'session' => $conn->Session->all(),
+				],
+			]);
+	}
+
 	public function testOnOpen() {
 		$mock = $this->getMock('\\Ratchet\\ConnectionInterface');
 		$conn = new Ratchet\Wamp\WampConnection($mock);
