@@ -23,15 +23,11 @@ class SessionHandlerImposer {
 
 abstract class CakeRatchetTestCase extends CakeTestCase {
 
-	private $__cbi = [];
-
 /**
  * {@inheritdoc}
  */
 	public function setUp() {
 		parent::setUp();
-
-		$this->__cbi = [];
 
 		$this->shell = $this->getMock('WebsocketShell', [], [
 			'out',
@@ -54,17 +50,18 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 	}
 
 	protected function _expectedEventCalls(&$asserts, $events) {
+		$cbi = [];
 		foreach ($events as $eventName => $event) {
 			$count = count($events[$eventName]['callback']);
 			for ($i = 0; $i < $count; $i++) {
 				$asserts[$eventName . '_' . $i] = false;
 			}
-			$this->__cbi[$eventName] = 0;
+			$cbi[$eventName] = 0;
 			$this->eventManager->attach(
-				function ($event) use (&$events, $eventName, &$asserts) {
-					$asserts[$eventName . '_' . $this->__cbi[$eventName]] = true;
-					call_user_func($events[$eventName]['callback'][$this->__cbi[$eventName]], $event);
-					$this->__cbi[$eventName]++;
+				function ($event) use (&$events, $eventName, &$asserts, &$cbi) {
+					$asserts[$eventName . '_' . $cbi[$eventName]] = true;
+					call_user_func($events[$eventName]['callback'][$cbi[$eventName]], $event);
+					$cbi[$eventName]++;
 				},
 				$eventName
 			);
