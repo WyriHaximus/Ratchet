@@ -140,7 +140,7 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 		}
 	}
 
-	public function testOnCallRejectProvider() {
+	public function testOnCallFailedProvider() {
 		return [
 			[
 				'test',
@@ -152,9 +152,9 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 	}
 
 /**
- * @dataProvider testOnCallRejectProvider
+ * @dataProvider testOnCallFailedProvider
  */
-	public function testOnCallReject($topic) {
+	public function testOnCallFailed($topic) {
 		$topicName = (string)$topic;
 		$results = 'foo:bar';
 
