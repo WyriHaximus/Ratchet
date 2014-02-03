@@ -99,9 +99,20 @@ class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
 					},
 				],
 			],
+			'Rachet.WampServer.onUnSubscribe.test' => [
+				'output' => [
+					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
+					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
+				],
+				'callback' => [
+					function ($event) {
+					},
+				],
+			],
 			]
 		);
 		$this->AppServer->onOpen($conn);
+		$this->AppServer->onSubscribe($conn, new \Ratchet\Wamp\Topic('test'));
 		$this->AppServer->onClose($conn);
 
 		foreach ($asserts as $assert) {
