@@ -111,14 +111,6 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 	}
 
 /**
- *
- * @param \Ratchet\Wamp\TopicManager $topicManager
- */
-	public function setTopicManager(\Ratchet\Wamp\TopicManager $topicManager) {
-		$this->_topicManager = $topicManager;
-	}
-
-/**
  * Silently ignore exceptions
  *
  * @param \Ratchet\ConnectionInterface $conn
