@@ -14,3 +14,7 @@ cakeWamp.call('Plugin.TopicName', {
   console.log(responseData);
 });
 ```
+
+## Server side ##
+
+The server side is a little more complicated.
