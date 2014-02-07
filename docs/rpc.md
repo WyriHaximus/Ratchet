@@ -18,3 +18,9 @@ cakeWamp.call('Plugin.TopicName', {
 ## Server side ##
 
 The server side is a little more complicated.
+
+[Setting up the listener]
+
+[Do your thing]
+
+[How to respond]
