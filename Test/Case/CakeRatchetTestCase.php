@@ -48,7 +48,7 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 
 		foreach ($this->__preservedEventListeners as $eventName => $eventListeners) {
 			foreach ($eventListeners as $eventListener) {
-				CakeEventManager::instance()->attach($eventListener['callable'], $eventName, array(
+				$this->eventManager->attach($eventListener['callable'], $eventName, array(
 						'passParams' => $eventListener['passParams'],
 				));
 			}
@@ -65,7 +65,7 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 		foreach ($events as $eventName => $event) {
 			$this->__preservedEventListeners[$eventName] = CakeEventManager::instance()->listeners($eventName);
 			foreach ($this->__preservedEventListeners[$eventName] as $eventListener) {
-				CakeEventManager::instance()->detach($eventListener['callable'], $eventName);
+				$this->eventManager->detach($eventListener['callable'], $eventName);
 			}
 
 			$count = count($events[$eventName]['callback']);
