@@ -23,6 +23,8 @@ class SessionHandlerImposer {
 
 abstract class CakeRatchetTestCase extends CakeTestCase {
 
+	private $__preservedEventListeners = [];
+
 /**
  * {@inheritdoc}
  */
@@ -44,6 +46,15 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 	public function tearDown() {
 		unset($this->AppServer, $this->eventManager);
 
+		foreach ($this->__preservedEventListeners as $eventName => $eventListeners) {
+			foreach ($eventListeners as $eventListener) {
+				CakeEventManager::instance()->attach($eventListener['callable'], $eventName, array(
+						'passParams' => $eventListener['passParams'],
+				));
+			}
+		}
+		$this->__preservedEventListeners = [];
+
 		CakeEventManager::instance($this->eventManagerOld);
 
 		parent::tearDown();
@@ -52,6 +63,11 @@ abstract class CakeRatchetTestCase extends CakeTestCase {
 	protected function _expectedEventCalls(&$asserts, $events) {
 		$cbi = [];
 		foreach ($events as $eventName => $event) {
+			$this->__preservedEventListeners[$eventName] = CakeEventManager::instance()->listeners($eventName);
+			foreach ($this->__preservedEventListeners[$eventName] as $eventListener) {
+				CakeEventManager::instance()->detach($eventListener['callable'], $eventName);
+			}
+
 			$count = count($events[$eventName]['callback']);
 			for ($i = 0; $i < $count; $i++) {
 				$asserts[$eventName . '_' . $i] = false;
