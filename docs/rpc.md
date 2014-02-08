@@ -17,9 +17,27 @@ cakeWamp.call('Plugin.TopicName', {
 
 ## Server side ##
 
-The server side is a little more complicated.
+The server side is a little more complicated. First you have to setup an `Event Listener`. In our example we'll create `SearchListener.php` in `./Event` with the following contents:
+```php
+<?php
 
-[Setting up the listener]
+App::uses('CakeEventListener', 'Event');
+
+class SearchListener implements CakeEventListener {
+
+	public function implementedEvents() {
+		return array(
+			'Rachet.WampServer.Rpc.search' => 'search',
+		);
+	}
+
+	public function search(CakeEvent $event) {
+		// With this function we'll search
+	}
+}
+```
+
+(Make sure you'll attach this listener during bootstrap!)
 
 [Do your thing]
 
