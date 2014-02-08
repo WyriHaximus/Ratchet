@@ -39,6 +39,12 @@ class SearchListener implements CakeEventListener {
 
 (Make sure you'll attach this listener during bootstrap!)
 
-[Do your thing]
+In that search function you'll do your magic and get the results from what ever async source you are using and fulfill the promise. (For example you could use [react/http-client](https://github.com/reactphp/http-client) to retrive the search results from elasticsearch.)
 
-[How to respond]
+```php
+public function search(CakeEvent $event) {
+    $event->data['promise']->resolve('results!');
+}
+```
+
+That returns the string `results!` back to the client side promise waiting for a result.
