@@ -40,10 +40,6 @@ class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
 			$asserts,
 			[
 			'Rachet.WampServer.onOpen' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onOpen#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onOpen#',
-				],
 				'callback' => [
 					function ($event) use ($conn) {
 						$this->assertEquals(
@@ -79,10 +75,6 @@ class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
 			$asserts,
 			[
 			'Rachet.WampServer.onClose' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.onClose#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.onClose#',
-				],
 				'callback' => [
 					function ($event) use ($conn) {
 						$this->assertEquals(
@@ -100,10 +92,6 @@ class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.onUnSubscribe.test' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) {
 					},

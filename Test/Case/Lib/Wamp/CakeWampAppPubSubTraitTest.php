@@ -51,10 +51,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 			$asserts,
 			[
 			'Rachet.WampServer.onPublish' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn, $topicName, $exclude, $eligible, $eventData) {
 						$this->assertEquals(
@@ -76,10 +72,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.onPublish.' . $topicName => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn, $topicName, $exclude, $eligible, $eventData) {
 						$this->assertEquals(
@@ -139,10 +131,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 			$asserts,
 			[
 			'Rachet.WampServer.onSubscribeNewTopic' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
@@ -163,10 +151,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.onSubscribeNewTopic.' . $topicName => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
@@ -187,10 +171,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.onSubscribe' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
@@ -227,10 +207,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.onSubscribe.' . $topicName => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
@@ -307,10 +283,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 			$asserts,
 			[
 			'Rachet.WampServer.onUnSubscribeStaleTopic' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn1, $topicName) {
 						$this->assertEquals(
@@ -329,10 +301,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.onUnSubscribeStaleTopic.' . $topicName => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn2, $topicName) {
 						$this->assertEquals(
@@ -351,10 +319,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.onUnSubscribe' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(
@@ -389,10 +353,6 @@ class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.onUnSubscribe.' . $topicName => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn1, $topicName, $topic) {
 						$this->assertEquals(

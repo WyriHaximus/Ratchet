@@ -66,10 +66,6 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 			$asserts,
 			[
 			'Rachet.WampServer.Rpc' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn, $topicName, $topic) {
 						$this->assertEquals(
@@ -93,10 +89,6 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.Rpc.' . $topicName => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn, $topicName, $topic, $deferred, $results) {
 						$resolver = $deferred->resolver();
@@ -199,10 +191,6 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 			$asserts,
 			[
 			'Rachet.WampServer.Rpc' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn, $topicName, $topic) {
 						$this->assertEquals(
@@ -226,11 +214,6 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.Rpc.' . $topicName => [
-				'eventname' => 'Rachet.WampServer.Rpc.' . $topicName,
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn, $topicName, $topic, $deferred, $rejectReason) {
 						$resolver = $deferred->resolver();
@@ -258,10 +241,6 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.RpcFailed' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn, $topicName, $topic) {
 						$this->assertEquals(
@@ -359,10 +338,6 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 			$asserts,
 			[
 			'Rachet.WampServer.Rpc' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($blockReason) {
 						$event->result['stop_reason'] = $blockReason;
@@ -371,10 +346,6 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 				],
 			],
 			'Rachet.WampServer.RpcBlocked' => [
-				'output' => [
-					'#\[<info>[0-9]+.[0-9]+</info>] Event begin: Rachet.WampServer.Rpc#',
-					'#\[<info>[0-9]+.[0-9]+</info>] Event end: Rachet.WampServer.Rpc#',
-				],
 				'callback' => [
 					function ($event) use ($conn, $topicName, $topic, $blockReason) {
 						$this->assertEquals(
