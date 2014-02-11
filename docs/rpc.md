@@ -49,8 +49,7 @@ public function search(CakeEvent $event) {
 
 That returns the string `results!` back to the client side promise waiting for a result.
 
-A promise can also be rejected.
-
+A promise can also be rejected:
 ```php
 public function search(CakeEvent $event) {
     $event->data['promise']->reject([
