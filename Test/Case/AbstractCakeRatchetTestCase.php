@@ -21,7 +21,7 @@ class SessionHandlerImposer {
 
 }
 
-abstract class CakeRatchetTestCase extends CakeTestCase {
+abstract class AbstractCakeRatchetTestCase extends CakeTestCase {
 
 	private $__preservedEventListeners = [];
 

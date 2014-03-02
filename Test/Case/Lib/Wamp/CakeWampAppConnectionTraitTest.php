@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
+App::uses('AbstractCakeRatchetTestCase', 'Ratchet.Test/Case');
 
-class CakeWampAppConnectionTraitTest extends CakeRatchetTestCase {
+class CakeWampAppConnectionTraitTest extends AbstractCakeRatchetTestCase {
 
 	public function testGetConnections() {
 		$mock = $this->getMock('\\Ratchet\\ConnectionInterface');

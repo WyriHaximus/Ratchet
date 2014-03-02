@@ -11,9 +11,9 @@
 
 App::uses('WebsocketShell', 'Ratchet.Console/Command');
 App::uses('CakeWampAppServer', 'Ratchet.Lib/Wamp');
-App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
+App::uses('AbstractCakeRatchetTestCase', 'Ratchet.Test/Case');
 
-class CakeWampAppPubSubTraitTest extends CakeRatchetTestCase {
+class CakeWampAppPubSubTraitTest extends AbstractCakeRatchetTestCase {
 
 	public function testOnPublishProvider() {
 		return [

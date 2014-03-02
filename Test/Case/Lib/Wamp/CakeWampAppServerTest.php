@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
+App::uses('AbstractCakeRatchetTestCase', 'Ratchet.Test/Case');
 
-class CakeWampAppServerTest extends CakeRatchetTestCase {
+class CakeWampAppServerTest extends AbstractCakeRatchetTestCase {
 
 	public function testGetShell() {
 		$this->assertEquals($this->AppServer->getShell(), $this->shell);

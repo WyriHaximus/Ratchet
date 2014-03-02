@@ -127,7 +127,7 @@ trait CakeWampAppRpcTrait {
 			$this,
 			[
 			'connection' => $conn,
-			'promise' => $deferred->resolver(),
+			'promise' => $deferred,
 			'id' => $id,
 			'topic' => $topic,
 			'params' => $params,

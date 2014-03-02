@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-App::uses('CakeRatchetTestCase', 'Ratchet.Test/Case');
+App::uses('AbstractCakeRatchetTestCase', 'Ratchet.Test/Case');
 
-class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
+class CakeWampAppRpcTraitTest extends AbstractCakeRatchetTestCase {
 
 	public function testOnCallProvider() {
 		return [
@@ -91,7 +91,7 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 			'Rachet.WampServer.Rpc.' . $topicName => [
 				'callback' => [
 					function ($event) use ($conn, $topicName, $topic, $deferred, $results) {
-						$resolver = $deferred->resolver();
+						$resolver = $deferred;
 
 						$this->assertEquals(
 							$event->data,
@@ -216,7 +216,7 @@ class CakeWampAppRpcTraitTest extends CakeRatchetTestCase {
 			'Rachet.WampServer.Rpc.' . $topicName => [
 				'callback' => [
 					function ($event) use ($conn, $topicName, $topic, $deferred, $rejectReason) {
-						$resolver = $deferred->resolver();
+						$resolver = $deferred;
 
 						$this->assertEquals(
 							$event->data,
