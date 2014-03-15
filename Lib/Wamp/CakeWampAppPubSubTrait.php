@@ -66,9 +66,9 @@ trait CakeWampAppPubSubTrait {
  * @param array $exclude
  * @param array $eligible
  */
-	public function onPublish(Conn $conn, $topic, $event, array $exclude, array $eligible) {
+	public function onPublish(Conn $conn, $topic, $event, array $exclude = array(), array $eligible = array()) {
 		if ($topic instanceof \Ratchet\Wamp\Topic) {
-			$topic->broadcast($event);
+			$topic->broadcast($event, $exclude, $eligible);
 		}
 
 		$topicName = self::getTopicName($topic);
