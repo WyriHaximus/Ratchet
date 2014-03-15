@@ -28,13 +28,13 @@ trait CakeWampAppRpcTrait {
 			'Rachet.WampServer.Rpc',
 			$this,
 			[
-			'topicName' => $topicName,
-			'connection' => $conn,
-			'id' => $id,
-			'topic' => $topic,
-			'params' => $params,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'topicName' => $topicName,
+				'connection' => $conn,
+				'id' => $id,
+				'topic' => $topic,
+				'params' => $params,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 
@@ -126,13 +126,13 @@ trait CakeWampAppRpcTrait {
 			'Rachet.WampServer.Rpc.' . $topicName,
 			$this,
 			[
-			'connection' => $conn,
-			'promise' => $deferred,
-			'id' => $id,
-			'topic' => $topic,
-			'params' => $params,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'connection' => $conn,
+				'promise' => $deferred,
+				'id' => $id,
+				'topic' => $topic,
+				'params' => $params,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 	}
