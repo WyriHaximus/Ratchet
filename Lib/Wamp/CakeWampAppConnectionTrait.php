@@ -45,9 +45,9 @@ trait CakeWampAppConnectionTrait {
 			'Rachet.WampServer.onOpen',
 			$this,
 			[
-			'connection' => $conn,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'connection' => $conn,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 	}
@@ -66,9 +66,9 @@ trait CakeWampAppConnectionTrait {
 			'Rachet.WampServer.onClose',
 			$this,
 			[
-			'connection' => $conn,
-			'wampServer' => $this,
-			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+				'connection' => $conn,
+				'wampServer' => $this,
+				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
 			]
 		);
 
