@@ -23,41 +23,33 @@ trait CakeWampAppRpcTrait {
  */
 	public function onCall(Conn $conn, $id, $topic, array $params) {
 		$topicName = self::getTopicName($topic);
+		$eventPayload = [
+			'connection' => $conn,
+			'id' => $id,
+			'connectionData' => $this->_connections[$conn->WAMP->sessionId],
+		];
 
 		$event = $this->dispatchEvent(
 			'Rachet.WampServer.Rpc',
 			$this,
-			[
+			array_merge($eventPayload, [
 				'topicName' => $topicName,
-				'connection' => $conn,
-				'id' => $id,
 				'topic' => $topic,
 				'params' => $params,
 				'wampServer' => $this,
-				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
-			]
+			])
 		);
 
 		if ($event->isStopped()) {
-			$conn->callError(
-				$id,
-				$event->result['stop_reason']['error_uri'],
-				$event->result['stop_reason']['desc'],
-				$event->result['stop_reason']['details']
-			);
-
+			$conn->callError($id, $event->result['stop_reason']['error_uri'], $event->result['stop_reason']['desc'], $event->result['stop_reason']['details']);
 			$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') was blocked');
-
 			$this->dispatchEvent(
 				'Rachet.WampServer.RpcBlocked',
 				$this,
-				[
+				array_merge($eventPayload, [
 					'topicName' => $topicName,
-					'connection' => $conn,
-					'id' => $id,
 					'reason' => $event->result['stop_reason'],
-					'connectionData' => $this->_connections[$conn->WAMP->sessionId],
-				]
+				])
 			);
 
 			return false;
@@ -67,57 +59,36 @@ trait CakeWampAppRpcTrait {
 
 		$deferred = new \React\Promise\Deferred();
 		$deferred->promise()->then(
-			function ($results) use ($conn, $id, $topicName, $start) {
+			function ($results) use ($conn, $id, $topicName, $start, $eventPayload) {
 				$end = microtime(true);
-				$conn->callResult(
-					$id,
-					$results
-				);
 
-				$this->outVerbose(
-					'Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 's</info> and succeeded'
-				);
-
+				$conn->callResult($id, $results);
+				$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 's</info> and succeeded');
 				$this->dispatchEvent(
 					'Rachet.WampServer.RpcSuccess',
 					$this,
-					[
+					array_merge($eventPayload, [
 						'topicName' => $topicName,
-						'connection' => $conn,
-						'id' => $id,
 						'results' => $results,
-						'connectionData' => $this->_connections[$conn->WAMP->sessionId],
-					]
+					])
 				);
 			},
-			function ($errorUri, $desc = '', $details = null) use ($conn, $id, $topicName, $start) {
+			function ($errorUri, $desc = '', $details = null) use ($conn, $id, $topicName, $start, $eventPayload) {
 				$end = microtime(true);
 
-				$conn->callError(
-					$id,
-					$errorUri,
-					$desc,
-					$details
-				);
-
-				$this->outVerbose(
-					'Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 's</info> and failed'
-				);
-
+				$conn->callError($id, $errorUri, $desc, $details);
+				$this->outVerbose('Rachet.WampServer.Rpc.' . $topicName . ' call (' . $id . ') took <info>' . ($end - $start) . 's</info> and failed');
 				$this->dispatchEvent(
 					'Rachet.WampServer.RpcFailed',
 					$this,
-					[
+					array_merge($eventPayload, [
 						'topicName' => $topicName,
-						'connection' => $conn,
-						'id' => $id,
 						'reason' => [
 							$errorUri,
 							$desc,
 							$details,
 						],
-						'connectionData' => $this->_connections[$conn->WAMP->sessionId],
-					]
+					])
 				);
 			}
 		);
@@ -125,15 +96,12 @@ trait CakeWampAppRpcTrait {
 		$this->dispatchEvent(
 			'Rachet.WampServer.Rpc.' . $topicName,
 			$this,
-			[
-				'connection' => $conn,
+			array_merge($eventPayload, [
 				'promise' => $deferred,
-				'id' => $id,
 				'topic' => $topic,
 				'params' => $params,
 				'wampServer' => $this,
-				'connectionData' => $this->_connections[$conn->WAMP->sessionId],
-			]
+			])
 		);
 	}
 } 
