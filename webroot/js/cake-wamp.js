@@ -29,12 +29,12 @@ cakeWamp.onhangupListeners = [];
  */
 cakeWamp.connect = function() {
 
-    if (cakeWamp.options.debugWamp) {
+    if (cakeWamp.options && cakeWamp.options.debugWamp) {
         ab._debugrpc = true;
         ab._debugpubsub = true;
     }
 
-    if (cakeWamp.options.debugWs) {
+    if (cakeWamp.options && cakeWamp.options.debugWs) {
         ab._debugws = true;
     }
 
