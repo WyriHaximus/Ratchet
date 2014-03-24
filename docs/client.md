@@ -1,6 +1,8 @@
 Client
 ======
 
+`Note: Make sure you've setup the helper before starting with this.`
+
 Ratchet's client is a simple wrapper around [Autobahn](http://autobahn.ws/) adding some handy functionality. Such as auto-connecting on page load, resubscrining after reconnect and `onconnect`/`onhangup` events.
 
 ## pub/sub ##
