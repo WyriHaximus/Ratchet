@@ -5,3 +5,5 @@ Changelog
 
 ## 0.1.0 ##
 - Websocket server
+- Client side libraries
+- DebugKit panel
