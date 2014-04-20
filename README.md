@@ -24,15 +24,17 @@ This plugin depends on the following plugins and libraries and are pulled in by 
 - [Ratchet](https://github.com/cboden/Ratchet)
 - [AssetCompress](https://github.com/markstory/asset_compress) v0.9+
 
-#### 2. Composer ####
+#### 2. Installation ####
 
-Make sure you have [composer](http://getcomposer.org/) installed and configured with the autoloader registering during bootstrap as described [here](http://ceeram.github.io/blog/2013/02/22/using-composer-with-cakephp-2-dot-x/). Make sure you have a composer.json and add the following to your required section.
+Installation is easy with [composer](http://getcomposer.org/) just add Ratchet to your composer.json.
 
 ```json
-"wyrihaximus/ratchet": "dev-master"
+{
+	"require": {
+		"wyrihaximus/ratchet": "dev-master"
+	}
+}
 ```
-
-When you've set everything up, run `composer install`.
 
 #### 3. Setup the plugin ####
 
