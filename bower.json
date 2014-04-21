@@ -1,0 +1,13 @@
+{
+  "name": "Ratchet",
+  "ignore": [
+    ".jshintrc",
+    "**/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "when": "d384ae03614c34ac2d309d1b4cfd48d716666df2",
+    "autobahnjs": "0.7.5",
+    "web-socket-js": "1.0.2"
+  }
+}

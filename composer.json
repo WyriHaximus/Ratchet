@@ -24,7 +24,6 @@
         "php": ">=5.4.0",
         "react/promise": "~2.0",
         "cboden/Ratchet": "0.3.*",
-        "composer/installers": "*",
-        "markstory/asset_compress": "v0.9"
+        "composer/installers": "*"
     }
 }

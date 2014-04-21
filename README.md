@@ -17,14 +17,7 @@ Ratchet for CakePHP brings [the Ratchet websocket](http://socketo.me/) server to
 
 Keep in mind that this should only be used to push data around. Handling and processing that data is the applications job this plugin is only to get it from and to the client.
 
-#### 1. Requirements ####
-
-This plugin depends on the following plugins and libraries and are pulled in by composer later on:
-
-- [Ratchet](https://github.com/cboden/Ratchet)
-- [AssetCompress](https://github.com/markstory/asset_compress) v0.9+
-
-#### 2. Installation ####
+#### 1. Installation ####
 
 Installation is easy with [composer](http://getcomposer.org/) just add Ratchet to your composer.json.
 
@@ -36,9 +29,27 @@ Installation is easy with [composer](http://getcomposer.org/) just add Ratchet t
 }
 ```
 
-#### 3. Setup the plugin ####
+Composer makes sure [Ratchet](https://github.com/cboden/Ratchet), yes I named this plugin after the underlying library, and other components are pulled in.
+
+#### 2. Setup the plugin ####
 
 Make sure you load `Ratchet` and `AssetCompress` in your bootstrap and setup `AssetCompress` properly.
+
+#### 3. Using the helper ####
+
+Add the helper to the `AppController` or to specific controllers that will use it.
+
+```php
+$helpers = [
+  'Ratchet.Wamp',
+];
+```
+
+Then in your view or layout template add this:
+
+```php
+<?php $this->Wamp->init(); ?>
+```
 
 #### 4. Start and stopping the server ####
 
