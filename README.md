@@ -19,7 +19,7 @@ Keep in mind that this should only be used to push data around. Handling and pro
 
 #### 1. Installation ####
 
-Installation is easy with [composer](http://getcomposer.org/) just add Ratchet to your composer.json.
+Installation is easy with [composer](http://getcomposer.org/) just add Ratchet to your composer.json. ([Read more here on Composer and CakePHP 2.x.](http://book.cakephp.org/2.0/en/installation/advanced-installation.html#installing-cakephp-with-composer))
 
 ```json
 {
