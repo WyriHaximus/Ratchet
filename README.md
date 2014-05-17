@@ -20,6 +20,7 @@ Keep in mind that this should only be used to push data around. Handling and pro
 #### 0. Requirements ####
 
 * PHP 5.4+
+* CakePHP 2.x
 * Composer
 * SSH/Shell access
 * ext-libevent is highly reccomended
