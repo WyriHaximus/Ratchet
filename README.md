@@ -17,6 +17,13 @@ Ratchet for CakePHP brings [the Ratchet websocket](http://socketo.me/) server to
 
 Keep in mind that this should only be used to push data around. Handling and processing that data is the applications job this plugin is only to get it from and to the client.
 
+#### 0. Requirements ####
+
+* PHP 5.4+
+* Composer
+* SSH/Shell access
+* ext-libevent is highly reccomended
+
 #### 1. Installation ####
 
 Installation is easy with [composer](http://getcomposer.org/) just add Ratchet to your composer.json. ([Read more here on Composer and CakePHP 2.x.](http://book.cakephp.org/2.0/en/installation/advanced-installation.html#installing-cakephp-with-composer))
