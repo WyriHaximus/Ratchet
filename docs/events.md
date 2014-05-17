@@ -5,7 +5,17 @@ Ratchet is build on events to decouple everything.
 
 ## RPC ##
 
-Creating an RPC is simple and requires you to listen to `Rachet.WampServer.Rpc.YOURRPCNAME` where YOURRPCNAME is the desires RPC name that can be called from the client. For example:
+### Pre-emit ###
+
+Before emitting the actual event Ratchet first emits `Rachet.WampServer.Rpc`. Any listener an hook into it and stop it.
+
+[CODEEXAMPLE HOW TO STOP IT]
+
+In case the event is stopped actual RPC event won't be emitted. This can be used to prevent certain connections to specific calls or to throttle  the amount of calls. When this happens another event is emitted: `Rachet.WampServer.RpcBlocked`.
+
+### Emit ###
+
+Listening for the actual RPC event is simple and requires you to listen to `Rachet.WampServer.Rpc.YOURRPCNAME` where YOURRPCNAME is the desired RPC name that can be called from the client. For example:
 
 ```php
 class PlusOnelListener implements CakeEventListener {
@@ -17,13 +27,17 @@ class PlusOnelListener implements CakeEventListener {
 }
 ```
 
-The plusOne function has to call `callResult` sending the RPC result back to the client.
+The `plusOne` function has to call `callResult` sending the RPC result back to the client.
 
 ```php
 	public function plusOne($event) {
 		$event->data['promise']->resolve(++$event->data['value']);
 	}
 ```
+
+### Post-emit ###
+
+Once the event listener has done it's job it can either `resolve` or `reject` the given promise. Wether the promise is resolved or rejected it starts sending the result back to the client before calling the `Rachet.WampServer.RpcSuccess` or `Rachet.WampServer.RpcFailed` events.
 
 ## pub/sub ##
 
