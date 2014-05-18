@@ -7,9 +7,13 @@ Ratchet is build on events to decouple everything.
 
 ### Pre-emit ###
 
-Before emitting the actual event Ratchet first emits `Rachet.WampServer.Rpc`. Any listener an hook into it and stop it.
+Before emitting the actual event Ratchet first emits `Rachet.WampServer.Rpc`. Any listener an hook into it and stop it. Stopping is done as stated in [the CakePHP Cookbook event section](http://book.cakephp.org/2.0/en/core-libraries/events.html#stopping-events):
 
-[CODEEXAMPLE HOW TO STOP IT]
+```php
+public function listeningMethod(CakeEvent $event) {
+    $event->stopPropagation();
+}
+```
 
 In case the event is stopped actual RPC event won't be emitted. This can be used to prevent certain connections to specific calls or to throttle  the amount of calls. When this happens another event is emitted: `Rachet.WampServer.RpcBlocked`.
 
