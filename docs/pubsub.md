@@ -11,6 +11,8 @@ cakeWamp.subscribe('Plugin.TopicName', function (topic, event) {
 
 ## Server side ##
 
+When a client broadcasts a message the server emits two events, `Rachet.WampServer.onPublish` and `Rachet.WampServer.onPublish.TOPICNAME`. Both with identical payload. The first first listeners interested in all messages from clients and the second only interested in messages for that specific topic.
+
 ### Broadcast ###
 
 ```php
