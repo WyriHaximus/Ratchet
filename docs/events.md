@@ -12,6 +12,8 @@ Before emitting the actual event Ratchet first emits `Rachet.WampServer.Rpc`. An
 ```php
 public function listeningMethod(CakeEvent $event) {
     $event->stopPropagation();
+    // OR 
+    return false;
 }
 ```
 
