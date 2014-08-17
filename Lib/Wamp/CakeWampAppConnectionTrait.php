@@ -18,6 +18,11 @@ trait CakeWampAppConnectionTrait {
 	 */
 	abstract function outVerbose();
 
+	/**
+	 * @return mixed
+	 */
+	abstract function dispatchEvent();
+
 /**
  * Contains metadata for all open connections
  *
