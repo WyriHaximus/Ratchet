@@ -19,7 +19,6 @@ App::uses('RatchetMessageQueueModelUpdateCommand', 'RatchetModelPush.Lib/Message
 App::uses('RatchetMessageQueueKillSwitchCommand', 'RatchetCommands.Lib/MessageQueue/Command');
 
 use Ratchet\Http\HttpServer;
-use Ratchet\Server\FlashPolicy;
 use Ratchet\Server\IoServer;
 use Ratchet\Session\SessionProvider;
 use Ratchet\Wamp\WampServer;
