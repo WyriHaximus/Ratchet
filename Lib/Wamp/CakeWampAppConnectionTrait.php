@@ -13,6 +13,13 @@ use Ratchet\ConnectionInterface as Conn;
 
 trait CakeWampAppConnectionTrait {
 
+	/**
+	 * @param $message
+	 *
+	 * @return mixed
+	 */
+	abstract function outVerbose($message);
+
 /**
  * Contains metadata for all open connections
  *
@@ -76,4 +83,4 @@ trait CakeWampAppConnectionTrait {
 
 		$this->outVerbose('Closed connection: <info>' . $conn->WAMP->sessionId . '</info>');
 	}
-} 
+}
