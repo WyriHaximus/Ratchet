@@ -104,7 +104,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
 
 /**
  *
- * @return \React\EventLoop\LoopInterface
+ * @return boolean
  */
 	public function getVerbose() {
 		return $this->_verbose;
@@ -125,7 +125,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
  * Syntactic sugar improving the readability for on* methods
  *
  * @param string $eventName
- * @param object $scope
+ * @param CakeWampAppServer $scope
  * @param array $params
  */
 	public function dispatchEvent($eventName, $scope, $params) {
