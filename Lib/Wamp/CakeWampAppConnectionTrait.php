@@ -14,11 +14,9 @@ use Ratchet\ConnectionInterface as Conn;
 trait CakeWampAppConnectionTrait {
 
 	/**
-	 * @param $message
-	 *
 	 * @return mixed
 	 */
-	abstract function outVerbose($message);
+	abstract function outVerbose();
 
 /**
  * Contains metadata for all open connections
