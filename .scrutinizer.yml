@@ -1,6 +1,5 @@
 filter:
-    paths: [Config/* Console/* Event/* Lib/* Model/* View/*]
-    excluded_paths: [Test/* docs/*]
+    excluded_paths: [Test/* docs/* webroot/*]
 tools:
     php_analyzer: true
 checks:
