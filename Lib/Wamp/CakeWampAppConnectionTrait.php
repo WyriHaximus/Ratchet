@@ -23,6 +23,8 @@ trait CakeWampAppConnectionTrait {
 	 */
 	abstract function dispatchEvent();
 
+	abstract function onUnSubscribe();
+
 /**
  * Contains metadata for all open connections
  *
