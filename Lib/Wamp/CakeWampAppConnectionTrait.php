@@ -14,16 +14,19 @@ use Ratchet\ConnectionInterface as Conn;
 trait CakeWampAppConnectionTrait {
 
 /**
+ * @param string $message
  * @return mixed
  */
 	abstract function outVerbose($message);
 
 /**
+ * @param string $eventName
  * @return mixed
  */
 	abstract function dispatchEvent($eventName, $subject, $payload);
 
 /**
+ * @param Conn $conn
  * @return mixed
  */
 	abstract function onUnSubscribe($conn, $topic);

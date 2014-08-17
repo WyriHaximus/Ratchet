@@ -19,6 +19,7 @@ trait CakeWampAppPubSubTrait {
 	abstract function getTopicName($topic);
 
 /**
+ * @param string $eventName
  * @return mixed
  */
 	abstract function dispatchEvent($eventName, $subject, $payload);
