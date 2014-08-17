@@ -1,0 +1,8 @@
+filter:
+    paths: [Config/* Console/* Event/* Lib/* Model/* View/*]
+    excluded_paths: [Test/* docs/*]
+tools:
+    php_analyzer: true
+checks:
+    php:
+        code_rating: true
