@@ -13,16 +13,19 @@ use Ratchet\ConnectionInterface as Conn;
 
 trait CakeWampAppConnectionTrait {
 
-	/**
-	 * @return mixed
-	 */
+/**
+ * @return mixed
+ */
 	abstract function outVerbose();
 
-	/**
-	 * @return mixed
-	 */
+/**
+ * @return mixed
+ */
 	abstract function dispatchEvent();
 
+/**
+ * @return mixed
+ */
 	abstract function onUnSubscribe();
 
 /**
