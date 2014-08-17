@@ -13,15 +13,15 @@ use Ratchet\ConnectionInterface as Conn;
 
 trait CakeWampAppPubSubTrait {
 
-	/**
-	 * @return mixed
-	 */
-	abstract function getTopicName();
+/**
+ * @return mixed
+ */
+	abstract function getTopicName($topic);
 
-	/**
-	 * @return mixed
-	 */
-	abstract function dispatchEvent();
+/**
+ * @return mixed
+ */
+	abstract function dispatchEvent($eventName, $subject, $payload);
 
 /**
  * Contains all active topics

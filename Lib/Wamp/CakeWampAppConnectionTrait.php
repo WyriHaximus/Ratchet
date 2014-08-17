@@ -16,17 +16,17 @@ trait CakeWampAppConnectionTrait {
 /**
  * @return mixed
  */
-	abstract function outVerbose();
+	abstract function outVerbose($message);
 
 /**
  * @return mixed
  */
-	abstract function dispatchEvent();
+	abstract function dispatchEvent($eventName, $subject, $payload);
 
 /**
  * @return mixed
  */
-	abstract function onUnSubscribe();
+	abstract function onUnSubscribe($conn, $topic);
 
 /**
  * Contains metadata for all open connections
