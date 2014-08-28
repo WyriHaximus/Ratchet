@@ -29,7 +29,7 @@ trait CakeWampAppConnectionTrait {
  * @param Conn $conn
  * @return mixed
  */
-	abstract function onUnSubscribe($conn, $topic);
+	abstract function onUnSubscribe(Conn $conn, $topic);
 
 /**
  * Contains metadata for all open connections
