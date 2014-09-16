@@ -1,7 +1,7 @@
 Ratchet
 =======
 
-`Rachet` for CakePHP wraps the `Rachet` library and brings `websockets` to CakePHP. It's build on to of `ReactPHP` to bring non-blocking asynchronous IO to `PHP`.
+`Ratchet` for CakePHP wraps the `Ratchet` library and brings `websockets` to CakePHP. It's build on to of `ReactPHP` to bring non-blocking asynchronous IO to `PHP`.
 
 ## Components ##
 
