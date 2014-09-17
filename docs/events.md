@@ -5,6 +5,8 @@ Ratchet is build on events to decouple everything.
 
 ## RPC ##
 
+`RPC`stands for `Remote Procedure Call` and allows you to call API's on the otherside of the line.
+
 ### Pre-emit ###
 
 Before emitting the actual event Ratchet first emits `Rachet.WampServer.Rpc`. Any listener an hook into it and stop it. Stopping is done as stated in [the CakePHP Cookbook event section](http://book.cakephp.org/2.0/en/core-libraries/events.html#stopping-events):
@@ -45,9 +47,9 @@ The `plusOne` function has to call `callResult` sending the RPC result back to t
 
 Once the event listener has done it's job it can either `resolve` or `reject` the given promise. Wether the promise is resolved or rejected it starts sending the result back to the client before calling the `Rachet.WampServer.RpcSuccess` or `Rachet.WampServer.RpcFailed` events.
 
-## pub/sub ##
+## Pub/Sub ##
 
-Pubsub events work slightly differently and have more then 1 event to listen on.
+PubSub events work slightly differently and have more then 1 event to listen on.
 
 - `Rachet.WampServer.onSubscribeNewTopic.YOURTOPICNAME` when a topic is `fresh` a.k.a. no clients are listening on it untill now.
 - `Rachet.WampServer.onSubscribe.YOURTOPICNAME` when a client subscribes to a topic with other clients listening on it.
