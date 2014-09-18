@@ -5,11 +5,11 @@ Client
 
 Ratchet's client is a simple wrapper around [Autobahn](http://autobahn.ws/) adding some handy functionality. Such as auto-connecting on page load, resubscrining after reconnect and `onconnect`/`onhangup` events.
 
-## pub/sub ##
+## Pub/Sub ##
 
 The examples below are usage examples, for a more detailed article about Autobahns pub/sub workings check [here](http://autobahn.ws/js/tutorials/pubsub).
 
-### subscribing ###
+### Subscribing ###
 
 ```javascript
 cakeWamp.subscribe('Plugin.TopicName', function(topicUri, event) {
@@ -17,7 +17,7 @@ cakeWamp.subscribe('Plugin.TopicName', function(topicUri, event) {
 });
 ```
 
-## publishing ###
+## Publishing ###
 
 ```javascript
 cakeWamp.publish('Plugin.TopicName', {
@@ -25,7 +25,7 @@ cakeWamp.publish('Plugin.TopicName', {
 });
 ```
 
-## unsubscribing ###
+## Unsubscribing ###
 
 ```javascript
 cakeWamp.unsubscribe('Plugin.TopicName');
@@ -39,9 +39,9 @@ cakeWamp.call('Plugin.TopicName', {
 });
 ```
 
-## events ##
+## Events ##
 
-### onconnect ###
+### Onconnect ###
 
 ```javascript
 cakeWamp.onconnectListeners.push(function(session) {
@@ -49,7 +49,7 @@ cakeWamp.onconnectListeners.push(function(session) {
 });
 ```
 
-### onhangup ###
+### Onhangup ###
 
 ```javascript
 cakeWamp.onhangupListeners.push(function(session) {
