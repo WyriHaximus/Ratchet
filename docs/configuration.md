@@ -18,7 +18,6 @@ Configure::write('Ratchet.Connection.websocket', [
 ]);
 ```
 
-
 ## External ##
 
 The external group defines the external interface of the websocket server.
