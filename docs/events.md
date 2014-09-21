@@ -3,6 +3,10 @@ Events
 
 Ratchet is build on events to decouple everything. 
 
+## Bootstrap ##
+
+During initial service bootstrap the `Rachet.WampServer.construct` event is emitted. Only passing the event loop, it's meant for listeners (from other plugins) providing features and functionality for and through the websocket service.
+
 ## RPC ##
 
 `RPC`stands for `Remote Procedure Call` and allows you to call API's on the otherside of the line.
@@ -55,4 +59,5 @@ PubSub utilizes the concept of channels to let everyone in a channel know of a m
 - `Rachet.WampServer.onSubscribe.YOURTOPICNAME` when a client subscribes to a topic with other clients listening on it.
 - `Rachet.WampServer.onUnSubscribe.YOURTOPICNAME` when a client unsubscribes to a topic with other clients listening on it.
 - `Rachet.WampServer.onUnSubscribeStaleTopic.YOURTOPICNAME` becomes `stale` as the last client listening on it has unsubscribed.
+
 
