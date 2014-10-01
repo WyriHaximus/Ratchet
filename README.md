@@ -41,7 +41,10 @@ Composer makes sure [Ratchet](https://github.com/cboden/Ratchet), yes I named th
 
 #### 2. Setup the plugin ####
 
-Make sure you load `Ratchet` and `AssetCompress` in your bootstrap and setup `AssetCompress` properly.
+Make sure you load `Ratchet` with the `bootstrap` option set to true:
+```php
+CakePlugin::load('Ratchet', ['bootstrap' => true]);
+```
 
 #### 3. Using the helper ####
 
