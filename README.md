@@ -64,10 +64,10 @@ Then in your view or layout template add this:
 
 #### 4. Start and stopping the server ####
 
-The server can be started with the following command (the verbose flag gives you debug information to see what is going on internally):
+The server can be started with the following command, from your `app` directory (the verbose flag gives you debug information to see what is going on internally):
 
 ```bash
-./cake Ratchet.websocket start --verbose
+./Console/cake Ratchet.websocket start --verbose
 ```
 
 If you've configurated the queue correctly you can stop the server with the following command:
