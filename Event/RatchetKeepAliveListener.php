@@ -23,7 +23,7 @@ class RatchetKeepAliveListener implements CakeEventListener {
 /**
  * Timer instance signature
  *
- * @var string
+ * @var \React\EventLoop\Timer\TimerInterface
  */
 	private $__timer = null;
 

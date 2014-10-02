@@ -16,7 +16,6 @@ class WampHelper extends AppHelper {
 	public $helpers
 		= [
 			'Html',
-			'AssetCompress.AssetCompress',
 		];
 
 	public function init() {
@@ -42,7 +41,7 @@ class WampHelper extends AppHelper {
 			'inline' => false,
 			]
 		);
-		$this->AssetCompress->script('Ratchet.wamp', ['block' => 'script']);
+		$this->Html->script('Ratchet.ratchet.min', ['block' => 'script']);
 
 		if (Configure::read('Ratchet.Connection.keepaliveInterval') > 0) {
 			$block = 'cakeWamp.subscribe(\'Rachet.connection.keepAlive\', function (topic, event) {});';

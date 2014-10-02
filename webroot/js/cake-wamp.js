@@ -57,8 +57,8 @@ cakeWamp.onconnect = function() {
         cakeWamp.onconnectListeners[i](cakeWamp.session);
     }
     
-    for (var i in cakeWamp.subscriptions) {
-        cakeWamp.session.subscribe(cakeWamp.subscriptions[i].topic, cakeWamp.subscriptions[i].callback);
+    for (var j in cakeWamp.subscriptions) {
+        cakeWamp.session.subscribe(cakeWamp.subscriptions[j].topic, cakeWamp.subscriptions[j].callback);
     }
 };
 

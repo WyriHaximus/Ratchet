@@ -14,6 +14,17 @@ use Ratchet\ConnectionInterface as Conn;
 trait CakeWampAppPubSubTrait {
 
 /**
+ * @return mixed
+ */
+	abstract function getTopicName($topic);
+
+/**
+ * @param string $eventName
+ * @return mixed
+ */
+	abstract function dispatchEvent($eventName, $subject, $payload);
+
+/**
  * Contains all active topics
  *
  * @var array

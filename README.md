@@ -11,39 +11,63 @@ CakePHP plugin wrapping Ratchet
 
 ## What is Ratchet ##
 
-Ratchet for CakePHP brings [the Ratchet websocket](http://socketo.me/) server to CakePHP. Websockets allow you to utilize near-real-time communication between your application and it's visitors. For example notifying a page the associated record in the database has been updated using the [Pushable behaviour](http://wyrihaximus.net/projects/cakephp/ratchet/documentation/model-push.html).
+Ratchet for CakePHP brings [the Ratchet websocket](http://socketo.me/) package to CakePHP. Websockets allow you to utilize near-real-time communication between your application and it's visitors. For example notifying a page the associated record in the database has been updated using the [Pushable behaviour](http://wyrihaximus.net/projects/cakephp/ratchet/documentation/model-push.html).
 
 ## Getting started ##
 
 Keep in mind that this should only be used to push data around. Handling and processing that data is the applications job this plugin is only to get it from and to the client.
 
-#### 1. Requirements ####
+#### 0. Requirements ####
 
-This plugin depends on the following plugins and libraries and are pulled in by composer later on:
+* PHP 5.4+
+* CakePHP 2.x
+* Composer
+* SSH/Shell access
+* ext-libevent is highly reccomended
 
-- [Ratchet](https://github.com/cboden/Ratchet)
-- [AssetCompress](https://github.com/markstory/asset_compress) v0.9+
+#### 1. Installation ####
 
-#### 2. Composer ####
-
-Make sure you have [composer](http://getcomposer.org/) installed and configured with the autoloader registering during bootstrap as described [here](http://ceeram.github.io/blog/2013/02/22/using-composer-with-cakephp-2-dot-x/). Make sure you have a composer.json and add the following to your required section.
+Installation is easy with [composer](http://getcomposer.org/) just add Ratchet to your composer.json. ([Read more here on Composer and CakePHP 2.x.](http://book.cakephp.org/2.0/en/installation/advanced-installation.html#installing-cakephp-with-composer))
 
 ```json
-"wyrihaximus/ratchet": "dev-master"
+{
+	"require": {
+		"wyrihaximus/ratchet": "dev-master"
+	}
+}
 ```
 
-When you've set everything up, run `composer install`.
+Composer makes sure [Ratchet](https://github.com/cboden/Ratchet), yes I named this plugin after the underlying library, and other components are pulled in.
 
-#### 3. Setup the plugin ####
+#### 2. Setup the plugin ####
 
-Make sure you load `Ratchet` and `AssetCompress` in your bootstrap and setup `AssetCompress` properly.
+Make sure you load `Ratchet` with the `bootstrap` option set to true:
+```php
+CakePlugin::load('Ratchet', ['bootstrap' => true]);
+```
+
+#### 3. Using the helper ####
+
+Add the helper to the `AppController` or to specific controllers that will use it.
+
+```php
+$helpers = [
+  'Ratchet.Wamp',
+];
+```
+
+Then in your view or layout template add this:
+
+```php
+<?php $this->Wamp->init(); ?>
+```
 
 #### 4. Start and stopping the server ####
 
-The server can be started with the following command:
+The server can be started with the following command (the verbose flag gives you debug information to see what is going on internally):
 
 ```bash
-./cake Ratchet.websocket start
+./cake Ratchet.websocket start --verbose
 ```
 
 If you've configurated the queue correctly you can stop the server with the following command:

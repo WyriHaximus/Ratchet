@@ -12,7 +12,6 @@
 App::uses('View', 'View');
 App::uses('WampHelper', 'Ratchet.View/Helper');
 App::uses('HtmlHelper', 'View/Helper');
-App::uses('AssetCompressHelper', 'AssetCompress.View/Helper');
 
 
 class WampHelperTest extends CakeTestCase {
@@ -31,12 +30,7 @@ class WampHelperTest extends CakeTestCase {
 		$this->view = new View($controller);
 		$this->view->request = $request;
 		$this->Helper = new WampHelper($this->view, ['noconfig' => true]);
-		$this->Helper->Html = $this->getMock('HtmlHelper', ['scriptBlock'], [$this->view]);
-		$this->Helper->AssetCompress = $this->getMock(
-			'AssetCompressHelper',
-			['script'],
-			[$this->view, ['noconfig' => true]]
-		);
+		$this->Helper->Html = $this->getMock('HtmlHelper', ['scriptBlock', 'script'], [$this->view]);
 
 		Router::reload();
 
@@ -90,9 +84,9 @@ class WampHelperTest extends CakeTestCase {
 				)
 			);
 
-		$this->Helper->AssetCompress->expects($this->once())
+		$this->Helper->Html->expects($this->once())
 			->method('script')
-			->with($this->equalTo('Ratchet.wamp'), $this->equalTo(['block' => 'script']));
+			->with($this->equalTo('Ratchet.ratchet.min'), $this->equalTo(['block' => 'script']));
 
 		$this->Helper->init();
 	}
@@ -118,7 +112,7 @@ class WampHelperTest extends CakeTestCase {
 					]
 				)
 			);
-		$this->Helper->Html->expects($this->at(1))
+		$this->Helper->Html->expects($this->at(2))
 			->method('scriptBlock')
 			->with(
 				$expectedScriptBlockB,
@@ -129,9 +123,9 @@ class WampHelperTest extends CakeTestCase {
 				)
 			);
 
-		$this->Helper->AssetCompress->expects($this->once())
+		$this->Helper->Html->expects($this->once())
 			->method('script')
-			->with($this->equalTo('Ratchet.wamp'), $this->equalTo(['block' => 'script']));
+			->with($this->equalTo('Ratchet.ratchet.min'), $this->equalTo(['block' => 'script']));
 
 		$this->Helper->init();
 	}
@@ -156,9 +150,9 @@ class WampHelperTest extends CakeTestCase {
 				)
 			);
 
-		$this->Helper->AssetCompress->expects($this->once())
+		$this->Helper->Html->expects($this->once())
 			->method('script')
-			->with($this->equalTo('Ratchet.wamp'), $this->equalTo(['block' => 'script']));
+			->with($this->equalTo('Ratchet.ratchet.min'), $this->equalTo(['block' => 'script']));
 
 		$this->Helper->init();
 	}
