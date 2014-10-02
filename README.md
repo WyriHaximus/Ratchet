@@ -73,7 +73,7 @@ The server can be started with the following command, from your `app` directory 
 If you've configurated the queue correctly you can stop the server with the following command:
 
 ```bash
-./cake Ratchet.websocket stop
+./Console/cake Ratchet.websocket stop
 ```
 
 For a proper way to boot the server check out the [Ratchet example supervisor configuration](http://socketo.me/docs/deploy#supervisor).
