@@ -11,7 +11,7 @@ CakePHP plugin wrapping Ratchet
 
 ## What is Ratchet ##
 
-<span style="color:orange;">Ratchet</span> for CakePHP brings [the Ratchet websocket](http://socketo.me/) server to CakePHP. Websockets allow you to utilize near-real-time communication between your application and it's visitors. For example notifying a page the associated record in the database has been updated using the [Pushable behaviour](http://wyrihaximus.net/projects/cakephp/ratchet/documentation/model-push.html).
+Ratchet for CakePHP brings [the Ratchet websocket](http://socketo.me/) server to CakePHP. Websockets allow you to utilize near-real-time communication between your application and it's visitors. For example notifying a page the associated record in the database has been updated using the [Pushable behaviour](http://wyrihaximus.net/projects/cakephp/ratchet/documentation/model-push.html).
 
 ## Getting started ##
 
