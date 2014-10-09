@@ -7,6 +7,10 @@ Ratchet for `CakePHP` has a few requirements to work.
 
 This plugin is written to work with `PHP` 5.4 and up.
 
+## PHP PCNTL Extension ##
+
+Intercepts signals from the OS.
+
 ## CakePHP 2.x ##
 
 While a `CakePHP` plugin obviously requires `CakePHP` if you want to use `Ratchet` as a standalone tool check out it's [website](http://socketo.me/).
