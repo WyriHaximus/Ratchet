@@ -121,16 +121,16 @@ class WebsocketShell extends Shell {
 		$parser->addSubcommand(
 			'start',
 			[
-			'help' => __('Starts and runs both the websocket service and the flashpolicy.')
+			    'help' => __('Starts and runs both the websocket service and the flashpolicy.')
 			]
 		)->description(__('Ratchet Websocket service.'))->addOption(
-				'verbose',
-				[
-				'help' => 'Enable verbose output.',
-				'short' => 'v',
-				'boolean' => true
-				]
-			);
+            'verbose',
+            [
+                'help' => 'Enable verbose output.',
+                'short' => 'v',
+                'boolean' => true
+            ]
+        );
 
 		return $parser;
 	}
