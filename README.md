@@ -41,7 +41,10 @@ Composer makes sure [Ratchet](https://github.com/cboden/Ratchet), yes I named th
 
 #### 2. Setup the plugin ####
 
-Make sure you load `Ratchet` and `AssetCompress` in your bootstrap and setup `AssetCompress` properly.
+Make sure you load `Ratchet` with the `bootstrap` option set to true:
+```php
+CakePlugin::load('Ratchet', ['bootstrap' => true]);
+```
 
 #### 3. Using the helper ####
 
@@ -61,16 +64,16 @@ Then in your view or layout template add this:
 
 #### 4. Start and stopping the server ####
 
-The server can be started with the following command:
+The server can be started with the following command, from your `app` directory (the verbose flag gives you debug information to see what is going on internally):
 
 ```bash
-./cake Ratchet.websocket start
+./Console/cake Ratchet.websocket start --verbose
 ```
 
 If you've configurated the queue correctly you can stop the server with the following command:
 
 ```bash
-./cake Ratchet.websocket stop
+./Console/cake Ratchet.websocket stop
 ```
 
 For a proper way to boot the server check out the [Ratchet example supervisor configuration](http://socketo.me/docs/deploy#supervisor).
