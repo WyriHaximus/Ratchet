@@ -83,16 +83,6 @@ class WebsocketShell extends Shell {
 			$this->__loop
 		);
 
-        $this->__pcntl = new MKraemer\ReactPCNTL\PCNTL($this->__loop);
-
-        $this->__pcntl->on(SIGTERM, function () {
-            $this->__loop->stop();
-        });
-
-        $this->__pcntl->on(SIGINT, function () {
-            $this->__loop->stop();
-        });
-
 		$this->__loop->run();
 	}
 

@@ -41,3 +41,9 @@ App::uses('CakeEventManager', 'Event');
 
 App::uses('RatchetKeepAliveListener', 'Ratchet.Event');
 CakeEventManager::instance()->attach(new RatchetKeepAliveListener());
+
+/**
+ * PCNTL listener
+ */
+App::uses('PcntlListener', 'Ratchet.Event');
+CakeEventManager::instance()->attach(new PcntlListener());
