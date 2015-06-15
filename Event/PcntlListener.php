@@ -35,7 +35,7 @@ class PcntlListener implements CakeEventListener {
             $event->subject()->getShell()->out(
                 '<warning>Your configuration doesn\'t seem to support \'ext-pcntl\'. It is highly recomended that you install and configure it as it provides OS signaling support!</warning>'
             );
-        } elseif (!class_exists('MKraemer\ReactPCNTL\PCNTL') {
+        } elseif (!class_exists('MKraemer\ReactPCNTL\PCNTL')) {
         	$event->subject()->getShell()->out(
                 '<warning>PCNTL support found but you didn\'t install mkraemer/react-pcntl!</warning>'
             );
