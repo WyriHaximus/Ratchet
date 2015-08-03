@@ -1,5 +1,6 @@
 {
     "name": "wyrihaximus/ratchet",
+    "type":"cakephp-plugin",
     "description": "Ratchet websockets integration plugin for CakePHP",
     "homepage": "http://wyrihaximus.net/projects/cakephp/ratchet.html",
     "license": "MIT",
@@ -31,7 +32,7 @@
         "mkraemer/react-pcntl": "Add support for OS signaling"
     },
     "require-dev": {
-        "cakephp/debug_kit": "3.0.*@dev",
+        "cakephp/debug_kit": "^3.0",
         "phpunit/phpunit": "^4.7",
         "squizlabs/php_codesniffer": "^1.5.0"
     }
