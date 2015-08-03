@@ -29,12 +29,8 @@ Keep in mind that this should only be used to push data around. Handling and pro
 
 Installation is easy with [composer](http://getcomposer.org/) just add Ratchet to your composer.json. ([Read more here on Composer and CakePHP 2.x.](http://book.cakephp.org/2.0/en/installation/advanced-installation.html#installing-cakephp-with-composer))
 
-```json
-{
-	"require": {
-		"wyrihaximus/ratchet": "dev-master"
-	}
-}
+```
+composer require wyrihaximus/ratchet 
 ```
 
 Composer makes sure [Ratchet](https://github.com/cboden/Ratchet), yes I named this plugin after the underlying library, and other components are pulled in.
