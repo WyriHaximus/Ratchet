@@ -1,5 +1,5 @@
 filter:
-    excluded_paths: [Test/* docs/* webroot/*]
+    excluded_paths: [tests/* docs/* webroot/*]
 tools:
     php_analyzer: true
     php_hhvm: true

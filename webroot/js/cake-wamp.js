@@ -48,7 +48,7 @@ cakeWamp.connect = function() {
 };
 
 /**
- * onhangup callback notifies all listeners about a succesful connection, subscribed to any listed in subscriptions
+ * onhangup callback notifies all listeners about a successful connection, subscribed to any listed in subscriptions
  * 
  * @returns void
  */

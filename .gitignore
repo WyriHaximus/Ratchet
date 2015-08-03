@@ -1,5 +1,4 @@
-/bower_components
-/node_modules
-/nbproject
-/Vendor
-/.idea
+bower_components
+node_modules
+vendor
+config/plugins.php

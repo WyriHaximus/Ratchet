@@ -38,4 +38,8 @@ gulp.task('swf', function() {
 });
 
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'swf']);
+gulp.task('default', [
+    'lint',
+    'scripts',
+    'swf'
+]);
