@@ -20,7 +20,7 @@
     "require": {
         "php": ">=5.4.0",
         "cakephp/cakephp": "^3.0",
-        "cboden/Ratchet": "^0.3",
+        "voryx/thruway": "^0.3.0",
         "react/promise": "^2.0"
     },
     "autoload": {
