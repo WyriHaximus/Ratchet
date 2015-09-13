@@ -13,7 +13,7 @@
 /**
  * Configuration
  */
-\Cake\Core\Configure::write('WyriHaximus.Ratchet', [
+/*\Cake\Core\Configure::write('WyriHaximus.Ratchet', [
 	'Loop' => \React\EventLoop\Factory::create(),
 	'Client' => [
 		'retryDelay' => 5000, // Not the best option but it speeds up development
@@ -32,19 +32,17 @@
 		],
 		'keepaliveInterval' => 23, // Why 23? Because NGINX kills after 30 seconds, set to 0 to disable
 	],
-]);
+]);*/
 
-App::uses('CakeEventManager', 'Event');
 
 /**
  * Client services listener
  */
 
-App::uses('RatchetKeepAliveListener', 'Ratchet.Event');
-CakeEventManager::instance()->attach(new RatchetKeepAliveListener());
+//CakeEventManager::instance()->attach(new RatchetKeepAliveListener());
 
 /**
  * PCNTL listener
  */
-App::uses('PcntlListener', 'Ratchet.Event');
-CakeEventManager::instance()->attach(new PcntlListener());
+//App::uses('PcntlListener', 'Ratchet.Event');
+//CakeEventManager::instance()->attach(new PcntlListener());

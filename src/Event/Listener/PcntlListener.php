@@ -9,31 +9,30 @@
  * file that was distributed with this source code.
  */
 
-namespace WyriHaximus\Ratchet\Event;
+namespace WyriHaximus\Ratchet\Event\Listener;
 
-use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 
 class PcntlListener implements EventListenerInterface
 {
     /**
-     * Return an array with events this listener implements.
+     * Return an array with events this listener implements
      *
      * @return array
      */
     public function implementedEvents()
     {
         return [
-        'WyriHaximus.Rachet.WampServer.Rpc.ping' => 'ping',
+        'WyriHaximus.Rachet.WampServer.construct' => 'construct',
         ];
     }
 
     /**
      * References the ReactPHP eventloop for later use
      *
-     * @param Event $event
+     * @param CakeEvent $event
      */
-    public function ping(Event $event)
+    public function construct(CakeEvent $event)
     {
 
         if (!function_exists('pcntl_signal')) {
