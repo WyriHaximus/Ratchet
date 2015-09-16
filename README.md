@@ -9,6 +9,10 @@ Ratchet
 
 CakePHP plugin wrapping Ratchet
 
+## Current status ##
+
+Currently I'm rewriting this plugin for CakePHP v3.
+
 ## What is Ratchet ##
 
 Ratchet for CakePHP brings [the Ratchet websocket](http://socketo.me/) package to CakePHP. Websockets allow you to utilize near-real-time communication between your application and it's visitors. For example notifying a page the associated record in the database has been updated using the [Pushable behaviour](http://wyrihaximus.net/projects/cakephp/ratchet/documentation/model-push.html).
@@ -20,7 +24,7 @@ Keep in mind that this should only be used to push data around. Handling and pro
 #### 0. Requirements ####
 
 * PHP 5.4+
-* CakePHP 2.x
+* CakePHP 3.x
 * Composer
 * SSH/Shell access
 * ext-libevent is highly reccomended
