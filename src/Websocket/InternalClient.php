@@ -9,9 +9,6 @@ use WyriHaximus\Ratchet\Event\OnSessionStartEvent;
 class InternalClient extends Client
 {
     /**
-     * This is meant to be overridden so that the client can do its
-     * thing
-     *
      * @param \Thruway\ClientSession $session
      * @param \Thruway\Transport\TransportInterface $transport
      */
@@ -20,6 +17,9 @@ class InternalClient extends Client
         EventManager::instance()->dispatch(OnSessionStartEvent::create($this->getRealm(), $session, $transport));
     }
 
+    /**
+     * @param \Thruway\ClientSession $session
+     */
     public function onSessionEnd($session)
     {
         EventManager::instance()->dispatch(OnSessionEndEvent::create($this->getRealm(), $session));
