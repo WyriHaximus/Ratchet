@@ -11,11 +11,7 @@
 
 namespace WyriHaximus\Ratchet\Tests\Event;
 
-use Cake\Event\Event;
 use React\EventLoop\Factory;
-use React\EventLoop\LoopInterface;
-use Thruway\ClientSession;
-use Thruway\Transport\TransportInterface;
 use WyriHaximus\Ratchet\Event\WebsocketStartEvent;
 
 class WebsocketStartEventTest extends AbstractEventTest
