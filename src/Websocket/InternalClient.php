@@ -18,4 +18,9 @@ class InternalClient extends Client
     {
         EventManager::instance()->dispatch(OnSessionStartEvent::create($this->getRealm(), $session, $transport));
     }
+
+    public function onSessionEnd($session)
+    {
+        EventManager::instance()->dispatch(OnSessionStartEvent::create($this->getRealm(), $session));
+    }
 }
