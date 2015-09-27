@@ -12,18 +12,18 @@
 namespace WyriHaximus\Ratchet\Event\Listener;
 
 use Cake\Event\EventListenerInterface;
-use WyriHaximus\Ratchet\Event\OnSesstionStartEvent;
+use WyriHaximus\Ratchet\Event\OnSessionStartEvent;
 
-class OnSesstionStartListener implements EventListenerInterface
+class OnSessionStartListener implements EventListenerInterface
 {
     public function implementedEvents()
     {
         return [
-            OnSesstionStartEvent::EVENT => 'onSessionStart',
+            OnSessionStartEvent::EVENT => 'onSessionStart',
         ];
     }
 
-    public function onSessionStart(OnSesstionStartEvent $event)
+    public function onSessionStart(OnSessionStartEvent $event)
     {
         $event->returnSession()->onClose()
     }
