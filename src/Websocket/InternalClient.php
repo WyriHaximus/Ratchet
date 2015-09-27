@@ -3,6 +3,7 @@ namespace WyriHaximus\Ratchet\Websocket;
 
 use Cake\Event\EventManager;
 use Thruway\Peer\Client;
+use WyriHaximus\Ratchet\Event\OnSessionEndEvent;
 use WyriHaximus\Ratchet\Event\OnSessionStartEvent;
 
 class InternalClient extends Client
@@ -21,6 +22,6 @@ class InternalClient extends Client
 
     public function onSessionEnd($session)
     {
-        EventManager::instance()->dispatch(OnSessionStartEvent::create($this->getRealm(), $session));
+        EventManager::instance()->dispatch(OnSessionEndEvent::create($this->getRealm(), $session));
     }
 }
