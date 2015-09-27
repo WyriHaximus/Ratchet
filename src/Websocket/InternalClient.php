@@ -3,7 +3,7 @@ namespace WyriHaximus\Ratchet\Websocket;
 
 use Cake\Event\EventManager;
 use Thruway\Peer\Client;
-use WyriHaximus\Ratchet\Event\OnSesstionStartEvent;
+use WyriHaximus\Ratchet\Event\OnSessionStartEvent;
 
 class InternalClient extends Client
 {
@@ -16,6 +16,6 @@ class InternalClient extends Client
      */
     public function onSessionStart($session, $transport)
     {
-        EventManager::instance()->dispatch(OnSesstionStartEvent::create($this->getRealm(), $session, $transport));
+        EventManager::instance()->dispatch(OnSessionStartEvent::create($this->getRealm(), $session, $transport));
     }
 }

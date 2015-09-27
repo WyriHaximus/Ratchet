@@ -15,7 +15,7 @@ use Cake\Event\Event;
 use Thruway\ClientSession;
 use Thruway\Transport\TransportInterface;
 
-class OnSesstionStartEvent extends Event
+class OnSessionStartEvent extends Event
 {
     const EVENT = 'WyriHaximus.Ratchet.onSessionStart';
 
