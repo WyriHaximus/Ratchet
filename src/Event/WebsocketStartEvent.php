@@ -13,13 +13,15 @@ namespace WyriHaximus\Ratchet\Event;
 
 use Cake\Event\Event;
 use React\EventLoop\LoopInterface;
-use Thruway\ClientSession;
-use Thruway\Transport\TransportInterface;
 
 class WebsocketStartEvent extends Event
 {
     const EVENT = 'WyriHaximus.Ratchet.WebsocketStart';
 
+    /**
+     * @param LoopInterface $loop
+     * @return static
+     */
     public static function create(LoopInterface $loop)
     {
         return new static(static::EVENT, $loop, [
