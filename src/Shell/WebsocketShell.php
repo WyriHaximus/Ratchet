@@ -48,12 +48,12 @@ class WebsocketShell extends Shell
         return parent::getOptionParser()->addSubcommand(
             'start',
             [
-                'help' => __('Starts and runs both the websocket service and the flashpolicy.')
+                'help' => __('Starts and runs both the websocket service')
             ]
         )->description(__('Ratchet Websocket service.'))->addOption(
             'verbose',
             [
-                'help' => 'Enable verbose output.',
+                'help' => 'Enable verbose output',
                 'short' => 'v',
                 'boolean' => true
             ]
@@ -62,7 +62,10 @@ class WebsocketShell extends Shell
 
     protected function loopResolver()
     {
-        if (Configure::check('WyriHaximus.PhuninCake.loop') && Configure::read('WyriHaximus.PhuninCake.loop') instanceof LoopInterface) {
+        if (
+            Configure::check('WyriHaximus.PhuninCake.loop') &&
+            Configure::read('WyriHaximus.PhuninCake.loop') instanceof LoopInterface
+        ) {
             return Configure::read('WyriHaximus.PhuninCake.loop');
         }
 
