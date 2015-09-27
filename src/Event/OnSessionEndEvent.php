@@ -13,7 +13,6 @@ namespace WyriHaximus\Ratchet\Event;
 
 use Cake\Event\Event;
 use Thruway\ClientSession;
-use Thruway\Transport\TransportInterface;
 
 class OnSessionEndEvent extends Event
 {
