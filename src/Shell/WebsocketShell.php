@@ -63,14 +63,14 @@ class WebsocketShell extends Shell
     protected function loopResolver()
     {
         if (
-            Configure::check('WyriHaximus.PhuninCake.loop') &&
-            Configure::read('WyriHaximus.PhuninCake.loop') instanceof LoopInterface
+            Configure::check('WyriHaximus.Ratchet.loop') &&
+            Configure::read('WyriHaximus.Ratchet.loop') instanceof LoopInterface
         ) {
-            return Configure::read('WyriHaximus.PhuninCake.loop');
+            return Configure::read('WyriHaximus.Ratchet.loop');
         }
 
-        if (class_exists('PipingBag\Di\PipingBag') && Configure::check('WyriHaximus.PhuninCake.pipingbag')) {
-            return PipingBag::get(Configure::read('WyriHaximus.PhuninCake.pipingbag'));
+        if (class_exists('PipingBag\Di\PipingBag') && Configure::check('WyriHaximus.Ratchet.pipingbag')) {
+            return PipingBag::get(Configure::read('WyriHaximus.Ratchet.pipingbag'));
         }
 
         return Factory::create();
