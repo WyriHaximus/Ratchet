@@ -5,7 +5,6 @@ namespace WyriHaximus\Ratchet\Shell;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Event\EventManager;
-use PipingBag\Di\PipingBag;
 use React\EventLoop\LoopInterface;
 use Thruway\Authentication\AllPermissiveAuthorizationManager;
 use Thruway\Authentication\AuthorizationManager;
@@ -15,15 +14,17 @@ use Thruway\Transport\RatchetTransportProvider;
 use Thruway\Authentication\AuthenticationManager;
 use WyriHaximus\Ratchet\Event\WebsocketStartEvent;
 use WyriHaximus\Ratchet\Websocket\InternalClient;
-use Zikarsky\React\Gearman\Factory;
 
 class WebsocketShell extends Shell
 {
+    /**
+     * @var LoopInterface
+     */
     protected $loop;
 
     public function start()
     {
-        $this->loop = $this->loopResolver();
+        $this->loop = \WyriHaximus\Ratchet\loopResolver();
 
         $router = new Router($this->loop);
 
@@ -58,21 +59,5 @@ class WebsocketShell extends Shell
                 'boolean' => true
             ]
         );
-    }
-
-    protected function loopResolver()
-    {
-        if (
-            Configure::check('WyriHaximus.Ratchet.loop') &&
-            Configure::read('WyriHaximus.Ratchet.loop') instanceof LoopInterface
-        ) {
-            return Configure::read('WyriHaximus.Ratchet.loop');
-        }
-
-        if (class_exists('PipingBag\Di\PipingBag') && Configure::check('WyriHaximus.Ratchet.pipingbag')) {
-            return PipingBag::get(Configure::read('WyriHaximus.Ratchet.pipingbag'));
-        }
-
-        return Factory::create();
     }
 }
