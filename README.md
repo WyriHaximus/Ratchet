@@ -21,59 +21,22 @@ Ratchet for CakePHP brings [the Ratchet websocket](http://socketo.me/) package t
 
 Keep in mind that this should only be used to push data around. Handling and processing that data is the applications job this plugin is only to get it from and to the client.
 
-#### 0. Requirements ####
+## Installation ##
 
-* PHP 5.4+
-* CakePHP 3.x
-* Composer
-* SSH/Shell access
-* ext-libevent is highly reccomended
+To install via [Composer](http://getcomposer.org/), use the command below, it will automatically detect the latest version and bind it with `~`.
 
-#### 1. Installation ####
-
-Installation is easy with [composer](http://getcomposer.org/) just add Ratchet to your composer.json. ([Read more here on Composer and CakePHP 2.x.](http://book.cakephp.org/2.0/en/installation/advanced-installation.html#installing-cakephp-with-composer))
-
-```
+```bash
 composer require wyrihaximus/ratchet 
 ```
 
-Composer makes sure [Ratchet](https://github.com/cboden/Ratchet), yes I named this plugin after the underlying library, and other components are pulled in.
+## Bootstrap ##
 
-#### 2. Setup the plugin ####
-
-Make sure you load `Ratchet` with the `bootstrap` option set to true:
-```php
-CakePlugin::load('Ratchet', ['bootstrap' => true]);
-```
-
-#### 3. Using the helper ####
-
-Add the helper to the `AppController` or to specific controllers that will use it.
+Add the following to your `config/bootstrap.php` to load the plugin.
 
 ```php
-$helpers = [
-  'Ratchet.Wamp',
-];
-```
-
-Then in your view or layout template add this:
-
-```php
-<?php $this->Wamp->init(); ?>
-```
-
-#### 4. Start and stopping the server ####
-
-The server can be started with the following command, from your `app` directory (the verbose flag gives you debug information to see what is going on internally):
-
-```bash
-./Console/cake Ratchet.websocket start --verbose
-```
-
-If you've configurated the queue correctly you can stop the server with the following command:
-
-```bash
-./Console/cake Ratchet.websocket stop
+Plugin::load('WyriHaximus/Ratchet', [
+    'bootstrap' => true,
+]);
 ```
 
 For a proper way to boot the server check out the [Ratchet example supervisor configuration](http://socketo.me/docs/deploy#supervisor).
@@ -86,7 +49,7 @@ For more abundant documentation on this project, check the [project documentatio
 
 (The MIT License)
 
-Copyright © 2012 - 2013 Cees-Jan Kiewiet
+Copyright © 2012 - 2015 Cees-Jan Kiewiet
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
