@@ -26,13 +26,13 @@
     "autoload": {
         "psr-4": {
             "WyriHaximus\\Ratchet\\": "src/"
-        }
+        },
+        "files": ["src/functions.php"]
     },
     "autoload-dev": {
         "psr-4": {
             "WyriHaximus\\Ratchet\\Tests\\": "tests/"
-        },
-        "files": ["src/functions.php"]
+        }
     },
     "suggest": {
         "wyrihaximus/ratchet-pcntl": "Add support for OS signaling",
