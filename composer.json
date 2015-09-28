@@ -28,12 +28,21 @@
             "WyriHaximus\\Ratchet\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "WyriHaximus\\Ratchet\\Tests\\": "tests/"
+        },
+        "files": ["src/functions.php"]
+    },
     "suggest": {
-        "mkraemer/react-pcntl": "Add support for OS signaling"
+        "wyrihaximus/ratchet-pcntl": "Add support for OS signaling",
+        "wyrihaximus/ratchet-model-push": "Push model operations over websockets"
     },
     "require-dev": {
         "cakephp/debug_kit": "^3.0",
         "phpunit/phpunit": "^4.7",
-        "squizlabs/php_codesniffer": "^1.5.0"
+        "squizlabs/php_codesniffer": "^1.5.6",
+        "vectorface/dunit": "^2.0",
+        "phake/phake": "^2.1"
     }
 }
