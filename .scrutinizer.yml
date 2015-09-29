@@ -1,6 +1,7 @@
 filter:
     excluded_paths: [tests/* docs/* webroot/*]
 tools:
+    external_code_coverage: true
     php_analyzer: true
     php_hhvm: true
     php_sim: true
