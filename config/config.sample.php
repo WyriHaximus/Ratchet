@@ -5,7 +5,7 @@ return [
         'Ratchet' => [
             'Connection' => [
                 'Websocket' => [
-                    'adddress' => '0.0.0.0',
+                    'address' => '0.0.0.0',
                     'port' => 12345,
                 ],
             ],
