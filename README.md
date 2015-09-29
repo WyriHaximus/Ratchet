@@ -8,7 +8,6 @@ Ratchet
 [![License](https://poser.pugx.org/wyrihaximus/ratchet/license.png)](https://packagist.org/packages/wyrihaximus/ratchet)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/WyriHaximus/Ratchet/badge.svg)](https://travis-ci.org/WyriHaximus/Ratchet)
 
-
 CakePHP plugin wrapping Ratchet
 
 ## Current status ##
