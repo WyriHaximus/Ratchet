@@ -6,7 +6,7 @@ Shell
 Start the websocket server with the following command
 
 ```bash
-./cake Ratchet.websocket start
+./cake WyriHaximus/Ratchet.websocket start
 ```
 
 ### Options ###
