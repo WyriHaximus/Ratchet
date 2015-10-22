@@ -5,14 +5,14 @@ The `Ratchet` plugin contains a helper that sets all the client side details for
 
 ```php
 $helpers = [
-  'Ratchet.Wamp',
+  'WyriHaximus/Ratchet.Wamp',
 ];
 ```
 
-Then in your view or layout template add this:
+The helper will automatically append the required JavaScript to the `script` block. If you're not fetching the script block in your view, you can do so by adding the following:
 
 ```php
-<?php $this->Wamp->init(); ?>
+<?= $this->fetch('script') ?>
 ```
 
 That will generate the needed code to configure and setup the websocket clientside tools.
