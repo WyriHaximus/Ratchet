@@ -8,7 +8,7 @@ This shell is the intiater for everything else. Aside from the `Helper` everythi
 Start the websocket server with the following command
 
 ```bash
-./cake Ratchet.websocket start
+./cake WyriHaximus/Ratchet.websocket start
 ```
 
 ### Options ###
