@@ -6,9 +6,13 @@ use Cake\View\Helper;
 
 class WampHelper extends Helper
 {
+    public $helpers = [
+        'Html',
+    ];
+
     public function beforeLayout()
     {
-        $this->_View->append('script', $this->_View->element('WyriHaximus\Ratchet.client'));
+        $this->_View->append('script', $this->Html->script('WyriHaximus/Ratchet.client'));
     }
 
     public function client($realm)
@@ -16,11 +20,13 @@ class WampHelper extends Helper
         $this->_View->append(
             'script',
             $this->_View->element(
-                'WyriHaximus\Ratchet.client',
+                'WyriHaximus/Ratchet.client',
                 [
-                    'realm' => $realm,
+                'realm' => $realm,
                 ]
             )
         );
+
+        return '';
     }
 }

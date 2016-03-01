@@ -44,7 +44,7 @@ function realmConfiguration($realm)
 
     $config = [
         'realm' => $realm,
-        'url' => createUrl($options['hostname'], $options['port'], $options['secure'], $options['path']),
+        'url' => createUrl($options['secure'], $options['hostname'], $options['port'], $options['path']),
     ];
 
     return array_merge($options['config'], $config);
