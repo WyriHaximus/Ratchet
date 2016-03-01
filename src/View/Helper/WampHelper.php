@@ -8,6 +8,19 @@ class WampHelper extends Helper
 {
     public function beforeLayout()
     {
-        $this->_View->append('script', $this->_View->element('WyriHaximus\Ratchet.wamp'));
+        $this->_View->append('script', $this->_View->element('WyriHaximus\Ratchet.client'));
+    }
+
+    public function client($realm)
+    {
+        $this->_View->append(
+            'script',
+            $this->_View->element(
+                'WyriHaximus\Ratchet.client',
+                [
+                    'realm' => $realm,
+                ]
+            )
+        );
     }
 }
