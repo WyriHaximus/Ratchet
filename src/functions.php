@@ -36,7 +36,11 @@ function realmConfiguration($realm)
         'secure' => false,
     ];
 
-    $options = array_merge($defaults, Configure::read('WyriHaximus.Ratchet.realms.' . $realm));
+    $options = array_merge(
+        $defaults,
+        Configure::read('WyriHaximus.Ratchet.realms.' . $realm),
+        Configure::read('WyriHaximus.Ratchet.external')
+    );
 
     $config = [
         'realm' => $realm,

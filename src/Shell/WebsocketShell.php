@@ -31,8 +31,8 @@ class WebsocketShell extends Shell
         $router->addInternalClient(new InternalClient('first', $this->loop));
         $router->addTransportProvider(
             new RatchetTransportProvider(
-                Configure::read('WyriHaximus.Ratchet.Connection.Websocket.address'),
-                Configure::read('WyriHaximus.Ratchet.Connection.Websocket.port')
+                Configure::read('WyriHaximus.Ratchet.internal.address'),
+                Configure::read('WyriHaximus.Ratchet.internal.port')
             )
         );
         //$router->getRealmManager()->setDefaultAuthorizationManager(new AllPermissiveAuthorizationManager());
