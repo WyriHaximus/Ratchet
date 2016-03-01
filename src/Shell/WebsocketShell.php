@@ -28,7 +28,9 @@ class WebsocketShell extends Shell
 
         $router = new Router($this->loop);
 
-        $router->addInternalClient(new InternalClient('first', $this->loop));
+        foreach (Configure::read('WyriHaximus.Ratchet.realms') as $realm => $config) {
+            $router->addInternalClient(new InternalClient($realm, $this->loop));
+        }
         $router->addTransportProvider(
             new RatchetTransportProvider(
                 Configure::read('WyriHaximus.Ratchet.internal.address'),
