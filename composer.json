@@ -20,7 +20,7 @@
     "require": {
         "php": "^5.4.0||^7.0",
         "cakephp/cakephp": "^3.0",
-        "voryx/thruway": "^0.3.0",
+        "voryx/thruway": "^0.4",
         "react/promise": "^2.0"
     },
     "autoload": {
