@@ -14,12 +14,24 @@ namespace WyriHaximus\Ratchet\Event;
 use Cake\Core\Configure;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
+use React\EventLoop\LoopInterface;
 use Thruway\Peer\Router;
 use Thruway\Transport\RatchetTransportProvider;
+use WyriHaximus\Ratchet\Security\AuthorizationManager;
 use WyriHaximus\Ratchet\Websocket\InternalClient;
 
-class ConstructListener implements EventListenerInterface
+final class ConstructListener implements EventListenerInterface
 {
+    /**
+     * @var Router
+     */
+    private $router;
+
+    /**
+     * @var LoopInterface
+     */
+    private $loop;
+
     /**
      * @return array
      */
@@ -35,21 +47,31 @@ class ConstructListener implements EventListenerInterface
      */
     public function construct(ConstructEvent $event)
     {
-        $router = new Router($event->getLoop());
+        $this->loop = $event->getLoop();
+        $this->router = new Router($this->loop);
 
         foreach (Configure::read('WyriHaximus.Ratchet.realms') as $realm => $config) {
-            $router->addInternalClient(new InternalClient($realm, $event->getLoop()));
+            $this->setUpRealm($realm, $config);
         }
-        $router->addTransportProvider(
+        $this->router->addTransportProvider(
             new RatchetTransportProvider(
                 Configure::read('WyriHaximus.Ratchet.internal.address'),
                 Configure::read('WyriHaximus.Ratchet.internal.port')
             )
         );
-        //$router->getRealmManager()->setDefaultAuthorizationManager(new AllPermissiveAuthorizationManager());
 
-        EventManager::instance()->dispatch(WebsocketStartEvent::create($event->getLoop()));
+        EventManager::instance()->dispatch(WebsocketStartEvent::create($this->loop));
 
-        $router->start(false);
+        $this->router->start(false);
+    }
+
+    protected function setUpRealm($realm, array $config)
+    {
+        $this->router->addInternalClient(new InternalClient($realm, $this->loop));
+        if (!igorw\get_in($config, ['auth'], false)) {
+            return;
+        }
+
+        $this->router->registerModule(new AuthorizationManager($realm, $this->loop));
     }
 }
