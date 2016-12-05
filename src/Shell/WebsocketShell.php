@@ -6,14 +6,7 @@ use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Event\EventManager;
 use React\EventLoop\LoopInterface;
-use Thruway\Authentication\AllPermissiveAuthorizationManager;
-use Thruway\Authentication\AuthorizationManager;
-use Thruway\Authentication\WampCraAuthProvider;
-use Thruway\Peer\Router;
-use Thruway\Transport\RatchetTransportProvider;
-use Thruway\Authentication\AuthenticationManager;
-use WyriHaximus\Ratchet\Event\WebsocketStartEvent;
-use WyriHaximus\Ratchet\Websocket\InternalClient;
+use WyriHaximus\Ratchet\Event\ConstructEvent;
 
 class WebsocketShell extends Shell
 {
@@ -25,24 +18,7 @@ class WebsocketShell extends Shell
     public function start()
     {
         $this->loop = \WyriHaximus\Ratchet\loopResolver();
-
-        $router = new Router($this->loop);
-
-        foreach (Configure::read('WyriHaximus.Ratchet.realms') as $realm => $config) {
-            $router->addInternalClient(new InternalClient($realm, $this->loop));
-        }
-        $router->addTransportProvider(
-            new RatchetTransportProvider(
-                Configure::read('WyriHaximus.Ratchet.internal.address'),
-                Configure::read('WyriHaximus.Ratchet.internal.port')
-            )
-        );
-        //$router->getRealmManager()->setDefaultAuthorizationManager(new AllPermissiveAuthorizationManager());
-
-        EventManager::instance()->dispatch(WebsocketStartEvent::create($this->loop));
-
-        $router->start(false);
-
+        EventManager::instance()->dispatch(ConstructEvent::create($this->loop));
         $this->loop->run();
     }
 
