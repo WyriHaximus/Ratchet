@@ -68,7 +68,7 @@ final class ConstructListener implements EventListenerInterface
     protected function setUpRealm($realm, array $config)
     {
         $this->router->addInternalClient(new InternalClient($realm, $this->loop));
-        if (!igorw\get_in($config, ['auth'], false)) {
+        if (!\igorw\get_in($config, ['auth'], false)) {
             return;
         }
 
