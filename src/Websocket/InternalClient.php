@@ -9,12 +9,25 @@ use WyriHaximus\Ratchet\Event\OnSessionStartEvent;
 class InternalClient extends Client
 {
     /**
+     * @var EventManager
+     */
+    private $eventManager;
+
+    /**
+     * @param EventManager $eventManager
+     */
+    public function setEventManager(EventManager $eventManager)
+    {
+        $this->eventManager = $eventManager;
+    }
+
+    /**
      * @param \Thruway\ClientSession $session
      * @param \Thruway\Transport\TransportInterface $transport
      */
     public function onSessionStart($session, $transport)
     {
-        EventManager::instance()->dispatch(OnSessionStartEvent::create($this->getRealm(), $session, $transport));
+        $this->eventManager->dispatch(OnSessionStartEvent::create($this->getRealm(), $session, $transport));
     }
 
     /**
@@ -22,6 +35,6 @@ class InternalClient extends Client
      */
     public function onSessionEnd($session)
     {
-        EventManager::instance()->dispatch(OnSessionEndEvent::create($this->getRealm(), $session));
+        $this->eventManager->dispatch(OnSessionEndEvent::create($this->getRealm(), $session));
     }
 }
