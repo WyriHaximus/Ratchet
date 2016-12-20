@@ -22,7 +22,7 @@ class WampHelper extends Helper
             $this->_View->element(
                 'WyriHaximus/Ratchet.client',
                 [
-                'realm' => $realm,
+                    'realm' => $realm,
                 ]
             )
         );

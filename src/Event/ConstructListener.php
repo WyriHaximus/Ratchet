@@ -51,7 +51,7 @@ final class ConstructListener implements EventListenerInterface
         $this->router = new Router($this->loop);
 
         foreach (Configure::read('WyriHaximus.Ratchet.realms') as $realm => $config) {
-            $this->setUpRealm($realm, $config);
+            $this->setUpRealm($realm, $config, $event->getEventManager());
         }
         $this->router->addTransportProvider(
             new RatchetTransportProvider(
@@ -60,15 +60,17 @@ final class ConstructListener implements EventListenerInterface
             )
         );
 
-        EventManager::instance()->dispatch(WebsocketStartEvent::create($this->loop));
+        $event->getEventManager()->dispatch(WebsocketStartEvent::create($this->loop));
 
         $this->router->start(false);
     }
 
-    protected function setUpRealm($realm, array $config)
+    protected function setUpRealm($realm, array $config, EventManager $eventManager)
     {
-        $this->router->addInternalClient(new InternalClient($realm, $this->loop));
-        if (!igorw\get_in($config, ['auth'], false)) {
+        $internalClient = new InternalClient($realm, $this->loop);
+        $internalClient->setEventManager($eventManager);
+        $this->router->addInternalClient($internalClient);
+        if (!\igorw\get_in($config, ['auth'], false)) {
             return;
         }
 
