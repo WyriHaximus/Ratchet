@@ -19,6 +19,7 @@ use Thruway\Authentication\AuthenticationManager;
 use Thruway\Peer\Router;
 use Thruway\Transport\RatchetTransportProvider;
 use WyriHaximus\Ratchet\Security\AuthorizationManager;
+use WyriHaximus\Ratchet\Security\JWTAuthProvider;
 use WyriHaximus\Ratchet\Security\WampCraAuthProvider;
 use WyriHaximus\Ratchet\Websocket\InternalClient;
 
@@ -54,12 +55,9 @@ final class ConstructListener implements EventListenerInterface
 
         $this->router->registerModule(new AuthenticationManager());
 
-        $realms = [];
         foreach (Configure::read('WyriHaximus.Ratchet.realms') as $realm => $config) {
-            $realms[] = $realm;
             $this->setUpRealm($realm, $config, $event->getEventManager());
         }
-        $this->router->addInternalClient(new WampCraAuthProvider($realms, $this->loop));
         $this->router->addTransportProvider(
             new RatchetTransportProvider(
                 Configure::read('WyriHaximus.Ratchet.internal.address'),
@@ -82,5 +80,6 @@ final class ConstructListener implements EventListenerInterface
         }
 
         $this->router->registerModule(new AuthorizationManager($realm, $this->loop));
+        $this->router->addInternalClient((new JWTAuthProvider([$realm], $this->loop))->setKey($config['auth_key']));
     }
 }

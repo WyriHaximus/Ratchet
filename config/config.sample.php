@@ -17,6 +17,8 @@ return [
             'realms' => [
                 'realm1' => [], // Always has to be an array
                 'secure' => [
+                    'auth' => true,
+                    'auth_key' => 'CHANGE_THIS_TO_A_SECURE_VALUE',
                     'max_retries' => 13,
                 ],
             ],
