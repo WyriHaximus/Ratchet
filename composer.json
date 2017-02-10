@@ -22,6 +22,7 @@
         "cakephp/cakephp": "^3.0",
         "firebase/php-jwt": "^4.0",
         "igorw/get-in": "^1.0",
+        "lcobucci/jwt": "^3.2",
         "react/promise": "^2.0",
         "voryx/thruway": "^0.4"
     },
