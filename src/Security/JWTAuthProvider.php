@@ -12,9 +12,11 @@
 namespace WyriHaximus\Ratchet\Security;
 
 use Firebase\JWT\JWT;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
 use React\Promise\PromiseInterface;
 use Thruway\Authentication\AbstractAuthProviderClient;
 use function React\Promise\resolve;
+use Lcobucci\JWT\Parser;
 
 /**
  * Class WampCraAuthProvider
@@ -55,10 +57,10 @@ final class JWTAuthProvider extends AbstractAuthProviderClient
      */
     public function processAuthenticate($signature, $extra = null)
     {
-        $JWT = JWT::decode($signature, $this->key, ['HS256']);
+        $token = (new Parser())->parse($signature);
 
-        if (isset($JWT->authId)) {
-            return resolve(["SUCCESS", ['authId' => $JWT->authId]]);
+        if ($token->verify(new Sha256(), $this->key)) {
+            return resolve(["SUCCESS", ['authId' => $token->getClaim('authId')]]);
         }
 
         return resolve(["FAILURE"]);
