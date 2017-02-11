@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc2fe7bffa1ab4ef1204fb24dbaa0de5",
+    "content-hash": "06b28d3c8262344ccbdd072d879885f2",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -346,49 +346,6 @@
                 "event-emitter"
             ],
             "time": "2012-11-02T14:49:47+00:00"
-        },
-        {
-            "name": "firebase/php-jwt",
-            "version": "v4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
-                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Firebase\\JWT\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Neuman Vong",
-                    "email": "neuman+pear@twilio.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Anant Narayanan",
-                    "email": "anant@php.net",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
-            "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2016-07-18T04:51:16+00:00"
         },
         {
             "name": "guzzle/guzzle",
