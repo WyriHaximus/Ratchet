@@ -30,13 +30,19 @@ class JWTController extends Controller
 
         $user = $this->Auth->user();
 
+        $realmSalt = Configure::read('WyriHaximus.Ratchet.realm_salt');
+        $authKeySalt = Configure::read('WyriHaximus.Ratchet.realm_auth_key_salt');
+        $hashedRealm = hash('sha512', $realmSalt . $realm . $realmSalt);
+        $hashedRealm = base64_encode($hashedRealm);
         $token = (new Builder())
+            ->setIssuer($hashedRealm)
+            ->setAudience($hashedRealm)
             ->setId(bin2hex(random_bytes(mt_rand(256, 512))), true)
             ->setIssuedAt(time())
             ->setNotBefore(time() - 13)
             ->setExpiration(time() + 13)
             ->set('authId', $user === null ? 0 : get_in($user, ['id'], 0))
-            ->sign(new Sha256(), $realms[$realm]['auth_key'])
+            ->sign(new Sha256(), $authKeySalt . $realms[$realm]['auth_key'] . $authKeySalt)
             ->getToken();
 
         $this->set('token', (string)$token);

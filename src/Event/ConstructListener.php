@@ -35,6 +35,8 @@ final class ConstructListener implements EventListenerInterface
      */
     private $loop;
 
+    private $authRealms = [];
+
     /**
      * @return array
      */
@@ -65,6 +67,10 @@ final class ConstructListener implements EventListenerInterface
             )
         );
 
+        if (count($this->authRealms) > 0) {
+            $this->router->addInternalClient((new JWTAuthProvider($this->authRealms, $this->loop)));
+        }
+
         $event->getEventManager()->dispatch(WebsocketStartEvent::create($this->loop));
 
         $this->router->start(false);
@@ -80,6 +86,6 @@ final class ConstructListener implements EventListenerInterface
         }
 
         $this->router->registerModule(new AuthorizationManager($realm, $this->loop));
-        $this->router->addInternalClient((new JWTAuthProvider([$realm], $this->loop))->setKey($config['auth_key']));
+        $this->authRealms[] = $realm;
     }
 }

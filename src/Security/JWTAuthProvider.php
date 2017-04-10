@@ -11,8 +11,9 @@
 
 namespace WyriHaximus\Ratchet\Security;
 
-use Firebase\JWT\JWT;
+use Cake\Core\Configure;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use Thruway\Authentication\AbstractAuthProviderClient;
 use function React\Promise\resolve;
@@ -25,19 +26,34 @@ use Lcobucci\JWT\Parser;
  */
 final class JWTAuthProvider extends AbstractAuthProviderClient
 {
-    /**
-     * @var string
-     */
-    private $key;
+    private $activeRealms = [];
 
-    /**
-     * @param string $key
-     * @return $this
-     */
-    public function setKey(string $key)
+    public function __construct(array $authRealms, LoopInterface $loop = null)
     {
-        $this->key = $key;
-        return $this;
+        parent::__construct($authRealms, $loop);
+
+        $realmSalt = Configure::read('WyriHaximus.Ratchet.realm_salt');
+        $authKeySalt = Configure::read('WyriHaximus.Ratchet.realm_auth_key_salt');
+        foreach (Configure::read('WyriHaximus.Ratchet.realms') as $realm => $options) {
+            if (!isset($options['auth'])) {
+                continue;
+            }
+
+            if (!$options['auth']) {
+                continue;
+            }
+
+            if (!isset($options['auth_key'])) {
+                continue;
+            }
+
+            if (empty($options['auth_key'])) {
+                continue;
+            }
+
+            $hash = hash('sha512', $realmSalt . $realm . $realmSalt);
+            $this->activeRealms[$hash] = $authKeySalt . $options['auth_key'] . $authKeySalt;
+        }
     }
 
     /**
@@ -57,9 +73,16 @@ final class JWTAuthProvider extends AbstractAuthProviderClient
      */
     public function processAuthenticate($signature, $extra = null)
     {
+        $this->getRealm();
         $token = (new Parser())->parse($signature);
 
-        if ($token->verify(new Sha256(), $this->key)) {
+        $iss = $token->getClaim('iss');
+        $iss = base64_decode($iss);
+        if (!isset($this->activeRealms[$iss])) {
+            return resolve(["FAILURE"]);
+        }
+
+        if ($token->verify(new Sha256(), $this->activeRealms[$iss])) {
             return resolve(["SUCCESS", ['authId' => $token->getClaim('authId')]]);
         }
 
