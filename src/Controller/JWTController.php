@@ -41,7 +41,7 @@ class JWTController extends Controller
             ->setIssuedAt(time())
             ->setNotBefore(time() - 13)
             ->setExpiration(time() + 13)
-            ->set('authId', $user === null ? 0 : get_in($user, ['id'], 0))
+            ->set('authid', $user === null ? 0 : get_in($user, ['id'], 0))
             ->sign(new Sha256(), $authKeySalt . $realms[$realm]['auth_key'] . $authKeySalt)
             ->getToken();
 
