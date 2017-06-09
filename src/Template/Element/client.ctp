@@ -26,8 +26,6 @@ use Cake\Routing\Router;
         }
     };
     window.config.WyriHaximus.Ratchet.<?= str_replace('-', '_', $realm) ?>.authmethods = ['jwt'];
-    window.config.WyriHaximus.Ratchet.<?= str_replace('-', '_', $realm) ?>.authid = '147145';
-    window.config.WyriHaximus.Ratchet.<?= str_replace('-', '_', $realm) ?>.key = '123';
 
     window.WyriHaximus = window.WyriHaximus || {};
     window.WyriHaximus.Ratchet = window.WyriHaximus.Ratchet || {};
