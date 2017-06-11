@@ -85,7 +85,7 @@ final class ConstructListener implements EventListenerInterface
             return;
         }
 
-        $this->router->registerModule(new AuthorizationManager($realm, $this->loop));
+        $this->router->registerModule((new AuthorizationManager($realm, $this->loop))->setEventManager($eventManager));
         $this->authRealms[] = $realm;
     }
 }
