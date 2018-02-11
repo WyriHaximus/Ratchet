@@ -83,7 +83,7 @@ final class JWTAuthProvider extends AbstractAuthProviderClient
         }
 
         if ($token->verify(new Sha256(), $this->activeRealms[$iss])) {
-            return resolve(["SUCCESS", ['authid' => $token->getClaim('authId')]]);
+            return resolve(["SUCCESS", ['authid' => $token->getClaim('authid')]]);
         }
 
         return resolve(["FAILURE"]);
