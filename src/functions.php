@@ -76,7 +76,7 @@ function createUrl($secure, $hostname, $port, $path)
     }
 
     $url .= '/';
-    $url .= $path;
+    $url .= ltrim($path, '/');
 
     return $url;
 }
