@@ -37,6 +37,6 @@ class OnSessionStartEvent extends Event
      */
     public function getSession()
     {
-        return $this->subject();
+        return $this->getSubject();
     }
 }

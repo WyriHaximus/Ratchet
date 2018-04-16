@@ -35,7 +35,7 @@ class ConstructEvent extends Event
      */
     public function getLoop()
     {
-        return $this->data()['loop'];
+        return $this->getData()['loop'];
     }
 
     /**
@@ -43,6 +43,6 @@ class ConstructEvent extends Event
      */
     public function getEventManager()
     {
-        return $this->data()['eventManager'];
+        return $this->getData()['eventManager'];
     }
 }

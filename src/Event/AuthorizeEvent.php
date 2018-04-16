@@ -56,7 +56,7 @@ class AuthorizeEvent extends Event
      */
     public function getRealm()
     {
-        return $this->data()['realm'];
+        return $this->getData()['realm'];
     }
 
     /**
@@ -64,7 +64,7 @@ class AuthorizeEvent extends Event
      */
     public function getSession()
     {
-        return $this->data()['session'];
+        return $this->getData()['session'];
     }
 
     /**
@@ -72,7 +72,7 @@ class AuthorizeEvent extends Event
      */
     public function getActionMessage()
     {
-        return $this->data()['actionMessage'];
+        return $this->getData()['actionMessage'];
     }
 
     /**
