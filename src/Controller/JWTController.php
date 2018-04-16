@@ -19,7 +19,7 @@ class JWTController extends Controller
 
     public function token()
     {
-        $realm = $this->request->query('realm');
+        $realm = $this->getRequest()->getQuery('realm');
         $realms = Configure::read('WyriHaximus.Ratchet.realms');
         if (!isset($realms[$realm])) {
             throw new \InvalidArgumentException('Unknown realm');
