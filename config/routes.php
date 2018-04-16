@@ -5,7 +5,7 @@ use Cake\Routing\Router;
 Router::plugin(
     'WyriHaximus/Ratchet',
     function (RouteBuilder $routes) {
-        $routes->extensions(['json']);
+        $routes->setExtensions(['json']);
         $routes->fallbacks('DashedRoute');
     }
 );
