@@ -36,10 +36,6 @@
             "WyriHaximus\\Ratchet\\Tests\\": "tests/"
         }
     },
-    "suggest": {
-        "wyrihaximus/ratchet-pcntl": "Add support for OS signaling",
-        "wyrihaximus/ratchet-model-push": "Push model operations over websockets"
-    },
     "require-dev": {
         "cakephp/debug_kit": "^3.0",
         "phpunit/phpunit": "^4.7",
