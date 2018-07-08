@@ -11,6 +11,7 @@
 namespace WyriHaximus\Ratchet\Event;
 
 use Cake\Event\Event;
+use Cake\Event\EventManager;
 use React\EventLoop\LoopInterface;
 
 class ConstructEvent extends Event
@@ -21,10 +22,11 @@ class ConstructEvent extends Event
      * @param LoopInterface $loop
      * @return static
      */
-    public static function create(LoopInterface $loop)
+    public static function create(LoopInterface $loop, EventManager $eventManager)
     {
         return new static(static::EVENT, $loop, [
             'loop' => $loop,
+            'eventManager' => $eventManager,
         ]);
     }
 
@@ -33,6 +35,14 @@ class ConstructEvent extends Event
      */
     public function getLoop()
     {
-        return $this->data()['loop'];
+        return $this->getData()['loop'];
+    }
+
+    /**
+     * @return EventManager
+     */
+    public function getEventManager()
+    {
+        return $this->getData()['eventManager'];
     }
 }

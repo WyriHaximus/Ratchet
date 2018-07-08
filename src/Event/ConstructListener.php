@@ -14,12 +14,29 @@ namespace WyriHaximus\Ratchet\Event;
 use Cake\Core\Configure;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
+use React\EventLoop\LoopInterface;
+use Thruway\Authentication\AuthenticationManager;
 use Thruway\Peer\Router;
 use Thruway\Transport\RatchetTransportProvider;
+use WyriHaximus\Ratchet\Security\AuthorizationManager;
+use WyriHaximus\Ratchet\Security\JWTAuthProvider;
+use WyriHaximus\Ratchet\Security\WampCraAuthProvider;
 use WyriHaximus\Ratchet\Websocket\InternalClient;
 
-class ConstructListener implements EventListenerInterface
+final class ConstructListener implements EventListenerInterface
 {
+    /**
+     * @var Router
+     */
+    private $router;
+
+    /**
+     * @var LoopInterface
+     */
+    private $loop;
+
+    private $authRealms = [];
+
     /**
      * @return array
      */
@@ -35,21 +52,40 @@ class ConstructListener implements EventListenerInterface
      */
     public function construct(ConstructEvent $event)
     {
-        $router = new Router($event->getLoop());
+        $this->loop = $event->getLoop();
+        $this->router = new Router($this->loop);
+
+        $this->router->registerModule(new AuthenticationManager());
 
         foreach (Configure::read('WyriHaximus.Ratchet.realms') as $realm => $config) {
-            $router->addInternalClient(new InternalClient($realm, $event->getLoop()));
+            $this->setUpRealm($realm, $config, $event->getEventManager());
         }
-        $router->addTransportProvider(
+        $this->router->addTransportProvider(
             new RatchetTransportProvider(
                 Configure::read('WyriHaximus.Ratchet.internal.address'),
                 Configure::read('WyriHaximus.Ratchet.internal.port')
             )
         );
-        //$router->getRealmManager()->setDefaultAuthorizationManager(new AllPermissiveAuthorizationManager());
 
-        EventManager::instance()->dispatch(WebsocketStartEvent::create($event->getLoop()));
+        if (count($this->authRealms) > 0) {
+            $this->router->addInternalClient((new JWTAuthProvider($this->authRealms, $this->loop)));
+        }
 
-        $router->start(false);
+        $event->getEventManager()->dispatch(WebsocketStartEvent::create($this->loop));
+
+        $this->router->start(false);
+    }
+
+    protected function setUpRealm($realm, array $config, EventManager $eventManager)
+    {
+        $internalClient = new InternalClient($realm, $this->loop);
+        $internalClient->setEventManager($eventManager);
+        $this->router->addInternalClient($internalClient);
+        if (!\igorw\get_in($config, ['auth'], false)) {
+            return;
+        }
+
+        $this->router->registerModule((new AuthorizationManager($realm, $this->loop))->setEventManager($eventManager));
+        $this->authRealms[] = $realm;
     }
 }

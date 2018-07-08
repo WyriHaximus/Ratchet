@@ -16,11 +16,16 @@ use Thruway\ClientSession;
 
 class OnSessionEndEvent extends Event
 {
-    const EVENT = 'WyriHaximus.Ratchet.onSessionEnd';
+    const EVENT = 'WyriHaximus.Ratchet.%s..onSessionEnd';
+
+    public static function realmEvent($realm)
+    {
+        return sprintf(self::EVENT, $realm);
+    }
 
     public static function create($realm, ClientSession $session)
     {
-        return new static(static::EVENT, $session, [
+        return new static(self::realmEvent($realm), $session, [
             'realm' => $realm,
         ]);
     }
@@ -30,6 +35,6 @@ class OnSessionEndEvent extends Event
      */
     public function getSession()
     {
-        return $this->subject();
+        return $this->getSubject();
     }
 }

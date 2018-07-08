@@ -19,9 +19,11 @@
     ],
     "require": {
         "php": "^5.4.0||^7.0",
-        "cakephp/cakephp": "^3.0",
-        "voryx/thruway": "^0.3.0",
-        "react/promise": "^2.0"
+        "cakephp/cakephp": "^3.6",
+        "igorw/get-in": "^1.0",
+        "lcobucci/jwt": "^3.2",
+        "react/promise": "^2.0",
+        "voryx/thruway": "^0.5.2"
     },
     "autoload": {
         "psr-4": {
@@ -34,15 +36,14 @@
             "WyriHaximus\\Ratchet\\Tests\\": "tests/"
         }
     },
-    "suggest": {
-        "wyrihaximus/ratchet-pcntl": "Add support for OS signaling",
-        "wyrihaximus/ratchet-model-push": "Push model operations over websockets"
-    },
     "require-dev": {
         "cakephp/debug_kit": "^3.0",
-        "phpunit/phpunit": "^4.7",
+        "phpunit/phpunit": "^6.0",
         "squizlabs/php_codesniffer": "^1.5.6",
         "vectorface/dunit": "^2.0",
         "phake/phake": "^2.1"
+    },
+    "config": {
+        "sort-packages": true
     }
 }

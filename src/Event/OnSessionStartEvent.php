@@ -17,11 +17,16 @@ use Thruway\Transport\TransportInterface;
 
 class OnSessionStartEvent extends Event
 {
-    const EVENT = 'WyriHaximus.Ratchet.onSessionStart';
+    const EVENT = 'WyriHaximus.Ratchet.%s.onSessionStart';
+
+    public static function realmEvent($realm)
+    {
+        return sprintf(self::EVENT, $realm);
+    }
 
     public static function create($realm, ClientSession $session, TransportInterface $transport)
     {
-        return new static(static::EVENT, $session, [
+        return new static(self::realmEvent($realm), $session, [
             'realm' => $realm,
             'transport' => $transport,
         ]);
@@ -32,6 +37,6 @@ class OnSessionStartEvent extends Event
      */
     public function getSession()
     {
-        return $this->subject();
+        return $this->getSubject();
     }
 }

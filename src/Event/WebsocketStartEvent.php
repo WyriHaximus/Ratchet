@@ -34,6 +34,6 @@ class WebsocketStartEvent extends Event
      */
     public function getLoop()
     {
-        return $this->subject();
+        return $this->getSubject();
     }
 }

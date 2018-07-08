@@ -18,7 +18,7 @@ class WebsocketShell extends Shell
     public function start()
     {
         $this->loop = \WyriHaximus\Ratchet\loopResolver();
-        EventManager::instance()->dispatch(ConstructEvent::create($this->loop));
+        EventManager::instance()->dispatch(ConstructEvent::create($this->loop, EventManager::instance()));
         $this->loop->run();
     }
 
