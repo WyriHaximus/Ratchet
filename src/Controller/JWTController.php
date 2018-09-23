@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use function igorw\get_in;
+use WyriHaximus\Annotations\ChildProcess;
 
 class JWTController extends Controller
 {
@@ -17,6 +18,9 @@ class JWTController extends Controller
         $this->Auth->allow(['token']);
     }
 
+    /**
+     * @ChildProcess()
+     */
     public function token()
     {
         $realm = $this->getRequest()->getQuery('realm');
