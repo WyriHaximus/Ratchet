@@ -23,7 +23,8 @@
         "igorw/get-in": "^1.0",
         "lcobucci/jwt": "^3.2",
         "react/promise": "^2.0",
-        "voryx/thruway": "^0.5.2"
+        "voryx/thruway": "^0.5.2",
+        "wyrihaximus/to-child-process-or-not-to-child-process": "^1.0"
     },
     "autoload": {
         "psr-4": {
