@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "expose-loader": "^0.7.1",
+    "expose-loader": "^0.7.3",
     "persistent-autobahn": "~0.1.0"
   },
   "devDependencies": {
