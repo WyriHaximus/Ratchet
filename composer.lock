@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e74cfd369955bba40f6944649979a6c9",
+    "content-hash": "db0cc2b14eefd8faf6fc1c2de03c8a5c",
     "packages": [
         {
             "name": "aura/intl",
@@ -4054,7 +4054,10 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.4.0||^7.0"
+        "php": "^7.2"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "7.2"
+    }
 }

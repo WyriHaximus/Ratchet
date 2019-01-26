@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^5.4.0||^7.0",
+        "php": "^7.2",
         "cakephp/cakephp": "^3.6",
         "igorw/get-in": "^1.0",
         "lcobucci/jwt": "^3.2",
@@ -45,6 +45,9 @@
         "phake/phake": "^2.1"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "7.2"
+        }
     }
 }
