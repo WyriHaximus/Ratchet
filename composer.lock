@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "e74cfd369955bba40f6944649979a6c9",
@@ -1521,16 +1521,16 @@
         },
         {
             "name": "wyrihaximus/doctrine-annotation-autoloader",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WyriHaximus/php-doctrine-annotation-autoloader.git",
-                "reference": "9670f84b7d3ca53723556988080ebc939da345af"
+                "reference": "e78712e878561e29162908f7067a76c9fd084455"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/php-doctrine-annotation-autoloader/zipball/9670f84b7d3ca53723556988080ebc939da345af",
-                "reference": "9670f84b7d3ca53723556988080ebc939da345af",
+                "url": "https://api.github.com/repos/WyriHaximus/php-doctrine-annotation-autoloader/zipball/e78712e878561e29162908f7067a76c9fd084455",
+                "reference": "e78712e878561e29162908f7067a76c9fd084455",
                 "shasum": ""
             },
             "require": {
@@ -1553,20 +1553,20 @@
                 }
             ],
             "description": "Request middleware",
-            "time": "2017-06-19T15:02:15+00:00"
+            "time": "2018-12-24T00:51:41+00:00"
         },
         {
             "name": "wyrihaximus/to-child-process-or-not-to-child-process",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WyriHaximus/php-to-child-process-or-not-to-child-process.git",
-                "reference": "289ed48877f5a843b39643c79419ae40e3f500b0"
+                "reference": "0a6b8f55630de41b0acd878c4d59fac13e0cf7e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/php-to-child-process-or-not-to-child-process/zipball/289ed48877f5a843b39643c79419ae40e3f500b0",
-                "reference": "289ed48877f5a843b39643c79419ae40e3f500b0",
+                "url": "https://api.github.com/repos/WyriHaximus/php-to-child-process-or-not-to-child-process/zipball/0a6b8f55630de41b0acd878c4d59fac13e0cf7e3",
+                "reference": "0a6b8f55630de41b0acd878c4d59fac13e0cf7e3",
                 "shasum": ""
             },
             "require": {
@@ -1575,7 +1575,7 @@
                 "wyrihaximus/to-x-or-not-to-x": "^1.0"
             },
             "require-dev": {
-                "api-clients/test-utilities": "^5.0"
+                "api-clients/test-utilities": "^5.4"
             },
             "type": "library",
             "extra": {
@@ -1610,20 +1610,20 @@
                 }
             ],
             "description": "To child process or not to child process",
-            "time": "2018-09-22T20:06:24+00:00"
+            "time": "2019-01-02T16:52:49+00:00"
         },
         {
             "name": "wyrihaximus/to-x-or-not-to-x",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WyriHaximus/php-to-X-or-not-to-X.git",
-                "reference": "78c2cda81e3f293f10d9a772a22fed188ea50e43"
+                "reference": "e46de217a51c7191d8bc68b1471824d41abad595"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/php-to-X-or-not-to-X/zipball/78c2cda81e3f293f10d9a772a22fed188ea50e43",
-                "reference": "78c2cda81e3f293f10d9a772a22fed188ea50e43",
+                "url": "https://api.github.com/repos/WyriHaximus/php-to-X-or-not-to-X/zipball/e46de217a51c7191d8bc68b1471824d41abad595",
+                "reference": "e46de217a51c7191d8bc68b1471824d41abad595",
                 "shasum": ""
             },
             "require": {
@@ -1633,7 +1633,8 @@
                 "wyrihaximus/doctrine-annotation-autoloader": "^1.0"
             },
             "require-dev": {
-                "api-clients/test-utilities": "^5.0"
+                "api-clients/cs-fixer-config": "^1.1",
+                "api-clients/test-utilities": "^5.4"
             },
             "type": "library",
             "extra": {
@@ -1668,7 +1669,7 @@
                 }
             ],
             "description": "To X or not to X",
-            "time": "2018-09-22T19:43:24+00:00"
+            "time": "2019-01-01T20:57:03+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
