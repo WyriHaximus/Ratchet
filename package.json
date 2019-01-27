@@ -4,7 +4,7 @@
     "persistent-autobahn": "~0.1.0"
   },
   "devDependencies": {
-    "babel-core": "^6.0.16",
+    "babel-core": "^6.26.3",
     "babel-loader": "^6.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.0.15",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
