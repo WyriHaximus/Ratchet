@@ -530,16 +530,16 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "8866a58fa866f6872f2a6ea0e04ad56480f0f440"
+                "reference": "a11ec5f4b4d75d1fcd04e133dede4c317aac9e18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/8866a58fa866f6872f2a6ea0e04ad56480f0f440",
-                "reference": "8866a58fa866f6872f2a6ea0e04ad56480f0f440",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/a11ec5f4b4d75d1fcd04e133dede4c317aac9e18",
+                "reference": "a11ec5f4b4d75d1fcd04e133dede4c317aac9e18",
                 "shasum": ""
             },
             "require": {
@@ -581,7 +581,7 @@
                 "JWS",
                 "jwt"
             ],
-            "time": "2019-05-22T09:44:23+00:00"
+            "time": "2019-05-24T18:30:49+00:00"
         },
         {
             "name": "psr/http-message",
