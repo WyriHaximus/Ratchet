@@ -2537,16 +2537,16 @@
         },
         {
             "name": "phake/phake",
-            "version": "v3.1.5",
+            "version": "v3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mlively/Phake.git",
-                "reference": "19e5d31d8401ee43c03c8d5680ea2c0edf3e1ccc"
+                "reference": "3848901ed8e236534ae684dd5cf0f3bfc4c8a24c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mlively/Phake/zipball/19e5d31d8401ee43c03c8d5680ea2c0edf3e1ccc",
-                "reference": "19e5d31d8401ee43c03c8d5680ea2c0edf3e1ccc",
+                "url": "https://api.github.com/repos/mlively/Phake/zipball/3848901ed8e236534ae684dd5cf0f3bfc4c8a24c",
+                "reference": "3848901ed8e236534ae684dd5cf0f3bfc4c8a24c",
                 "shasum": ""
             },
             "require": {
@@ -2591,7 +2591,7 @@
                 "mock",
                 "testing"
             ],
-            "time": "2019-05-24T22:24:06+00:00"
+            "time": "2019-06-06T22:41:35+00:00"
         },
         {
             "name": "phar-io/manifest",
